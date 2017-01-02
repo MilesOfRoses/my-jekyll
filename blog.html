@@ -2,3 +2,12 @@
 layout: default
 ---
 <h1 class="centerText">Articles</h1>
+
+<ul class="centerText article-list">
+	{% for post in site.categories.design %}
+		<li>
+			<h2 class="article-title"><a href="">{{post.title}}</a></h2>
+			<p>{{post.meta}}</p>
+		</li>
+	{% endfor %}
+</ul>
