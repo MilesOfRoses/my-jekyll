@@ -1,0 +1,64 @@
+html {
+	margin: 0;
+	padding: 0;
+
+	font: normal 100%/1.4 sans-serif;
+}
+
+.current {
+	text-shadow: 0px 0px 1px red;
+}
+
+#icon {
+	width:70px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+nav li {
+  display: inline-block;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+ul {
+	padding: 0;
+}
+
+nav {
+ text-align: center;
+}
+
+.title {
+	font-size: 4rem;
+	margin: .5rem;
+}
+
+.nav-top{
+	font-size:1.5rem;
+}
+
+a {
+	text-decoration: none;
+	color:black;
+}
+
+.centerText, #copy {
+	text-align: center
+}
+
+#headshot{
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+    width: 15%;
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px #878787;
+}
+
+#bio {
+	max-width: 50%;
+	margin-left: auto;
+    margin-right: auto;
+}
+

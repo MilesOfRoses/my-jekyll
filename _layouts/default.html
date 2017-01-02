@@ -3,17 +3,18 @@
 <head>
 	<meta charset="utf-8">
 	<title>Miles Rose</title>
+	<link href="{{site.baseurl}}/css/common.css" rel="stylesheet">
 </head>
 <body>
 <header>
-	<h1>Miles Rose</h1>
-	<nav>
-		<ul>
-			<li><a href="{{site.baseurl}}/index.html">Home</a></li>
-			<li><a href="{{site.baseurl}}/blog.html">Blog</a></li>
-		</ul>
-	</nav>
+	<h1 class="centerText title">Miles <img src=img/rose-icon200x200.svg id="icon"> Rose</h1>
+	{% include nav.html navclass='nav-top' %}
 </header>
-	{{content}}
+{{content}}
+
+<footer>
+	{% include nav.html navclass='nav-bottom' %}
+	<p id="copy">©2017 Miles Rose</p>
+</footer>
 </body>
 </html>
