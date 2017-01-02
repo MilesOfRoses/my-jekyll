@@ -1,0 +1,2 @@
+baseurl:/my-jekyll
+exclude: ['README.md']
