@@ -23,19 +23,25 @@ nav li {
 
 ul {
 	padding: 0;
+	margin-bottom: 1rem;
+	margin-top: -1rem;
 }
 
 nav {
  text-align: center;
+ font-family: 'Niconne', serif;
 }
 
 .title {
-	font-size: 4rem;
-	margin: .5rem;
+	font-size: 5rem;
+	margin: 0;
+	font-family: 'Niconne', serif;
+	color: #a00000;
+	letter-spacing: .4rem;
 }
 
 .nav-top{
-	font-size:1.5rem;
+	font-size:2.5rem;
 }
 
 a {
@@ -62,3 +68,6 @@ a {
     margin-right: auto;
 }
 
+h1 {
+	font-family: 'Niconne', serif;
+}
