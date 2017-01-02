@@ -1,5 +1,5 @@
 ---
-layout: post-article
+layout: blog
 title: Design a basic webpage with HTML
 meta: In this tutorial, you'll learn how to design the structure for a simple webpage in html 
 category: code
