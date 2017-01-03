@@ -2,13 +2,13 @@
 <html lang="en-ca">
 <head>
 	<meta charset="utf-8">
-	<title>Miles Rose</title>
+	<title>{% if page.title%}{{page.title}} · {% endif%}Miles Rose</title>
 	<link href="{{site.baseurl}}/css/common.css" rel="stylesheet">
 	<link href="{{site.baseurl}}/css/responsive-gallery.css" rel="stylesheet">
 </head>
 <body>
 <header>
-	<h1 class="centerText title">Miles <div class="icon-placeholder"></div> Rose</h1>
+	<a href="{{site.baseurl}}/index.html"><h1 class="centerText title">Miles <div class="icon-placeholder"></div> Rose</h1></a>
 	{% include nav.html navclass='nav-top' %}
 </header>
 {{content}}

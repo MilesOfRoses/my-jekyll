@@ -1,0 +1,25 @@
+div.icon-placeholder:before {
+	content:url(../img/rose-loop-200x200.gif);
+	width:70px;
+}
+
+div.icon-placeholder{
+	display:inline-block;
+	zoom:.4;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+ul {
+	padding: 0;
+	margin-bottom: 1rem;
+	margin-top: -1rem;
+}
+
+.title {
+	font-size: 5rem;
+	margin: 0;
+	font-family: 'Niconne', serif;
+	color: #a00000;
+	letter-spacing: .5rem;
+}
