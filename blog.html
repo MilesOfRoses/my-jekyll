@@ -2,9 +2,9 @@
 layout: blog
 title: Blog
 ---
-<h1 class="centerText">Articles About Design</h1>
+<h1 class="centerText">All Articles</h1>
 <ul class="centerText article-list">
-	{% for post in site.categories.design %}
+	{% for post in site.posts %}
 		<li>
 			<h2 class="article-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></h2>
 			<p>{{post.meta}}</p>
