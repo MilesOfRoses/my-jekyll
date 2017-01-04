@@ -104,6 +104,11 @@ a {
     text-align: center;
 }
 
+.job-titles{
+	font-size:1rem;
+	color: #aaa;
+}
+
 h1 {
 	font-family: 'Niconne', serif;
 }
