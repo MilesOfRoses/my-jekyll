@@ -1,47 +1,60 @@
-div.img {
-	border: 1px solid #ccc;
+body {
+  width: 80%;
+  margin: 30px auto;
+  font-family: sans-serif;
 }
 
-div.img:hover {
-	width:100%;
-	height: auto;
+h3 {
+  text-align: center;
+  font-size: 1.65em;
+  margin: 0 0 30px;
 }
 
-div.img img {
-	width: 100%;
-	height: auto;
+div.responsive  {
+  font-size: 0;
 }
 
-div.desc {
-	padding: 15px;
-	text-align: center;
+div.responsive a {
+  font-size: 16px;
+  overflow: hidden;
+  display: inline-block;
+  margin-bottom: 8px;
+  width: calc(50% - 4px);
+  margin-right: 8px;
 }
 
-* {
-	box-sizing: border-box;
+div.responsive a:nth-of-type(2n) {
+  margin-right: 0;
 }
 
-.responsive {
-	padding: 0 6px;
-	float: left;
-	width: 24.99999%;
+@media screen and (min-width: 50em) {
+  div.responsive a {
+    width: calc(25% - 6px);
+  }
+  
+  div.responsive a:nth-of-type(2n) {
+    margin-right: 8px;
+  }
+  
+  div.responsive a:nth-of-type(4n) {
+    margin-right: 0;
+  }
 }
 
-@media only screen and (max-width: 700px){
-	.responsive {
-		width: 50%;
-		margin: 6px 0;
-	}
+div.responsive a:hover img {
+  transform: scale(1.15);
 }
 
-@media only screen and (max-width: 500px){
-	.responsive {
-		width:100%;
-	}
+figure {
+  margin: 0;
 }
 
-.clearfix:after {
-	content: "";
-	display: table;
-	clear: both;
+div.responsive img {
+  border: none;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  background: #ccc;
+  transition: transform .2s ease-in-out;
 }
+
