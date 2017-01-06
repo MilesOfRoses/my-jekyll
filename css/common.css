@@ -58,7 +58,9 @@ nav {
 }
 
 .nav-top li{
-	  padding: 1rem;
+	padding-left:  1.5%;
+	padding-right: 1.5%;
+	padding-top: 0;
 }
 .portfolio-nav{
 	font-size: 2rem;
@@ -69,7 +71,10 @@ nav {
 }
 
 .subnav li {
-	padding: 1rem;
+	padding-left:  1%;
+	padding-right: 1%;
+	padding-top: 0;
+
 }
 /*blog articles*/
 
@@ -102,13 +107,13 @@ a {
 	display: block;
 	margin-left: auto;
     margin-right: auto;
-    width: 15%;
+    width: 200px;
     border-radius: 100%;
     box-shadow: 0px 0px 10px #878787;
 }
 
 #bio {
-	max-width: 50%;
+	max-width: 600px;
 	margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -117,6 +122,7 @@ a {
 .job-titles{
 	font-size:1rem;
 	color: #aaa;
+	display: block;
 }
 
 h1 {
@@ -127,6 +133,29 @@ h1 {
 	height: 300px;
 }
 
+body {
+	min-width: 290px;
+}
+
+
+
+.videoWrapper {
+
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 75%;
+	height: 75%;
+
+}
+
+
 /* responsive */
 
 @media (max-width: 630px){
@@ -136,12 +165,13 @@ h1 {
 	}
 
 	div.icon-placeholder {
-		zoom:.15;
+		zoom:.20;
 	}
 
 	.nav-top{
 		font-size:1.3rem;
 		margin-top: 0px;
+		margin-bottom: 10px;
 	}
 
 	.subnav {
@@ -164,6 +194,18 @@ h1 {
 
 	.centertext {
 		margin: .0rem;
+	}
+
+	.job-titles{
+		font-size:.7rem;
+	}
+
+	#headshot {
+		width: 100px;
+	}
+
+	#bio {
+		max-width: 100%;
 	}
 
 
