@@ -131,8 +131,8 @@ h1 {
 
 @media (max-width: 630px){
 	.title {
-		font-size: 1rem;
-		letter-spacing: .4rem;
+		font-size: 2.5rem;
+		letter-spacing: .3rem;
 	}
 
 	div.icon-placeholder {
@@ -145,19 +145,19 @@ h1 {
 	}
 
 	.subnav {
-		font-size: 1rem;
+		font-size: 1.2rem;
 	}
 
 	.subnav li{
-		padding-left: .5rem;
-		padding-right: .5rem;
+		padding-left:  1%;
+		padding-right: 1%;
 		padding-top: 0;
 		padding-bottom: 0;
 	}
 
 	.nav-top li{
-		padding-left: .5rem;
-		padding-right: .5rem;
+		padding-left:  1%;
+		padding-right: 1%;
 		padding-top: 0;
 		padding-bottom: 0;
 	}
@@ -166,8 +166,5 @@ h1 {
 		margin: .0rem;
 	}
 
-	body {
-		background-color: red;
-	}
 
 }
