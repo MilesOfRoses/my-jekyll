@@ -3,9 +3,11 @@ layout: default
 ---
 
 <nav>
-	<ul>
+	<ul class="subnav">
 		<li><a href="{{site.baseurl}}/portfolio/" class="{% if page.url == '/portfolio/' %}current{% endif %}">Animations</a></li>
+		<li>-</li>
 		<li><a href="{{site.baseurl}}/portfolio/illustration/" class="{% if page.url contains 'illustration' %}current{% endif %}">Drawings</a></li>
+		<li>-</li>
 		<li><a href="{{site.baseurl}}/portfolio/sculpture/"" class="{% if page.url contains 'sculpture' %}current{% endif %}">Sculptures</a></li>
 	</ul>
 </nav>
