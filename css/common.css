@@ -166,4 +166,8 @@ h1 {
 		margin: .0rem;
 	}
 
+	body {
+		background-color: red;
+	}
+
 }
