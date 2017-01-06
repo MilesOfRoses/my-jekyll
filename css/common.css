@@ -137,26 +137,37 @@ body {
 	min-width: 290px;
 }
 
+/*video gallery*/
 
+.containingBlock {
+	width: 49.7%;
+	display: inline-block;
+	margin-right: auto;
+	margin-left: auto;
+}
 
 .videoWrapper {
-
 	position: relative;
 	padding-bottom: 56.25%; /* 16:9 */
 	padding-top: 25px;
-	height: 0;
+	
 }
 .videoWrapper iframe {
 	position: absolute;
 	top: 0;
-	left: 0;
-	width: 75%;
-	height: 75%;
+	width: 100%;
+	height: 100%;
 
 }
 
 
 /* responsive */
+
+@media (max-width: 770px){
+	.containingBlock { /*this is just to resize the video gallery to a single column layout on medium or small screens*/
+	width: 100%;
+	}
+}
 
 @media (max-width: 630px){
 	.title {
@@ -176,6 +187,8 @@ body {
 
 	.subnav {
 		font-size: 1.2rem;
+		padding-top: 15px;
+		margin-bottom: 0;
 	}
 
 	.subnav li{
@@ -192,8 +205,9 @@ body {
 		padding-bottom: 0;
 	}
 
-	.centertext {
-		margin: .0rem;
+	.centerText {
+		margin-bottom: 15px;
+		margin-top: 0;
 	}
 
 	.job-titles{
@@ -207,6 +221,7 @@ body {
 	#bio {
 		max-width: 100%;
 	}
+
 
 
 }
