@@ -1,2 +1,0 @@
-"news" = post (while looping over posts)
-"recently-discovered.html" = code.html (in root)
