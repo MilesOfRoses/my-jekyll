@@ -91,6 +91,13 @@ nav {
     font-family: sans-serif;
 }
 
+article img {
+	width: 100%;
+	max-width:650px;
+	height:auto;
+	margin-bottom: 60px;
+}
+
 /*common*/
 
 a {

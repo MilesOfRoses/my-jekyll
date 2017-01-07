@@ -1,7 +1,7 @@
 ---
 layout: blog-article
-title: Create a responsive image gallery with CSS
-meta: In this article, we'll look at a CSS technique that will allow us to create seamless image galleries
+title: Create a Responsive Image Gallery with CSS
+meta: In this article, we'll look at a CSS technique that will allow us to create seamless image galleries for our websites!
 category: code
 
 ---
