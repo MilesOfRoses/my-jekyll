@@ -75,7 +75,7 @@ category: code
 	}
 	</xmp>
 
-	<p>this will reduce the number of columns to 3 on screens that are 100px or less, and further reduce to 2 on screens that are 800px or less, and only one column for small smartphone screens less than 400px wide.</p>
+	<p>this will reduce the number of columns to 3 on screens that are 1000px or less, and further reduce to 2 on screens that are 800px or less, and only one column for small smartphone screens less than 400px wide.</p>
 
 	<p>And that's how you get rid of white space between images of varying aespect ratio sizes in a responsive fluid layout! Feel free to look at the galleries on the portfolio page of this website to see examples of this method in action, and if you want to read more about seamless image galleries, read <a href="https://css-tricks.com/seamless-responsive-photo-grid/" class="inline">this great article</a> by Chris Coyier</p>
 

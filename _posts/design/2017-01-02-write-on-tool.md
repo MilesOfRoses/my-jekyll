@@ -18,7 +18,7 @@ category: design
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31311268284/in/album-72157675031904004/" title="3 - pen tool"><img src="https://c5.staticflickr.com/1/729/31311268284_f00945a54c_z.jpg" width="640" height="448" alt="3 - pen tool"></a>
 
-<p> close the mask making sure to use the pen tool's bezier curves to taper the tip to a narrow point. If you're not used to dawing with the pen tool, it can take some time to get used to the bezier curve handles. This shape will be our basic plant stalk.</p>
+<p> close the mask making sure to use the pen tool's bezier curves to taper the tip to a narrow point. If you're not used to drawing with the pen tool, it can take some time to get used to the bezier curve handles. This shape will be our basic plant stalk.</p>
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32152782745/in/album-72157675031904004/" title="4 - close mask"><img src="https://c2.staticflickr.com/1/646/32152782745_a10607dca8_z.jpg" width="640" height="591" alt="4 - close mask"></a>
 
@@ -26,7 +26,7 @@ category: design
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31311268024/in/album-72157675031904004/" title="5 write-on"><img src="https://c1.staticflickr.com/1/498/31311268024_80430934eb_m.jpg" width="227" height="179" alt="5 write-on"></a>
 
-<p>After you have applied the write-on effect, check the stopwatches for "Brush size" and "Brush Position" because we'll want to animate keyframes into both of those properties. Then increase Brush Size to around 37 pixels in size. Also, make sure you change Paint Style to "Reveal Original Image" Lastly, change Brush Time Properties to "Size" </p>
+<p>After you have applied the write-on effect, check the stopwatches for "Brush size" and "Brush Position" because we'll want to animate keyframes into both of those properties. Then increase Brush Size to around 37 pixels in size. Also, make sure you change Paint Style to "Reveal Original Image". Lastly, make sure you change Brush Time Properties to the"Size" setting </p>
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32152782125/in/album-72157675031904004/" title="6 - brush position size reveal original image"><img src="https://c6.staticflickr.com/1/363/32152782125_2f574fbc05_m.jpg" width="240" height="213" alt="6 - brush position size reveal original image"></a>
 
@@ -34,15 +34,15 @@ category: design
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31777841480/in/album-72157675031904004/" title="7 - move brush position to bottom"><img src="https://c1.staticflickr.com/1/526/31777841480_74404b6a63_m.jpg" width="240" height="201" alt="7 - move brush position to bottom"></a>
 
-<p>Now here comes the time consuming part, animating the keyframes. Make sure the solid layer is still selected so that you can see the outline of the mask you drew. Then move to the beginning of the timeline and make sure the Brush Position stopwatch is on, and that you have a keyframe at the beginning of the timeline. Then move forward about 5 frames or so and move the Brush Position up a little bit following the outline of the mask. Then move forward in the timeline another 5 frames and move the Brush Position up a little bit more. As you animate forward, reduce the Brush Size so that it also begins to taper to a point as it gets closer to the tip.</p>
+<p>Now here comes the time consuming part, animating the keyframes. Make sure the solid layer is still selected so that you can see the outline of the mask you drew. Then move to the beginning of the timeline and make sure the Brush Position stopwatch is on, and that you have a keyframe at the beginning of the timeline. Then move forward about 5 frames or so and move the Brush Position up a little bit, following the outline of the mask. Then move forward in the timeline another 5 frames and move the Brush Position up a little bit more. As you animate forward, reduce the Brush Size so that it also begins to taper to a point as it gets closer to the tip.</p>
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32152781815/in/album-72157675031904004/" title="8 - add position keyframes"><img src="https://c8.staticflickr.com/1/720/32152781815_819a681ff4_m.jpg" width="180" height="240" alt="8 - add position keyframes"></a>
 
-<p>Keep animating the Brush Position along the outline of the mask until you reach the top. Now when you playback all of the keyframes, you should have a basic animation of the mask slowly being revealed from the bottom up. </p>
+<p>Keep animating the Brush Position along the outline of the mask until you reach the top. Now when you play back all of the keyframes, you should have a basic animation of the mask slowly being revealed from the bottom up, like this. </p>
 
 <img src="https://imageshack.com/a/img921/6138/JYKYCX.gif">
 
-<p>Now comes the fun part! We can add more branches by cheating and simply copying the original solid layer, scaling it down and rotating it and positioning it in a way that looks somewhat organic.</p>
+<p>Now comes the fun part! We can add more branches by cheating and simply copying the original solid layer, scaling it, rotating it and positioning it in a way that looks somewhat organic.</p>
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32034431481/in/album-72157675031904004/" title="10 - copy layers"><img src="https://c2.staticflickr.com/1/300/32034431481_ea9645229d_m.jpg" width="240" height="214" alt="10 - copy layers"></a>
 
@@ -75,7 +75,7 @@ category: design
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32004099672/in/album-72157675031904004/" title="16 - copy petals"><img src="https://c1.staticflickr.com/1/555/32004099672_a65926826a_m.jpg" width="240" height="203" alt="16 - copy petals"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
-<p>We can add the bevel and emboss layer style to the flower in the same way we did to the branches, Layer > Layer Styles > Bevel and Emboss. Now we need to animate our flower's growth. This is very simple and only involves the scale tool. Move the timeline to the last keyframe of th branch animation and Start the flower's scale at 0. Then 10 frames later, turn the scale up to 100. You can ease-out the animation keyframe by selecting the keyframes and pressing f9 on the keyboard. If you want, you can make copies of the flower to add to the tips of each branch. Finally, you should have something like this.</p>
+<p>We can add the bevel and emboss layer style to the flower in the same way we did to the branches, Layer > Layer Styles > Bevel and Emboss. Now we need to animate our flower's growth. This is very simple and only involves the scale tool. Move the timeline to the last keyframe of the branch animation and Start the flower's scale at 0. Then 10 frames later, turn the scale up to 100. You can ease-out the animation keyframe by selecting the keyframes and pressing f9 on the keyboard. If you want, you can make copies of the flower to add to the tips of each branch. Finally, you should have something like this.</p>
 
 <img src="https://imageshack.com/a/img923/6195/09yR4b.gif">
 
