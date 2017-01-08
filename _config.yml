@@ -1,3 +1,5 @@
-
+url: http://milesrose.net
 exclude: ['README.md']
 permalink: pretty
+name: Miles Rose Blog and Portfolio
+description: A blog about coding and design, and a collection of my best artwork
