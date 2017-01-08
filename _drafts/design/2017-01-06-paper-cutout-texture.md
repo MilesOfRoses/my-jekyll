@@ -9,6 +9,13 @@ category: design
 
 <p>To make this animation we'll only need these 3 paper textures. You can right-click over each image and click "Save Image As..." to download them for this project.</p>
 
+<h2>Crumply paper texture</h2>
+<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32027711262/in/dateposted-public/" title="crumply brown paper"><img src="https://c7.staticflickr.com/1/538/32027711262_ac04bb10a7_m.jpg" width="240" height="196" alt="crumply brown paper"></a>
+<h2>Cardboard texture</h2>
+<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32027732112/in/dateposted-public/" title="cardboard"><img src="https://c1.staticflickr.com/1/389/32027732112_5b193dabf5_m.jpg" width="184" height="240" alt="cardboard"></a>
+<h2>Brown paper texture</h2>
+<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32057894261/in/dateposted-public/" title="brown_paper"><img src="https://c6.staticflickr.com/1/723/32057894261_d45b0b8b18_m.jpg" width="240" height="172" alt="brown_paper"></a>
+
 <p>We'll start by making a new composition sized 1280 x 720. Then click File > Import > Multiple Files, and import our 3 new image textures.</p>
 
 <p>Then drag the cardboard image texture into the composition and scale it down to 23 so that it fits within the composition. We'll name this layer "Trunk 1"</p>
