@@ -111,6 +111,10 @@ a {
 	color:black;
 }
 
+.redlink {
+	color: #a00000;
+	text-decoration: underline;
+}
 
 .centerText, #copy {
 	text-align: center
