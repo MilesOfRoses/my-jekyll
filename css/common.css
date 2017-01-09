@@ -126,7 +126,7 @@ a {
 }
 
 .centerText, #copy {
-	text-align: center
+	text-align: center;
 }
 
 #headshot{
@@ -154,6 +154,7 @@ a {
 
 h1 {
 	font-family: 'Niconne', serif;
+	font-size: 2.5em;
 }
 
 .img {
@@ -162,6 +163,10 @@ h1 {
 
 body {
 	min-width: 290px;
+}
+
+#top-0 {
+	margin-top: 0;
 }
 
 /*video gallery*/
