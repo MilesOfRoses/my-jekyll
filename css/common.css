@@ -55,6 +55,7 @@ nav {
 
 .nav-top{
 	font-size:2.5rem;
+	margin-bottom: 0;
 }
 
 .nav-top li{
@@ -68,6 +69,7 @@ nav {
 
 .subnav {
 	font-size: 1.5rem;
+	margin-top: 2px;
 }
 
 .subnav li {
@@ -75,6 +77,13 @@ nav {
 	padding-right: 1%;
 	padding-top: 0;
 
+}
+
+hr{
+	margin: 0;
+	max-width: 600px;
+	margin-right: auto;
+	margin-left: auto;
 }
 /*blog articles*/
 
@@ -127,6 +136,7 @@ a {
     width: 200px;
     border-radius: 100%;
     box-shadow: 0px 0px 10px #878787;
+    margin-top: 15px;
 }
 
 #bio {
@@ -216,11 +226,6 @@ article a{
 }
 
 @media (max-width: 630px){
-	.title {
-		font-size: 2.5rem;
-		letter-spacing: .3rem;
-	}
-
 	div.icon-placeholder {
 		zoom:.20;
 	}
@@ -228,12 +233,11 @@ article a{
 	.nav-top{
 		font-size:1.3rem;
 		margin-top: 0px;
-		margin-bottom: 10px;
+		margin-bottom: 0px;
 	}
 
 	.subnav {
 		font-size: 1.2rem;
-		padding-top: 15px;
 		margin-bottom: 0;
 	}
 
@@ -254,6 +258,7 @@ article a{
 	.centerText {
 		margin-bottom: 15px;
 		margin-top: 0;
+
 	}
 
 	.job-titles{
@@ -265,8 +270,18 @@ article a{
 		width: 100px;
 	}
 
+	hr {
+		max-width: 280px
+	}
+
 	#bio {
 		max-width: 100%;
+	}
+
+	.title {
+		font-size: 2.5rem;
+		letter-spacing: .3rem;
+		margin-bottom: 0;
 	}
 
 
