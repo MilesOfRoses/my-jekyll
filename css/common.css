@@ -115,6 +115,10 @@ article img {
 
 /*common*/
 
+body{
+	min-width: 310px;
+}
+
 a {
 	text-decoration: none;
 	color:black;
@@ -154,15 +158,11 @@ a {
 
 h1 {
 	font-family: 'Niconne', serif;
-	font-size: 2.5em;
+	font-size: 1.5em;
 }
 
 .img {
 	height: 300px;
-}
-
-body {
-	min-width: 290px;
 }
 
 #top-0 {
@@ -264,6 +264,7 @@ article a{
 		margin-bottom: 15px;
 		margin-top: 0;
 		text-align: center;
+		width: 100%;
 
 	}
 
@@ -291,20 +292,22 @@ article a{
 	}
 
 	h1{
-		font-size: 1.3rem;
+		font-size: 1rem;
 	}
 
 	.article-title {
 		font-size: 1rem;
 	}
 
-	article p{
+	p{
+		width: 100%;
+	}
+
+	.article-list{
 		max-width: 100%;
 	}
 
-	article{
-		max-width: 100%;
-	}
+
 
 
 
