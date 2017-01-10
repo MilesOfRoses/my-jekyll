@@ -65,7 +65,7 @@ category: design
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31365448263/in/album-72157676949094332/" title="9 - roughen leave edges"><img src="https://c8.staticflickr.com/1/765/31365448263_26c09e794a_m.jpg" width="240" height="159" alt="9 - roughen leave edges"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>That's basically all it takes to make a tree! Now we can make copies of this tree by selecting both the "Trunk 1" and "Leaves 1" layers and Edit > Copy and Edit > Paste. Rename the copies to "Trunk 2", "Leaves 2" and "Trunk 3", "Leaves 3" I would also reccomend changing the layer colors for each copy to make it easier for you to tell them apart in the time-line. To do this, just click the little colored box to the left of the layer name and select a new color for each copy. I set layers 1 to red, layers 2 to blue, and layers 3 to yellow. To make each copy look more unique, I made some minor adjustments to the mask points of each copy, so that they don't just look like completely identical copies.</p>
+	<p>That's basically all it takes to make a tree! Now we can make copies of this tree by selecting both the "Trunk 1" and "Leaves 1" layers and Edit > Copy and Edit > Paste. Rename the copies to "Trunk 2", "Leaves 2" and "Trunk 3", "Leaves 3" I would also recommend changing the layer colors for each copy to make it easier for you to tell them apart in the time-line. To do this, just click the little colored box to the left of the layer name and select a new color for each copy. I set layers 1 to red, layers 2 to blue, and layers 3 to yellow. To make each copy look more unique, I made some minor adjustments to the mask points of each copy, so that they don't just look like completely identical copies.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32027419842/in/album-72157676949094332/" title="10 - tree copies"><img src="https://c3.staticflickr.com/1/479/32027419842_0892cda610_m.jpg" width="240" height="186" alt="10 - tree copies"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -89,7 +89,7 @@ category: design
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31365444093/in/album-72157676949094332/" title="14 - blur shadow"><img src="https://c6.staticflickr.com/1/349/31365444093_ff33fd34d8_m.jpg" width="240" height="129" alt="14 - blur shadow"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
-	<p>Now that we have the shodow, move the "leaves shadow 1" and "trunk shadow 1" layer under the "trunk 1" and "Leaves 1" layers. This gives us a nice drop-shadow effect behind the tree, making it look more like a physical paper cut out.</p>
+	<p>Now that we have the shadow, move the "leaves shadow 1" and "trunk shadow 1" layer under the"trunk 1" and "Leaves 1" layers. This gives us a nice drop-shadow effect behind the tree, making it look more like a physical paper cut out.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31365442843/in/album-72157676949094332/" title="15 - move shadown under"><img src="https://c4.staticflickr.com/1/406/31365442843_aed8c916a0_m.jpg" width="240" height="165" alt="15 - move shadown under"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -99,7 +99,7 @@ category: design
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31365441243/in/album-72157676949094332/" title="16 - all drop shadows"><img src="https://c4.staticflickr.com/1/544/31365441243_b305551e02_m.jpg" width="240" height="156" alt="16 - all drop shadows"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>To make all of these tree layers easier to deal with, let's pre-compose each tree into it's own composition. Select all 4 layers of each tree and then click Layer > Pre-compose to combine all 4 of each tree into it's own composition. Now each tree will be seperated into it's own composition, and it will make managing the layers much easier.</p>
+	<p>To make all of these tree layers easier to deal with, let's pre-compose each tree into it's own composition. Select all 4 layers of each tree and then click Layer > Pre-compose to combine all 4 of each tree into it's own composition. Now each tree will be separated into it's own composition, and it will make managing the layers much easier.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31365438043/in/album-72157676949094332/" title="17 - pre compose trees"><img src="https://c4.staticflickr.com/1/433/31365438043_67fe0b3900_m.jpg" width="240" height="138" alt="17 - pre compose trees"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -109,12 +109,12 @@ category: design
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31800750990/in/album-72157676949094332/" title="18 - new background"><img src="https://c7.staticflickr.com/1/351/31800750990_8a6c15e229_m.jpg" width="240" height="141" alt="18 - new background"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>Now go back to the Effects Search bar and type in Curves again. We'll increase the green quite a bit, and decrease the blue slightly to get a nice grasssy green color.</p>
+	<p>Now go back to the Effects Search bar and type in Curves again. We'll increase the green quite a bit, and decrease the blue slightly to get a nice grassy green color.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32057613861/in/album-72157676949094332/" title="19 - green background hills"><img src="https://c6.staticflickr.com/1/636/32057613861_b8bf805247_m.jpg" width="240" height="105" alt="19 - green background hills"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>Now use the pen tool to cut out the rolling wavey hill shape for the bacground. Again, make sure to use the pen tool's bezier curves by clicking and dragging every time you make a new point! We can add a drop-shadow to the hills layer the same way we did for the trees. Just copy the hills layer, make the copy black, add a blur effect and put it behind the original. </p>
+	<p>Now use the pen tool to cut out the rolling wavey hill shape for the background. Again, make sure to use the pen tool's bezier curves by clicking and dragging every time you make a new point! We can add a drop-shadow to the hills layer the same way we did for the trees. Just copy the hills layer, make the copy black, add a blur effect and put it behind the original. </p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31800740090/in/album-72157676949094332/" title="20 - cut mask on background"><img src="https://c3.staticflickr.com/1/616/31800740090_8d9f422ff6_m.jpg" width="240" height="105" alt="20 - cut mask on background"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -149,12 +149,12 @@ category: design
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32137633416/in/album-72157676949094332/" title="26 - enable 3d layers"><img src="https://c1.staticflickr.com/1/600/32137633416_7e736e689c_m.jpg" width="240" height="142" alt="26 - enable 3d layers"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>You'll notice that we have a new layer called "Camera 1". This is what we'll use to control the point of view. However, the camera's position controls aren't very easy to control. So we'll make a new null object and parent the camera to that null object. that way, whenever we move the null's position, the camera's position will match it as well. Click Layer > New > Null Object and name it cam-control. Check the 3D cube icon for cam-control as well to make it a 3D layer. You can parent the camera to the Cam-Control by clicking the camera's "pick whip" icon, which looks like a little spiral, and draging it to the cam-control layer.</p>
+	<p>You'll notice that we have a new layer called "Camera 1". This is what we'll use to control the point of view. However, the camera's position controls aren't very easy to control. So we'll make a new null object and parent the camera to that null object. that way, whenever we move the null's position, the camera's position will match it as well. Click Layer > New > Null Object and name it cam-control. Check the 3D cube icon for cam-control as well to make it a 3D layer. You can parent the camera to the Cam-Control by clicking the camera's "pick whip" icon, which looks like a little spiral, and dragging it to the cam-control layer.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31800743370/in/album-72157676949094332/" title="27 - parent camera to cam control"><img src="https://c3.staticflickr.com/1/753/31800743370_6e96a0dfa5_m.jpg" width="240" height="79" alt="27 - parent camera to cam control"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 
-	<p>Now we can control the camera's position by changing the position of the cam-control layer! But before we do that, let's set our Z positions on all of our layers. Up until now, we've only been moving in the X and Y dimentions, but now that we're working in 3D we have a whole extra dimention to work with! We'll start by pushing the sky's Z position waaaay back to 3000 so that it's far back in the background. After pushing it so far back, we'll also need to scale it up to 183 so that it covers the entire viewport.</p>
+	<p>Now we can control the camera's position by changing the position of the cam-control layer! But before we do that, let's set our Z positions on all of our layers. Up until now, we've only been moving in the X and Y dimensions, but now that we're working in 3D we have a whole extra dimension to work with! We'll start by pushing the sky's Z position waaaay back to 3000 so that it's far back in the background. After pushing it so far back, we'll also need to scale it up to 183 so that it covers the entire viewport.</p>
 
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32137629976/in/album-72157676949094332/" title="28 - push sky position back"><img src="https://c1.staticflickr.com/1/442/32137629976_cb8b3d97d2_m.jpg" width="240" height="79" alt="28 - push sky position back"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -166,7 +166,7 @@ category: design
 
 	<p>The Z index for our trees can remain at 0, but we can bring the ground layer a little bit closer to the camera by setting it's Z index to -200 and it's scale to 200.</p>
 
-	<p>Once we have our Z index positioning setup the way we want it, we can adjust the Cam-Control's X position and observe how the different layers appear to move based on their position on the Z axis. The Sky being the furthest back at a Z position of 3000 moves much slower than the hills at Z 1500, which are a bit closer to the camera. The trees movement is much more noticable at a Z position of 0, and the ground layer is closest to the camera, so it's movement is the most pronounced of all.</p>
+	<p>Once we have our Z index positioning setup the way we want it, we can adjust the Cam-Control's X position and observe how the different layers appear to move based on their position on the Z axis. The Sky being the furthest back at a Z position of 3000 moves much slower than the hills at Z 1500, which are a bit closer to the camera. The trees movement is much more noticeable at a Z position of 0, and the ground layer is closest to the camera, so it's movement is the most pronounced of all.</p>
 
 	<img src="https://imageshack.us/a/img923/8108/v08aSQ.gif">
 
@@ -175,7 +175,7 @@ category: design
 
 
 
-	<p>Now we can optionally copy more trees in behind the first row of trees. Just copy and paste the trees we already created and move their Z position back to 800. We can darken them a little bit too, to make it look like they are in the shadow of the forground trees by using the Curves effect.</p>
+	<p>Now we can optionally copy more trees in behind the first row of trees. Just copy and paste the trees we already created and move their Z position back to 800. We can darken them a little bit too, to make it look like they are in the shadow of the foreground trees by using the Curves effect.</p>
 
 	<img src="https://imageshack.us/a/img924/6792/Dzw5TX.gif">
 

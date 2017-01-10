@@ -62,7 +62,7 @@ category: design
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/31777839860/in/album-72157675031904004/" title="13 - bevel and emboss settings"><img src="https://c5.staticflickr.com/1/330/31777839860_d2dc257835_m.jpg" width="240" height="143" alt="13 - bevel and emboss settings"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
-<p> Let's add some flowers! Create a new solid layer by clicking Layer > New > Solid and make it bright yellow #FFF600. Then use the Ellipse tool to cut a small circle near tht tip of the middle branch layer</p>
+<p> Let's add some flowers! Create a new solid layer by clicking Layer > New > Solid and make it bright yellow #FFF600. Then use the Ellipse tool to cut a small circle near the tip of the middle branch layer</p>
 
 <a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32034429631/in/album-72157675031904004/" title="14 - ellipse"><img src="https://c8.staticflickr.com/1/405/32034429631_ca1bcae1d9_m.jpg" width="240" height="143" alt="14 - ellipse"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
@@ -81,7 +81,7 @@ category: design
 
 <p>And we're finished! Optionally, you can add leaves growing up the side stalks in much the same way as we created the flowers</p>
 
-<p>This is the same basic method that I used in my video From Seed to Flower, so be sure to check that out if you haven't already :)</p>
+<p>This is the same basic method that I used in my video <a href="https://www.youtube.com/watch?v=Avrbtt7izP4">How Do Flowers Grow From Seeds</a> so be sure to check that out if you haven’t already :)</p>
 
 
 </article>
