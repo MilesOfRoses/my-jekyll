@@ -225,11 +225,21 @@ article a{
 }
 /* responsive */
 
+@media (min-width: 770px){
+	#thumbnail-viewer {
+		visibility: hidden;
+	}
+}
+
 @media (max-width: 770px){
 	.containingBlock { /*this is just to resize the video gallery to a single column layout on medium or small screens*/
 	width: 100%;
 	}
-	
+
+	#thumbnail-viewer{
+		margin-top:-1050px;
+	}
+
 	#viewer-3d{
 		visibility: hidden;
 	}
