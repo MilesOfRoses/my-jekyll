@@ -169,6 +169,11 @@ h1 {
 	margin-top: 0;
 }
 
+#image-view {
+	margin-left: auto;
+	margin-right: auto;
+}
+
 
 /*video gallery*/
 
@@ -229,6 +234,9 @@ article a{
 	#thumbnail-viewer {
 		visibility: hidden;
 	}
+	#viewer-3d{
+		margin-bottom: -600px /*the hidden thumbnail view created whitespace where it would be. this code pulls the comment section back up to cover that whitespace.*/
+	}
 }
 
 @media (max-width: 770px){
@@ -237,7 +245,7 @@ article a{
 	}
 
 	#thumbnail-viewer{
-		margin-top:-1050px;
+		margin-top:-1150px;
 	}
 
 	#viewer-3d{
@@ -320,6 +328,10 @@ article a{
 
 	.article-list{
 		max-width: 100%;
+	}
+
+	#thumbnail-viewer{
+		margin-top:-850px;
 	}
 
 
