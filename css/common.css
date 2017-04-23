@@ -202,19 +202,6 @@ h1 {
 
 }
 
-.code{
-	text-align: left;
-	font-family: Courier;
-	background:#bababa;
-	width: 1000px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.code-inline{
-	background:#bababa;
-	font-family: Courier;
-}
 
 .inline-link {
 	color: blue;
