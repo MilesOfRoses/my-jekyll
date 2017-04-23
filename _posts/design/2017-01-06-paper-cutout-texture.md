@@ -2,7 +2,7 @@
 description: Learn how to creat a paper cut-out effect using After Effects
 layout: blog-article
 title: Create a Paper Cut-Out Animation with After Effects
-meta: In this article you'll earn how to create a paper cut-out animation using After Effects
+meta: Learn how to create a paper cut-out animation using After Effects
 category: design
 ---
 <article>

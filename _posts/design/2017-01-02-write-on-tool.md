@@ -1,7 +1,7 @@
 ---
 layout: blog-article
 title: Animate a Plant Growing with After Effects
-meta: In this article, I'll show you how to create a growing flower animation using only After Effects!
+meta: How to create a growing flower animation using After Effects!
 category: design
 ---
 <article>
