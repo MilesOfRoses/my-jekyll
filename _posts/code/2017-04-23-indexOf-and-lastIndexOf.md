@@ -5,10 +5,6 @@ meta: In this article, we'll learn how "indexOf" and "lastIndexOf" work in javas
 category: code
 
 ---
-
-
-
-
 <p>The indexOf method will index a string to find whether or not a particular term or word appears in a string or not, and it also indicates what character position that term or word appears. 
 
 For example, we have a string that says "Hail to the king, baby!"
