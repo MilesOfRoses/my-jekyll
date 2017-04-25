@@ -181,33 +181,35 @@ h1 {
 
 /*video gallery*/
 
+#videos{
+	display: block;
+	max-width: 814px;
+	margin-right: auto;
+	margin-left: auto;
+	background:lightgrey;
+}
+
+#videos img{
+	width:200px;
+}
+
 .containingBlock {
-	width: 49.7%;
 	display: inline-block;
 	margin-right: auto;
 	margin-left: auto;
-}
-
-.videoWrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
 	
 }
-.videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 100%;
 
+
+#videos h2{
+	display:none;
 }
-
 
 .inline-link {
 	color: blue;
 	text-decoration: underline;
 }
-
+/*article text formatting*/
 article p{
 	text-align: left;
 	max-width: 1000px;
@@ -231,9 +233,7 @@ article a{
 }
 
 @media (max-width: 770px){
-	.containingBlock { /*this is just to resize the video gallery to a single column layout on medium or small screens*/
-	width: 100%;
-	}
+
 
 	#thumbnail-viewer{
 		margin-top:-1150px;
