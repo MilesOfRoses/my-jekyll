@@ -186,7 +186,6 @@ h1 {
 	max-width: 814px;
 	margin-right: auto;
 	margin-left: auto;
-	background:lightgrey;
 }
 
 #videos img{
@@ -222,6 +221,12 @@ article a{
 	color: blue;
 }
 /* responsive */
+@media (max-width: 850px){ /*narrows the video grid*/
+	#videos {
+		max-width:611px;
+	}
+}
+
 
 @media (min-width: 770px){
 	#thumbnail-viewer {
@@ -231,6 +236,7 @@ article a{
 		margin-bottom: -600px /*the hidden thumbnail view created whitespace where it would be. this code pulls the comment section back up to cover that whitespace.*/
 	}
 }
+
 
 @media (max-width: 770px){
 
@@ -244,7 +250,7 @@ article a{
 	}
 }
 
-@media (max-width: 630px){
+@media (max-width: 635px){
 	div.icon-placeholder {
 		zoom:.20;
 	}
@@ -325,9 +331,18 @@ article a{
 		margin-top:-1000px;
 	}
 
+	#videos {
+		max-width:405px;
+	}
 
+}
 
-
-
+@media (max-width: 440px){
+	#videos img{
+		width: 150px;
+	}
+	#videos{
+		width:305px;
+	}
 
 }
