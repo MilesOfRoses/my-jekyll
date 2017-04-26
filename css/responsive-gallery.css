@@ -22,7 +22,6 @@
   margin-left: auto;
 }
 
-
 @media (max-width: 2000px) {
    #photos {
    -moz-column-count:    6;
