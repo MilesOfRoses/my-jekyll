@@ -231,11 +231,9 @@ h3 {
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
+	max-width: 1165px;
 }
 
-#thumbnail-viewer{
-	
-}
 /* responsive */
 @media (max-width: 850px){ /*narrows the video grid*/
 	#videos {
@@ -243,28 +241,14 @@ h3 {
 	}
 }
 
-
-@media (min-width: 770px){
-	#thumbnail-viewer {
-		visibility: hidden;
-	}
-	#viewer-3d{
-		margin-bottom: -300px /*the hidden thumbnail view created whitespace where it would be. this code pulls the comment section back up to cover that whitespace.*/
-	}
-}
-
-
-@media (max-width: 770px){
-
-
-	#thumbnail-viewer{
-		margin-top:-1150px;
+@media (max-width: 1200px) {
+		#viewer-3d{
+			max-width: 583px;
+		}
 	}
 
-	#viewer-3d{
-		visibility: hidden;
-	}
-}
+
+
 
 @media (max-width: 635px){
 	div.icon-placeholder {
@@ -343,12 +327,17 @@ h3 {
 		max-width: 100%;
 	}
 
-	#thumbnail-viewer{
-		margin-top:-1000px;
-	}
-
 	#videos {
 		max-width:405px;
+	}
+
+	#viewer-3d img{
+		width: 300px;
+		height: 169px;
+	}
+
+	#viewer-3d{
+		max-width: 310px
 	}
 
 }
