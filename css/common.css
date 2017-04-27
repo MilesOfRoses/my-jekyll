@@ -183,13 +183,14 @@ h1 {
 
 #videos{
 	display: block;
-	max-width: 814px;
+	max-width: 1270px;
 	margin-right: auto;
 	margin-left: auto;
+	background: lightgrey;
 }
 
 #videos img{
-	width:200px;
+	width:250px;
 
 }
 
