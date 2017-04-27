@@ -190,7 +190,7 @@ h1 {
 
 #videos img{
 	width:200px;
-	
+
 }
 
 .containingBlock {
@@ -221,6 +221,21 @@ article a{
 	text-decoration: underline;
 	color: blue;
 }
+
+h3 {
+	display: inline;
+}
+/*3d viewer settings*/
+
+#viewer-3d{
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#thumbnail-viewer{
+	
+}
 /* responsive */
 @media (max-width: 850px){ /*narrows the video grid*/
 	#videos {
@@ -234,7 +249,7 @@ article a{
 		visibility: hidden;
 	}
 	#viewer-3d{
-		margin-bottom: -600px /*the hidden thumbnail view created whitespace where it would be. this code pulls the comment section back up to cover that whitespace.*/
+		margin-bottom: -300px /*the hidden thumbnail view created whitespace where it would be. this code pulls the comment section back up to cover that whitespace.*/
 	}
 }
 
