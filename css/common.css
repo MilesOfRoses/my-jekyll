@@ -173,6 +173,11 @@ a {
   shape-outside:circle();
 }
 
+#feed-button{
+
+	margin-top: -20px;
+	margin-bottom: -30px;
+}
 
 h1 {
 	font-family: 'Niconne', serif;
