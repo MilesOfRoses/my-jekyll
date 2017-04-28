@@ -72,6 +72,7 @@ nav {
 /*.portfolio{
 	visibility: hidden;
 	margin-bottom: -30px;
+
 }*/
 
 .subnav {
@@ -126,7 +127,9 @@ article img {
 
 /*common*/
 
-
+body{
+	min-width: 370px;
+}
 
 a {
 	text-decoration: none;
@@ -160,7 +163,7 @@ a {
 #bio-card{
 	border: 2px solid lightgrey;
     border-radius: 10px;
-    
+    padding: 10px;
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
@@ -175,7 +178,7 @@ a {
 }
 #circle-shape-example .curve { 
 
-
+  min-width: 150px;
   float: left;
   margin-right:.5rem; 
 
@@ -216,11 +219,11 @@ h1 {
 	max-width: 1270px;
 	margin-right: auto;
 	margin-left: auto;
-	background: lightgrey;
+
 }
 
 #videos img{
-	max-width:250px;
+	width:250px;
 
 }
 
@@ -393,7 +396,7 @@ h3 {
 
 }
 
-@media (max-width: 820px){
+@media (max-width: 795px){
 	#videos{
 		max-width:505px;
 	}
