@@ -69,6 +69,11 @@ nav {
 	font-size: 2rem;
 }
 
+/*.portfolio{
+	visibility: hidden;
+	margin-bottom: -30px;
+}*/
+
 .subnav {
 	font-size: 1.5rem;
 	margin-top: 2px;
@@ -152,7 +157,15 @@ a {
 	max-width: 1000px;
 	margin-left: auto;
     margin-right: auto;
-    
+}
+
+#bio-card{
+	border: 2px solid lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #circle-shape-example p { 
@@ -272,7 +285,7 @@ h3 {
 
 
 
-@media (max-width: 635px){
+@media (max-width: 735px){
 	div.icon-placeholder {
 		zoom:.20;
 	}
@@ -372,7 +385,7 @@ h3 {
 	}
 }
 
-@media (max-width: 635px){
+@media (max-width: 735px){
 	#videos img{
 		width: 170px;
 	}
