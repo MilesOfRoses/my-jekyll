@@ -287,6 +287,10 @@ h3 {
 
 
 @media (max-width: 735px){
+	#bio-card {
+		border: none;
+	}
+
 	div.icon-placeholder {
 		zoom:.20;
 	}
@@ -335,6 +339,7 @@ h3 {
 
 	#bio {
 		max-width: 100%;
+		padding: 5px;
 	}
 
 	.title {
