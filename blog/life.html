@@ -6,10 +6,10 @@ meta: Blog posts about some of the things going on in the life of Miles Rose
 <h1 class="centerText">Articles About Life</h1>
 <ul class="centerText article-list">
 	{% for post in site.categories.life %}
-		<li>
+		<li id="bio-card">
 			<h2 class="article-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></h2>
-			<p>{{post.meta}}</p>
 			<hr>
+			<p>{{post.meta}}</p>
 		</li>
 	{% endfor %}
 </ul>

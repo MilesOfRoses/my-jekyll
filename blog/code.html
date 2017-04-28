@@ -6,10 +6,11 @@ meta: Blog posts about code, web design, technology and more!
 <h1 class="centerText">Articles About Coding</h1>
 <ul class="centerText article-list">
 	{% for post in site.categories.code %}
-		<li>
+		<li id="bio-card">
 			<h2 class="article-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></h2>
-			<p>{{post.meta}}</p>
 			<hr>
+			<p>{{post.meta}}</p>
+			
 		</li>
 	{% endfor %}
 </ul>

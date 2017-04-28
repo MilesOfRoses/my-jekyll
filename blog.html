@@ -4,14 +4,15 @@ title: Blog
 meta: Blog about Art, Design, Programming, and more!
 changefreq: weekly
 ---
-<h1 class="centerText">All Articles</h1>
 
+<br><br>
 <ul class="centerText article-list">
+<h1 class="centerText" >All Articles</h1>
 	{% for post in site.posts %}
-		<li>
+		<li id="bio-card">
 			<h2 class="article-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></h2>
-			<p>{{post.meta}}</p>
 			<hr>
+			<p>{{post.meta}}</p>
 		</li>
 	{% endfor %}
 </ul>
