@@ -131,10 +131,6 @@ article img {
 
 /*common*/
 
-body{
-	min-width: 370px;
-}
-
 a {
 	text-decoration: none;
 	color:black;
