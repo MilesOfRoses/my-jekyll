@@ -112,6 +112,10 @@ hr{
     font-family: sans-serif;
 }
 
+#feed-button p{
+	margin-top: 20px;
+}
+
 article img {
 	width: 100%;
 	max-width:1000px;
@@ -163,7 +167,6 @@ a {
 #bio-card{
 	border: 2px solid lightgrey;
     border-radius: 10px;
-    padding: 10px;
     margin-bottom: 10px;
     max-width: 1100px;
     margin-left: auto;
@@ -339,7 +342,6 @@ h3 {
 
 	#bio {
 		max-width: 100%;
-		padding: 5px;
 	}
 
 	.title {
@@ -362,6 +364,7 @@ h3 {
 
 	.article-list{
 		max-width: 100%;
+		margin-top:40px;
 	}
 
 	#videos {
