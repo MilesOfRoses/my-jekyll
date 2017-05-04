@@ -1,7 +1,7 @@
 ---
 layout: blog-article
 title: Free clean water for anybody, anywhere.
-meta: I built this simple structure to capture, filter, and store rain water for agricultural irrigation where other sources of water are unavalible
+meta: A simple structure to capture, filter, and store rain water for agricultural irrigation
 category: life
 ---
 
