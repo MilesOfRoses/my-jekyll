@@ -20,13 +20,20 @@ html {
 
 /* MASTHEAD */
 div.icon-placeholder:before {
-	content:url(../img/rose-loop-200x200.gif);
-	width:70px;
+	content:url(../img/rose-loop-100x100.gif);
+}
+
+header{
+	box-shadow: 0px 0px 10px black;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 80px;
+	border-top-right-radius: 80px;
+
 }
 
 div.icon-placeholder{
 	display:inline-block;
-	zoom:.4;
 	margin-left: auto;
     margin-right: auto;
 }
@@ -38,13 +45,13 @@ div.icon-placeholder{
 ul {
 	padding: 0;
 	margin-bottom: 1rem;
-	margin-top: -1rem;
+	margin-top: 1rem;
 }
 
 
 .title {
-	font-size:500%;
-	margin: 0;
+	font-size:600%;
+	margin-bottom: -40px;
 	margin-left:10px;
 	font-family: 'Niconne', serif;
 	color: #a00000;
@@ -53,6 +60,8 @@ ul {
 
 
 /* NAVIGATION */
+
+
 
 nav li {
   display: inline-block;
@@ -88,12 +97,13 @@ nav {
 .subnav {
 	font-size: 1.5rem;
 	margin-top: 0px;
+	
 }
 
 .subnav li {
 	padding-left:  15px;
 	padding-right: 15px;
-	margin-top: -10px;
+	margin-top: 5px;
 
 }
 
@@ -164,6 +174,7 @@ a {
 
 .centerText, #copy {
 	text-align: center;
+	margin-top: -10px;
 }
 
 #headshot{
@@ -193,8 +204,8 @@ a {
     max-width: 1270px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 50px;
-    box-shadow: 0px 0px 10px black;
+    margin-top: 10px;
+
 }
 
 #circle-shape-example p { 
@@ -217,7 +228,6 @@ a {
 
 #feed-button{
 
-	margin-top: -20px;
 	margin-bottom: -30px;
 }
 
@@ -320,12 +330,14 @@ h3 {
 		border-radius: 20px;
 	}
 
-	.media-section {
-		margin-top: 30px;
+	header {
+		border-radius: 20px;
 	}
 
-	div.icon-placeholder {
-		zoom:.20;
+
+
+	.media-section {
+		margin-top: 30px;
 	}
 
 	.nav-top{
@@ -336,7 +348,7 @@ h3 {
 
 	.subnav {
 		font-size: 1.2rem;
-		margin-bottom: 0;
+		margin-bottom: -10px;
 	}
 
 	.subnav li{
@@ -352,7 +364,7 @@ h3 {
 
 	.centerText {
 		margin-bottom: 15px;
-		margin-top: 0;
+		margin-top: -15px;
 		text-align: center;
 		width: 100%;
 
@@ -370,8 +382,8 @@ h3 {
 
 
 	.title {
-		font-size: 2.5rem;
-		letter-spacing: .3rem;
+		font-size: 1.8rem;
+		letter-spacing: .2rem;
 		margin-bottom: 0;
 	}
 
