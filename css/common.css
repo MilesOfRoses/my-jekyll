@@ -172,6 +172,9 @@ a {
     padding-left: 10px;
 }
 
+#bio-card p{
+	padding: 5px;
+}
 
 #bio-card{
 	border: 2px solid lightgrey;
@@ -193,7 +196,7 @@ a {
 }
 #circle-shape-example .curve { 
 
-  min-width: 150px;
+  min-width: 100px;
   float: left;
   margin-right:.5rem; 
 
@@ -302,8 +305,13 @@ h3 {
 
 
 @media (max-width: 735px){
+
+	.wrapper {
+		border-radius: 20px;
+	}
 	#bio-card {
 		border: none;
+
 	}
 
 	div.icon-placeholder {
@@ -365,9 +373,6 @@ h3 {
 		font-size: 1rem;
 	}
 
-	p{
-		width: 100%;
-	}
 
 	.article-list{
 		max-width: 100%;

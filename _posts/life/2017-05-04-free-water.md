@@ -65,4 +65,4 @@ You'll also need a browser that supports <a href="https://get.webgl.org/" target
 After the model loads, click the "<" Icon to the right for camera control options.<br>
 <a class="redlink" target="blank" href="https://3dwarehouse.sketchup.com/model/bb060212-66ae-4580-996b-505f48eec904/8x16-rainwater-catchment-a-irrigation-system">Click here</a> to download this model as an editable SketchUp file.</p>
 
-<iframe src="https://3dwarehouse.sketchup.com/embed.html?mid=bb060212-66ae-4580-996b-505f48eec904&width=580&height=326" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="1000px" height="600px" allowfullscreen></iframe>
+<iframe src="https://3dwarehouse.sketchup.com/embed.html?mid=bb060212-66ae-4580-996b-505f48eec904&width=580&height=326" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="100%" height="600px" allowfullscreen></iframe>
