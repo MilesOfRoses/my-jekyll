@@ -17,28 +17,30 @@ as well as all of the CSS links and JS links -->
 	<link href="{{site.baseurl}}/css/lity.css" rel="stylesheet"><!-- the CSS that controls the "lity" light box used in all of the galleries -->
 </head>
 <body>
-<header>
-	<a name="backToTop"></a>
-	<a href="{{site.baseurl}}/"><h1 class="centerText title">Miles <div class="icon-placeholder"></div> Rose</h1></a> <!-- the masthead-->
-	{% include nav.html navclass='nav-top' %}<!-- link to navigation under the masthead-->
-</header>
-{{content}}
+<div class="wrapper">
+	<header>
+		<a name="backToTop"></a>
+		<a href="{{site.baseurl}}/"><h1 class="centerText title">Miles <div class="icon-placeholder"></div> Rose</h1></a> <!-- the masthead-->
+		{% include nav.html navclass='nav-top' %}<!-- link to navigation under the masthead-->
+	</header>
+	{{content}}
 
-<footer>
-	<h2 class="centerText">Follow me!</h2>
-<div class="container centerText">
-	<!-- Extra Small Buttons spin -->
-	<a href="https://www.youtube.com/channel/UCoi5IujqQmaHU48EduXVxew" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-youtube"></i></span></a> 
-	<a href="https://twitter.com/MilesOfRoses"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-twitter"></i></span></a>
-	<a href="https://www.linkedin.com/in/miles-rose-44816752?trk=nav_responsive_tab_profile"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-linkedin-square"></i></span></a>
-	<a href="http://milesofcrimsonroses.tumblr.com/"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-tumblr-square"></i></span></a> 
-	<a href="{{site.baseurl}}/feed.xml"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-rss-square"></i></span></a>
-	<a href="https://vimeo.com/milesrose"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-vimeo-square"></i></span></a>
-	<a href="https://github.com/MilesOfRoses"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-github-square"></i></span></a>
-	<a href="https://www.flickr.com/photos/146669889@N04/albums"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-flickr"></i></span></a>		<!--  Extra Small Buttons spin  End -->
-</div><!-- /.container -->
-	<p id="copy">©2017 Miles Rose</p>
-</footer>
+	<footer>
+		<h2 class="centerText">Follow me!</h2>
+	<div class="container centerText">
+		<!-- Extra Small Buttons spin -->
+		<a href="https://www.youtube.com/channel/UCoi5IujqQmaHU48EduXVxew" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-youtube"></i></span></a> 
+		<a href="https://twitter.com/MilesOfRoses"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-twitter"></i></span></a>
+		<a href="https://www.linkedin.com/in/miles-rose-44816752?trk=nav_responsive_tab_profile"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-linkedin-square"></i></span></a>
+		<a href="http://milesofcrimsonroses.tumblr.com/"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-tumblr-square"></i></span></a> 
+		<a href="{{site.baseurl}}/feed.xml"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-rss-square"></i></span></a>
+		<a href="https://vimeo.com/milesrose"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-vimeo-square"></i></span></a>
+		<a href="https://github.com/MilesOfRoses"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-github-square"></i></span></a>
+		<a href="https://www.flickr.com/photos/146669889@N04/albums"target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-flickr"></i></span></a>		<!--  Extra Small Buttons spin  End -->
+	</div><!-- /.container -->
+		<p id="copy">©2017 Miles Rose</p>
+	</footer>
+</div>
 
 <script src="{{site.baseurl}}/assets/js/jquery-2.1.0.min.js"></script>
 <script src="{{site.baseurl}}/assets/js/hexagons.min.js"></script><!--javascript fo the animated social media hexigons -->
