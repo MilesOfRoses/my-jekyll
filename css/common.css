@@ -110,6 +110,8 @@ hr{
 		box-shadow: 0px 0px 10px black;
 		border-radius: 10px;
 		padding-bottom: 10px;
+		margin-top: 50px;
+	}
 }
 
 /*blog articles*/
@@ -317,9 +319,9 @@ h3 {
 	.wrapper {
 		border-radius: 20px;
 	}
-	#bio-card {
-		border: none;
 
+	.media-section {
+		margin-top: 30px;
 	}
 
 	div.icon-placeholder {
@@ -374,7 +376,7 @@ h3 {
 	}
 
 	h1{
-		font-size: 1rem;
+		font-size: 3rem;
 	}
 
 	.article-title {
