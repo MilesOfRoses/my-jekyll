@@ -226,10 +226,7 @@ a {
   shape-outside:circle();
 }
 
-#feed-button{
 
-	margin-bottom: -30px;
-}
 
 h1 {
 	font-family: 'Niconne', serif;
@@ -325,6 +322,11 @@ h3 {
 
 
 @media (max-width: 735px){
+
+	#feed-button{
+	margin-bottom: -30px;
+	margin-top: 10px;
+}
 
 	.wrapper {
 		border-radius: 20px;
