@@ -56,6 +56,11 @@ So I designed and built this simple structure on her land to capture, filter, an
 
 <p>We will attach irrigation lines to the containers to water our crops this summer. This system could be cheaply and easily replicated anywhere in the world that has a few inches of rainfall, especially in places with no groundwater for a well, or in situations where the cost of drilling a well would be too cost prohibitive.</p>
 
+<h2>Step 9: Optional: Enclose Walls to Make Greenhouse Nursery</h2>
+
+<a href="https://c1.staticflickr.com/5/4185/34683269665_1e70cf208c_h.jpg" data-lity data-lity-desc="step7"><img src="https://c1.staticflickr.com/5/4185/34683269665_1e70cf208c_h.jpg" width="100%" alt="step8"></a>
+<p>In the future, we would like to enclose the walls. I build the high side facing south, so we could put big windows covering the whole wall to create a greenhouse using transparent plastic roofing panels. The north, east, and west walls can be framed using strong pallets, clad in painted plywood. The inside of the pallets can be stuffed with straw for insulation.</p>
+
 <h2>Download my 3D model to edit and build your own!</h2>
 
 <p class="centerText">To interact with 3D models, make sure you have enabled <a href="https://offcampushousing.uconn.edu/auth/help-cookies" target="_blank" class="redlink">third party cookies and site data.</a>

@@ -56,8 +56,10 @@ div.icon-placeholder{
 .currentBlack{
 	text-shadow: 0px 0px 10px white;
 	background-color: rgba(0, 0, 0, 0.6);
-	box-shadow: 0px 0px 15px black;
+	box-shadow: 0px 0px 20px black;
 	border-radius: 20px;
+	padding-left: 8px;
+	padding-right: 8px;
 	
 }
 
@@ -79,6 +81,7 @@ ul {
 
 h2 {
 	font-family: 'Nova Square', cursive;
+	padding-top: 10px;
 }
 
 
@@ -167,7 +170,7 @@ hr{
 	max-width: 1270PX;
 	margin-left: auto;
     margin-right: auto;
-    
+    padding: 10px;
     list-style: none;
     font-family: sans-serif;
 }
@@ -365,6 +368,10 @@ h3 {
 
 
 @media (max-width: 735px){
+
+	div.icon-placeholder:before {
+	content:url(../img/rose-loop-50x50.gif);
+}
 
 	#feed-button{
 	margin-top: 10px;
