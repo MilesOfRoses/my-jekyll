@@ -2,13 +2,14 @@
 layout: blog
 comments: true
 ---
+<div class="media-section">
+	<h1 class="centerText article-list">{{page.title}}</h1>
 
-<h1 class="centerText article-list">{{page.title}}</h1>
+	<div class=" article-list">{{content}}</div>
+	<hr>
 
-<div class=" article-list">{{content}}</div>
-<hr>
-
-<div id="disqus_thread"></div>
+	<div id="disqus_thread"></div>
+</div>
 <script>
 
 /**

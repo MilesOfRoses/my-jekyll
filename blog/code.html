@@ -3,12 +3,11 @@ layout: blog
 title: Code Blog
 meta: Blog posts about code, web design, technology and more!
 ---
-<h1 class="centerText">Articles About Coding</h1>
+<h1 class="centerText article-title" >Posts About Coding</h1>
 <ul class="centerText article-list">
 	{% for post in site.categories.code %}
-		<li id="bio-card">
+		<li class="media-section">
 			<h2 class="article-title"><a href="{{site.baseurl}}{{post.url}}">{{post.title}}</a></h2>
-			<hr>
 			<p>{{post.meta}}</p>
 			
 		</li>
