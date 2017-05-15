@@ -81,7 +81,6 @@ ul {
 
 h2 {
 	font-family: 'Nova Square', cursive;
-	padding-top: 10px;
 }
 
 #portfolio{
@@ -163,7 +162,12 @@ hr{
 	font-size: 1.5rem;
 	margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
 	max-width: 650px;
+}
+
+.allPosts{
+	margin-bottom: -30px;
 }
 
 .article-title{
@@ -174,7 +178,6 @@ hr{
 	max-width: 1270PX;
 	margin-left: auto;
     margin-right: auto;
-    padding: 10px;
     list-style: none;
     font-family: sans-serif;
 }
@@ -242,7 +245,7 @@ a {
 }
 
 #bio-card p{
-	padding: 5px;
+	padding: 15px;
 }
 
 #bio-card{
@@ -372,6 +375,10 @@ h3 {
 
 
 @media (max-width: 735px){
+
+	.allPosts{
+		margin-top: -60px;
+	}
 
 	div.icon-placeholder:before {
 	content:url(../img/rose-loop-50x50.gif);
