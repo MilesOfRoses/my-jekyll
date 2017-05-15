@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Niconne');
+@import url('https://fonts.googleapis.com/css?family=Nova+Square');
 
 body {
 	margin-top: 15px;
@@ -56,9 +56,9 @@ div.icon-placeholder{
 .currentBlack{
 	text-shadow: 0px 0px 10px white;
 	background-color: rgba(0, 0, 0, 0.6);
-	box-shadow: 0px 0px 20px black;
+	box-shadow: 0px 0px 15px black;
 	border-radius: 20px;
-	padding: 3px;
+	
 }
 
 ul {
@@ -69,12 +69,16 @@ ul {
 
 
 .title {
-	font-size:600%;
+	font-size:520%;
 	margin-bottom: -40px;
 	margin-left:10px;
-	font-family: 'Niconne', serif;
+	font-family: 'Nova Square', cursive;
 	color: #a00000;
-	letter-spacing: .8rem;
+	letter-spacing: .45rem;
+}
+
+h2 {
+	font-family: 'Nova Square', cursive;
 }
 
 
@@ -90,11 +94,11 @@ nav li {
 
 nav {
  text-align: center;
- font-family: 'Niconne', serif;
+ font-family: 'Nova Square', cursive;
 }
 
 .nav-top{
-	font-size:2.5rem;
+	font-size:2.1rem;
 	margin-bottom: 0;
 }
 
@@ -270,7 +274,7 @@ a {
 
 
 h1 {
-	font-family: 'Niconne', serif;
+	font-family: 'Nova Square', cursive;
 	font-size: 2.5rem;
 }
 
