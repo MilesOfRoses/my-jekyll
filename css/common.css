@@ -74,13 +74,13 @@ ul {
 	font-size:520%;
 	margin-bottom: -40px;
 	margin-left:10px;
-	font-family: 'Nova Square', cursive;
+	font-family: 'Nova Square', sans-serif;
 	color: #a00000;
 	letter-spacing: .45rem;
 }
 
 h2 {
-	font-family: 'Nova Square', cursive;
+	font-family: 'Nova Square', sans-serif;
 }
 
 #portfolio{
@@ -100,7 +100,7 @@ nav li {
 
 nav {
  text-align: center;
- font-family: 'Nova Square', cursive;
+ font-family: 'Nova Square', sans-serif;
 }
 
 .nav-top{
@@ -180,6 +180,7 @@ hr{
     margin-right: auto;
     list-style: none;
     font-family: sans-serif;
+    padding:10px;
 }
 
 #feed-button p{
@@ -284,7 +285,7 @@ a {
 
 
 h1 {
-	font-family: 'Nova Square', cursive;
+	font-family: 'Nova Square', sans-serif;
 	font-size: 2.5rem;
 }
 
