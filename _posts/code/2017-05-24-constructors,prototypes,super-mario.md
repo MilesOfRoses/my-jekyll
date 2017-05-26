@@ -1,6 +1,6 @@
 ---
 layout: blog-article
-title: Using Super Mario Bros to learn about JavaScript Constructor functions and Prorotypes
+title: Using Super Mario Bros to learn about JavaScript Constructor functions and Prototypes
 meta: Mario and Luigi can teach us a lot about coding!
 category: code
 
