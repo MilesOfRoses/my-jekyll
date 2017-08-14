@@ -5,7 +5,7 @@ meta: How to create a floating island kingdom in the clouds using Photoshop
 category: design
 ---
 <article>
-<p>Check out the video tutorial to learn how to create this floating island kingdom using photoshop!<br>
+<p><a href="https://www.youtube.com/watch?v=LPhkSkKaBhM">Check out the video tutorial</a> to learn how to create this floating island kingdom using photoshop!<br>
 <b> Scroll all the way down</b> to find the four images you'll need to recreate this project.</p>
 <a data-flickr-embed="true"  href="https://www.flickr.com/photos/149069890@N07/36404943142/in/dateposted-public/" title="kingdom of the Clouds tutorial"><img src="https://farm5.staticflickr.com/4368/36404943142_f30ecf6249_b.jpg" width="1024" height="791" alt="kingdom of the Clouds tutorial"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
