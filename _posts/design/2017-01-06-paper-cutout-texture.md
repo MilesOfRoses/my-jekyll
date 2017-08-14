@@ -9,7 +9,7 @@ category: design
 	<p> In this tutorial you'll learn how to create this stylized paper cut-out animation using After Effects and a few image textures!</p>
 	<img src="https://imageshack.us/a/img924/6792/Dzw5TX.gif">
 
-	<p>To make this animation we'll only need these 3 paper textures below. You can right-click over each image and click "Save Image As..." to download them for this project.</p>
+	<p>To make this animation we'll only need these 3 paper textures below. Click on each of the pictures to download them from flickr.</p>
 
 	<h2>Crumply paper texture</h2>
 	<a data-flickr-embed="true" data-header="true"  href="https://www.flickr.com/photos/146669889@N04/32027711262/in/dateposted-public/" title="crumply brown paper"><img src="https://c7.staticflickr.com/1/538/32027711262_ac04bb10a7_m.jpg" width="240" height="196" alt="crumply brown paper"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
