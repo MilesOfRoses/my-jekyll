@@ -16,11 +16,13 @@ body {
 #follow {
 	color:white;
 	margin-top: 10px;
+	margin-bottom:5px;
 }
 
 
 .wrapper {
 	max-width: 1270px;
+	margin-top:25px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: rgba(0, 0, 0, 0.7);
@@ -51,10 +53,10 @@ div.icon-placeholder{
 }
 
 .current {
-	text-shadow: 0px 0px 6px red;
+	text-shadow: 0px 0px 10px red, 0px 0px 2px red;
 }
 .currentBlack{
-	text-shadow: 0px 0px 10px white;
+	text-shadow: 0px 0px 5px red, 0px 0px 5px red;
 	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow: 0px 0px 20px black;
 	border-radius: 20px;
@@ -127,6 +129,7 @@ nav {
 	font-size: 1.5rem;
 	margin-top: 0px;
 	color: white;
+	margin-bottom: 0px;
 }
 
 .subnav a{
@@ -208,6 +211,7 @@ article img {
 
 /*common*/
 
+
 a {
 	text-decoration: none;
 	color:black;
@@ -220,7 +224,7 @@ a {
 
 .centerText, #copy {
 	text-align: center;
-	margin-top: -10px;
+	margin-top: -5px;
 }
 
 #copy{
@@ -237,17 +241,15 @@ a {
 
 
 #bio{
-	max-width: 1270px;
+	max-width: 270px;
+	margin-top: 0px;
 	margin-left: auto;
     margin-right: auto;
-    padding-bottom: 20px;
+
     padding-left: 10px;
-    margin-bottom: -20px;
+    text-align: justify;
 }
 
-#bio-card p{
-	padding: 15px;
-}
 
 #bio-card{
     border-radius: 20px;
@@ -258,12 +260,20 @@ a {
     margin-top: 10px;
 }
 
+#bio-card p{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 #bio-card h2{
 	color:white;
 }
-#follow {
-	color:white;
+
+.home-bio{
+	margin-bottom: -45px;
 }
+
+
 #circle-shape-example p { 
   line-height: 2; 
   max-width: 1270px;
@@ -304,6 +314,7 @@ h1 {
 
 
 /*video gallery*/
+
 
 #videos{
 	display: block;
@@ -351,6 +362,7 @@ article a{
 h3 {
 	display: inline;
 }
+
 /*3d viewer settings*/
 
 #viewer-3d{
