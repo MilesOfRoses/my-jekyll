@@ -1,4 +1,4 @@
-#photos {
+.photos {
   /* Prevent vertical gaps */
   line-height: 0;
    
@@ -10,34 +10,34 @@
   column-gap:           0px;  
 }
 
-#photos img {
+.photos img {
   /* Just in case there are inline attributes */
   width: 100% !important;
   height: auto !important;
 }
 
-#photos{
+.photos{
   display:inline-block;
   margin-right: auto;
   margin-left: auto;
 }
 
 @media (max-width: 2000px) {
-   #photos {
+   .photos {
    -moz-column-count:    6;
    -webkit-column-count: 6;
    column-count:         6;
    }
   }
   @media (max-width: 1000px) {
-   #photos {
+   .photos {
    -moz-column-count:    4;
    -webkit-column-count: 4;
    column-count:         4;
    }
   }
   @media (max-width: 635px) {
-   #photos {
+   .photos {
    -moz-column-count:    2;
    -webkit-column-count: 2;
     column-count:        2;

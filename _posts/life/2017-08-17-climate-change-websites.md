@@ -22,7 +22,4 @@ The NASA website about climate change is climate.nasa.gov, it includes links to 
 <p>While gathering information online, it is important to be able to determine what information is credible, objective, and free from political prejudice. Reading with a skeptical, inquisitive mindset is the best way to protect oneself from the manipulation of political agendas. The ability to spot misleading headlines and political misinformation will aid one’s ability to be an informed member of society who will make socially responsible decisions.</p>
 
 
-<p>In one way or another, climate change will affect the lives of every living being on earth. It is important the we as a society have the scientific literacy to understand our impact on the world that we depend on for our very survival. It is ridiculous and embarrassing for our country that our political policies have lagged so far behind the scientific knowledge of the rest of the developed world.</p>
-
-
-</p>
+<p>One way or another, climate change will affect the lives of every living being on earth. It is important the we as a society have the scientific literacy to understand our impact on the world that we depend on for our very survival. It is ridiculous and embarrassing for our country that our political policies have lagged so far behind the scientific knowledge of the rest of the developed world.</p>
