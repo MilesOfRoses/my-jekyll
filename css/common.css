@@ -377,11 +377,13 @@ h3 {
 
 	div.icon-placeholder:before {
 	content:url(../img/rose-loop-50x50.gif);
-}
+	margin-left: -40px;
+	margin-right: -40px;
+	}
 
 	#feed-button{
 	margin-top: 10px;
-}
+	}
 
 	.media-section {
 		margin-top: 30px;
@@ -432,6 +434,11 @@ h3 {
 		letter-spacing: .3rem;
 		margin-bottom: 0;
 		margin-left: 2px;
+		display: inline;
+	}
+
+	#logo{
+		margin-bottom: -10px;
 	}
 
 	h1{
