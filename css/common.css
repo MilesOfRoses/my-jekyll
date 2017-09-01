@@ -14,16 +14,15 @@ I have tried to document a lot of the CSS using comments to make it easier for y
 	font-family: 'Nova Square', sans-serif;
 }
 
-
 /* Change your colors scheme under here */
 .overlay {
-    background: rgba(255, 0, 161, 0.5); /*BG color be anything, of course*/
+    background: rgba(0, 255, 0, 0.5); /*BG color be anything, of course*/
     padding-top: 20px;
     padding-bottom: 450px;
 }
 
 .current {
-	text-shadow: 0px 0px 10px rgb(255, 0, 161), 0px 0px 2px rgb(255, 0, 161);
+	text-shadow: 0px 0px 10px #00b244, 0px 0px 2px #00b244;
 }
 
 .currentBlack{
@@ -36,10 +35,12 @@ I have tried to document a lot of the CSS using comments to make it easier for y
 }
 
 .title {
-	color: rgb(255, 0, 161);
+	color: #00b244;
 }
 
 /* this is most of the layout for the top of the home page under here */
+
+
 
 body {
 	margin: 0;
