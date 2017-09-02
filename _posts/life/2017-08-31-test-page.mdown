@@ -1,0 +1,7 @@
+---
+layout: blog-article
+title: test 
+meta: some text here
+category: code
+---
+<h1>hello world</h1>
