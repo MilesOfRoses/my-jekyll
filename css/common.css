@@ -20,11 +20,11 @@ body {
 }
 
 .wrapper {
-	max-width: 1270px;
+	max-width: 1000px;
 	margin-top:25px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.6);
 	box-shadow: 0px 0px 30px black;
 	border-radius: 20px;
 }
@@ -316,7 +316,7 @@ h1 {
 }
 
 #videos img{
-	width:250px;
+	width:330px;
 }
 
 .containingBlock {
@@ -482,7 +482,7 @@ h3 {
 
 @media (max-width: 735px){
 	#videos img{
-		width: 170px;
+		width: 140px;
 	}
 	#videos{
 		width:345px;
