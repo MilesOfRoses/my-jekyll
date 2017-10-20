@@ -13,9 +13,13 @@ body {
 	color:white;
 }
 
+.home-bio p{
+	line-height: 50%;
+}
+
 #follow {
 	color:white;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-bottom:5px;
 }
 
@@ -358,14 +362,14 @@ h3 {
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
-	max-width: 1165px;
+	max-width: 500px;
 }
 
 /* responsive */
 
 @media (max-width: 1200px) {
 		#viewer-3d{
-			max-width: 583px;
+			max-width: 450px;
 		}
 	}
 
