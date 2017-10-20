@@ -1,4 +1,6 @@
 .photos {
+  /* hello 10/19/ 2017 */
+
   /* Prevent vertical gaps */
   line-height: 0;
    
@@ -24,7 +26,7 @@
 
 @media (max-width: 2000px) {
    .photos {
-   -moz-column-count:    3;
+   -moz-column-count:    3; 
    -webkit-column-count: 3;
    column-count:         3;
    }
