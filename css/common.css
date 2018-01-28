@@ -215,6 +215,10 @@ article img {
     padding: 10px;
 }
 
+.blog li{
+	margin-left: 50px;
+}
+
 /*common*/
 
 a {
