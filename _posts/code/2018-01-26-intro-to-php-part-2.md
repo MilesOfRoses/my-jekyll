@@ -71,3 +71,6 @@ echo"here's something that would be problematic without the \"escape\" backslash
 {% endhighlight %}
 
 <p>Now that we've learned about PHP's echo statement, the next post will be about using variables in PHP.</p>
+
+<br>
+<p id="smallText">Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)</p>

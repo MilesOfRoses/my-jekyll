@@ -231,13 +231,15 @@ a {
 	text-decoration: underline;
 }
 
-.centerText, #copy {
+.centerText, #smallText {
 	text-align: center;
 	margin-top: -5px;
+
 }
 
-#copy{
-	color:white;
+#smallText{
+	color:gray;
+	font-size: 11px;
 }
 
 #headshot{

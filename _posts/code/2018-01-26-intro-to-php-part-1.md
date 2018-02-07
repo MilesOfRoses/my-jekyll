@@ -73,3 +73,6 @@ if you try to access this page through your file directory like any normal HTML 
 <p>Open your browser again and type <strong>http://localhost/testing.php</strong>. This should bring up a purple screen with text saying something like <strong>PHP Version 5.6.31</strong>(Newer versions will likely have been released since the writing of this post).
 <br>
 phpinfo(); is a usefull built in function that will display information about your version of PHP. If you've made it this far, then you've successfully installed both Apache and PHP! Now you're ready to start the next post in this series, where we'll actually get started programming in PHP!</p>
+
+<br>
+<p id="smallText">Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)</p>
