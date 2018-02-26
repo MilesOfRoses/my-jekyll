@@ -151,9 +151,15 @@ nav {
 
 hr{
 	margin: 0;
-	max-width: 600px;
+
 	margin-right: auto;
 	margin-left: auto;
+}
+
+#subnav-hr{
+	display: inline-block;
+	width: 99.7%;
+	margin-bottom: -10px;
 }
 
 .media-section{
