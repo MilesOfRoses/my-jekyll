@@ -1,37 +1,83 @@
-/* @import url('https://fonts.googleapis.com/css?family=Nova+Square'); */
+/* ATTENTION! I put most of the CSS that you're most likely to want to tweak in the top 30 lines 
+of this page to make it easier for you. 
 
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
+You can easily change the color scheme of the whole site just by changing a few value in the first 13 lines of code here. 
+Below that, you can change the font size of the title, which is "Your Name" by default.
+
+This site uses google fonts, so you can easily swap them out if you want.
+I have tried to document a lot of the CSS using comments to make it easier for you to change */
+
+@import url('https://fonts.googleapis.com/css?family=Nova+Square');
+
+/* Change the fonts for the title and h2 elements under here */
+.title, h2{
+	font-family: 'Nova Square', sans-serif;
+}
+
+/* Change your color scheme under here */
+.overlay {
+    background: rgba(255, 0, 0, 0.6); /*BG color could be anything, of course*/
+    padding-top: 20px;
+    padding-bottom: 450px;
+}
+
+.current {
+/*	text-shadow: 2px 2px 5px black, 0px 0px 2px #2b7cff;*/
+text-decoration: underline;
+	color: #a00000;
+}
+
+.currentBlack{
+	text-shadow: 0px 0px 5px black, 0px 0px 5px #2b7cff;
+}
+
+/* Change the font size of your name under here */
+.title {
+	font-size:580%;
+}
+
+.title {
+	color: #a00000;
+}
+
+/* this is most of the layout for the top of the home page under here */
+
+
 
 body {
-	margin-top: -25px;
+	margin: 0;
 	padding: 0;
-	background-color: #ececec;
-	/* background-image: url('../img/background.jpg'); */
+	background-image: url('../img/background.jpg');
 	background-attachment: fixed;
 	font: normal 100%/1.4 sans-serif;
 }
 
 #bio-card p{
-	color:black;
-}
-
-.home-bio p{
-	line-height: 50%;
+	color:white;
 }
 
 #follow {
-	color:black;
-	margin-top: 5px;
+	color:white;
+	margin-top: 10px;
 	margin-bottom:5px;
 }
 
 .wrapper {
-	max-width: 1000px;
-	margin-top:25px;
+	z-index: 1;
+    height: 100%;
+    width: 100%;
+    position: inherit;
+    top: 0px;
+    left: 0px;
+}
+
+.wrapper {
+	z-index: 2;
+	max-width: 1270px;
 	margin-left: auto;
 	margin-right: auto;
-	/* background-color: rgba(0, 0, 0, 0.6); */
-	/* box-shadow: 0px 0px 30px black; */
+	background-color: rgba(0, 0, 0, 0.5);
+	box-shadow: 0px 0px 30px black;
 	border-radius: 20px;
 }
 
@@ -41,13 +87,12 @@ div.icon-placeholder:before {
 }
 
 header{
-	/* box-shadow: 0px 0px 10px black; */
+	box-shadow: 0px 0px 10px black;
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 	background-color: white;
-	/* position: fixed; */
 }
 
 #logo{
@@ -72,15 +117,9 @@ div.icon-placeholder{
 	margin-left: 0px;
 }
 
-.current {
-	text-shadow:  0px 0px 2px red;
-	color: #a00000;
-	font-weight: bold;
-}
 .currentBlack{
-	text-shadow: 0px 0px 5px red, 0px 0px 5px red;
-	/* background-color: rgba(0, 0, 0, 0.6); */
-	/* box-shadow: 0px 0px 20px black; */
+	background-color: rgba(0, 0, 0, 0.6);
+	box-shadow: 0px 0px 20px black;
 	border-radius: 20px;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -93,17 +132,11 @@ ul {
 }
 
 .title {
-	font-size:520%;
 	margin-bottom: -40px;
-	margin-left:10px;
-	font-family: 'Julius Sans One', sans-serif;
-	color: #a00000;
+
+
 	letter-spacing: .45rem;
 	display: inline-block;
-}
-
-h2 {
-	font-family: 'Julius Sans One', sans-serif;
 }
 
 #portfolio{
@@ -114,24 +147,23 @@ h2 {
 
 nav li {
   display: inline-block;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 nav {
  text-align: center;
- font-family: 'Julius Sans One', sans-serif;
+ font-family: 'Nova Square', sans-serif;
 }
 
 .nav-top{
-	font-size:1.5rem;
-	font-weight: bold;
+	font-size:2.1rem;
 	margin-bottom: 0;
 }
 
 .nav-top li{
-	padding-left:  32px;
-	padding-right: 32px;
+	padding-left:  13px; /* Change these values to adject how far apart the nav links will be from eachother */
+	padding-right: 20px; /* Change these values to adject how far apart the nav links will be from eachother */
 	padding-top: 0;
 }
 .portfolio-nav{
@@ -141,12 +173,12 @@ nav {
 .subnav {
 	font-size: 1.5rem;
 	margin-top: 0px;
-	color: black;
+	color: white;
 	margin-bottom: 0px;
 }
 
 .subnav a{
-	color: black;
+	color: white;
 }
 
 .subnav li {
@@ -157,19 +189,13 @@ nav {
 
 hr{
 	margin: 0;
-
+	max-width: 600px;
 	margin-right: auto;
 	margin-left: auto;
 }
 
-#subnav-hr{
-	display: inline-block;
-	width: 99.7%;
-	margin-bottom: -10px;
-}
-
 .media-section{
-		/* box-shadow: 0px 0px 10px black; */
+		box-shadow: 0px 0px 10px black;
 		padding-top:50px;
 		padding-bottom: 20px;
 		margin-top: 15px;
@@ -192,7 +218,7 @@ hr{
 }
 
 .article-title{
-	color: black;
+	color: white;
 }
 
 .article-list{
@@ -209,7 +235,7 @@ hr{
 }
 
 #feed-button{
-	color:black;
+	color:white;
 
 }
 
@@ -221,14 +247,10 @@ article img {
 }
 
 #disqus_thread {
-	max-width: 980px;
+	max-width: 1270px;
 	margin-left: auto;
     margin-right: auto;
     padding: 10px;
-}
-
-.blog li{
-	margin-left: 50px;
 }
 
 /*common*/
@@ -239,26 +261,24 @@ a {
 }
 
 .redlink {
-	color: #ff3838;
+	color: white;
 	text-decoration: underline;
 }
 
-.centerText, #smallText {
+.centerText, #copy {
 	text-align: center;
 	margin-top: -5px;
-
 }
 
-#smallText{
-	color:gray;
-	font-size: 11px;
+#copy{
+	color:white;
 }
 
 #headshot{
     width: 200px;
-    border-radius: 100%;
+/*    border-radius: 100%;*/
     box-shadow: 0px 0px 10px black;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 #bio{
@@ -272,7 +292,7 @@ a {
 }
 
 #bio-card{
-    border-radius: 0px;
+    border-radius: 20px;
     margin-bottom: 20px;
     max-width: 1270px;
     margin-left: auto;
@@ -286,7 +306,7 @@ a {
 }
 
 #bio-card h2{
-	color:black;
+	color:white;
 }
 
 .home-bio{
@@ -311,7 +331,7 @@ a {
 }
 
 h1 {
-	font-family: 'Julius Sans One', sans-serif;
+	font-family: 'Nova Square', sans-serif;
 	font-size: 2.5rem;
 }
 
@@ -338,7 +358,7 @@ h1 {
 }
 
 #videos img{
-	width:330px;
+	width:250px;
 }
 
 .containingBlock {
@@ -380,14 +400,14 @@ h3 {
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
-	max-width: 500px;
+	max-width: 1165px;
 }
 
 /* responsive */
 
 @media (max-width: 1200px) {
 		#viewer-3d{
-			max-width: 450px;
+			max-width: 583px;
 		}
 	}
 
@@ -504,7 +524,7 @@ h3 {
 
 @media (max-width: 735px){
 	#videos img{
-		width: 140px;
+		width: 170px;
 	}
 	#videos{
 		width:345px;
