@@ -1,10 +1,14 @@
 <nav>
 	<ul class="nav {{include.navclass}}">
-		<li><a href="{{site.baseurl}}/" class="{% if page.url == '/' or page.url contains 'animation' or page.url contains 'illustration' or page.url contains 'sculpture' or page.url contains '3d-model' %}current{% endif %}">Portfolio</a></li>
-		<li>-</li>
+		<li><a href="{{site.baseurl}}/" class="{% if page.url == '/' or page.url contains 'illustration' or page.url contains 'sculpture' or page.url contains '3d-model' %}current{% endif %}">All</a></li>
+		<!-- <li>-</li> -->
+		<!-- <li>-</li> -->
+		<!-- <li><a href="{{site.baseurl}}/about/" class="{% if page.url contains 'about' %}current{% endif %}">About</a></li> -->
+		<li><a href="{{site.baseurl}}/animations" class="{% if page.url contains 'animations'%}current{% endif %}">Animations</a></li>
+		<li><a href="{{site.baseurl}}/websites/" class="{% if page.url contains 'websites'%}current{% endif %}">Websites</a></li>
+		<!-- <li>-</li> -->
+		<li><a href="{{site.baseurl}}/graphic" class="{% if page.url contains 'graphic'%}current{% endif %}">Graphic Design</a></li>
 		<li><a href="{{site.baseurl}}/blog/" class="{% if page.url contains 'blog' or page.url contains 'life' or page.url contains 'code' or page.url contains 'design' %}current{% endif %}">Blog</a></li>
-		<li>-</li>
-		<li><a href="{{site.baseurl}}/about/" class="{% if page.url contains 'about' %}current{% endif %}">About</a></li>
 		
 	</ul>
 </nav>

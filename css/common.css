@@ -1,16 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Nova+Square');
+/* @import url('https://fonts.googleapis.com/css?family=Nova+Square'); */
+
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One&display=swap');
 
 body {
 	margin-top: -25px;
 	padding: 0;
-	background-color: #8e0000;
-	background-image: url('../img/background.jpg');
+	background-color: #ececec;
+	/* background-image: url('../img/background.jpg'); */
 	background-attachment: fixed;
 	font: normal 100%/1.4 sans-serif;
 }
 
 #bio-card p{
-	color:white;
+	color:black;
 }
 
 .home-bio p{
@@ -18,7 +20,7 @@ body {
 }
 
 #follow {
-	color:white;
+	color:black;
 	margin-top: 5px;
 	margin-bottom:5px;
 }
@@ -28,8 +30,8 @@ body {
 	margin-top:25px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: rgba(0, 0, 0, 0.6);
-	box-shadow: 0px 0px 30px black;
+	/* background-color: rgba(0, 0, 0, 0.6); */
+	/* box-shadow: 0px 0px 30px black; */
 	border-radius: 20px;
 }
 
@@ -39,12 +41,13 @@ div.icon-placeholder:before {
 }
 
 header{
-	box-shadow: 0px 0px 10px black;
+	/* box-shadow: 0px 0px 10px black; */
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
 	border-top-left-radius: 0px;
 	border-top-right-radius: 0px;
 	background-color: white;
+	/* position: fixed; */
 }
 
 #logo{
@@ -70,12 +73,14 @@ div.icon-placeholder{
 }
 
 .current {
-	text-shadow: 0px 0px 10px red, 0px 0px 2px red;
+	text-shadow:  0px 0px 2px red;
+	color: #a00000;
+	font-weight: bold;
 }
 .currentBlack{
 	text-shadow: 0px 0px 5px red, 0px 0px 5px red;
-	background-color: rgba(0, 0, 0, 0.6);
-	box-shadow: 0px 0px 20px black;
+	/* background-color: rgba(0, 0, 0, 0.6); */
+	/* box-shadow: 0px 0px 20px black; */
 	border-radius: 20px;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -91,14 +96,14 @@ ul {
 	font-size:520%;
 	margin-bottom: -40px;
 	margin-left:10px;
-	font-family: 'Nova Square', sans-serif;
+	font-family: 'Julius Sans One', sans-serif;
 	color: #a00000;
 	letter-spacing: .45rem;
 	display: inline-block;
 }
 
 h2 {
-	font-family: 'Nova Square', sans-serif;
+	font-family: 'Julius Sans One', sans-serif;
 }
 
 #portfolio{
@@ -109,17 +114,18 @@ h2 {
 
 nav li {
   display: inline-block;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 nav {
  text-align: center;
- font-family: 'Nova Square', sans-serif;
+ font-family: 'Julius Sans One', sans-serif;
 }
 
 .nav-top{
-	font-size:2.1rem;
+	font-size:1.5rem;
+	font-weight: bold;
 	margin-bottom: 0;
 }
 
@@ -135,12 +141,12 @@ nav {
 .subnav {
 	font-size: 1.5rem;
 	margin-top: 0px;
-	color: white;
+	color: black;
 	margin-bottom: 0px;
 }
 
 .subnav a{
-	color: white;
+	color: black;
 }
 
 .subnav li {
@@ -163,7 +169,7 @@ hr{
 }
 
 .media-section{
-		box-shadow: 0px 0px 10px black;
+		/* box-shadow: 0px 0px 10px black; */
 		padding-top:50px;
 		padding-bottom: 20px;
 		margin-top: 15px;
@@ -186,7 +192,7 @@ hr{
 }
 
 .article-title{
-	color: white;
+	color: black;
 }
 
 .article-list{
@@ -203,7 +209,7 @@ hr{
 }
 
 #feed-button{
-	color:white;
+	color:black;
 
 }
 
@@ -215,7 +221,7 @@ article img {
 }
 
 #disqus_thread {
-	max-width: 1270px;
+	max-width: 980px;
 	margin-left: auto;
     margin-right: auto;
     padding: 10px;
@@ -280,7 +286,7 @@ a {
 }
 
 #bio-card h2{
-	color:white;
+	color:black;
 }
 
 .home-bio{
@@ -305,7 +311,7 @@ a {
 }
 
 h1 {
-	font-family: 'Nova Square', sans-serif;
+	font-family: 'Julius Sans One', sans-serif;
 	font-size: 2.5rem;
 }
 
