@@ -1,10 +1,732 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://milesrose.net/">
   <channel>
-    <title>Jekyll Blog and Portfolio</title>
-    <description>a jekyll theme</description>
+    <title>Miles Rose Blog and Portfolio</title>
+    <description>A blog about coding and design, and a collection of my best artwork</description>
     <link>http://localhost:4000</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Intro to PHP Part 5, Forms and user input</title>
+        <description>&lt;p&gt;In this post, we&apos;ll create an HTML form and use PHP to handle submitted values. Understanding how to handle forms is important for developing most websites. The first we&apos;ll write the HTML form it&apos;s self. Then, we&apos;ll write a PHP program that will receive and process the resulting form input. To create the HTML form, start with the &lt;em&gt; form tags &lt;/em&gt; which look like this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Notice the &lt;strong&gt;action=&quot;process_form.php&quot;&lt;/strong&gt; part of the form tag. This controls which PHP file will be processing the HTML form. You&apos;ll also notice the &lt;strong&gt;method=&quot;post&quot;&lt;/strong&gt;. There are two different form &quot;methods&quot; that are commonly used. There is &lt;strong&gt;method=&quot;post&quot;&lt;/strong&gt; and there is &lt;strong&gt;method=&quot;get&quot;&lt;/strong&gt;. A &quot;get&quot; method means that the user input will be visible in the URL, for example &lt;strong&gt;http://something.com/script.php?name=Miles&amp;amp;gender=M&lt;/strong&gt; The advantage of a &quot;get&quot; method is that the form&apos;s inputed values can easily be bookmarked by the user. The major disadvantage of the &quot;get&quot; method is security. anybody could just change those form values to whatever they wanted, and get around any input validation you may have set up to protect yourself from hacks. We&apos;ll get into input validation later on, but for the purposes of this series, I&apos;ll always lean toward the &quot;post&quot; method unless I have a very good reason not to.
+&lt;br /&gt;
+Anyway, to get started, just make a new file called &lt;strong&gt;form.html&lt;/strong&gt;
+&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;form&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;fieldset&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;legend&amp;gt;&lt;/span&gt;Tell us about yourself!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/legend&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Name: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;20&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Email: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;50&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;What&apos;s your favorite operating system?&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Windows&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Windows
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mac&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Mac
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Linux&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Linux&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;What&apos;s your favorite browser?
+  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;browser&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chrome&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chrome&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;firefox&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;FireFox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;safari&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Safari&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Other&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Message to us: &lt;span class=&quot;nt&quot;&gt;&amp;lt;textarea&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;message&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rows=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;cols=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/textarea&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/fieldset&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Send my information&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;form&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4622/39267429764_c4c0b3a317_z.jpg&quot; width=&quot;600&quot; alt=&quot;form&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Break it down!&lt;/h2&gt;
+&lt;p&gt;Once again, I&apos;ll break this code into small chunks, and discuss them in detail.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This form&apos;s action attribute points to a file called &lt;strong&gt;process_form.php&lt;/strong&gt;, which we will create in the next step.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;fieldset&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;legend&amp;gt;&lt;/span&gt;Tell us about yourself!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/legend&amp;gt;&lt;/span&gt;
+  	  	...
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The &lt;strong&gt;fieldset&lt;/strong&gt;tags help group the form&apos;s content and add a box around it. This is optional, but I like the way it looks.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;		&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Name: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;20&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Email: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;50&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;These are textarea boxes for users to enter their name and emails. The label tags are used to associate each text label with it&apos;s corresponding input area&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;What&apos;s your favorite operating system?&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Windows&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Windows
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mac&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Mac
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Linux&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Linux&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Radio buttons can only be selected one at a time. since these radio buttons all have the same &quot;name&quot; then only one can be seleced at a time.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;What&apos;s your favorite browser?
+  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;browser&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chrome&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chrome&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;firefox&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;FireFox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;safari&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Safari&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Other&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
+  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
+  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Here&apos;s a &lt;strong&gt;pull down menu&lt;/strong&gt;, which starts with a select tag, and each option tag stands for a new line in the pull down menu. Here, four options are avalible. Similar to a radio button, only one option can be selected at a time.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;		&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Message to us: &lt;span class=&quot;nt&quot;&gt;&amp;lt;textarea&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;message&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rows=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;cols=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/textarea&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Here&apos;s a &lt;strong&gt;textarea&lt;/strong&gt;, which are just another form of text input, which allow users to enter in much more information. Textareas are presented as a box, instead of a single line.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/fieldset&amp;gt;&lt;/span&gt;
+  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Send my information&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Finally, this submit button is what actually sends the user&apos;s unput to the PHP file that we are about to create. All of the data that the user entered will be accessable to PHP. The PHP program will store the user&apos;s data into variables, and then output those variables back to the browser. So far this post has only been about HTML, but not it&apos;s time to &lt;em&gt;finally&lt;/em&gt; write some PHP to process this form! And at the same time, I&apos;ll introduce a new programming concept called &lt;strong&gt;conditionals&lt;/strong&gt;, which we will use to process our form.&lt;/p&gt;
+
+&lt;h2&gt;Conditionals&lt;/h2&gt;
+&lt;p&gt;Conditionals allow for the execution of sections of code depending on whether or not a certain &lt;em&gt;condition&lt;/em&gt; is true or not. For example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is bigger than b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;elseif&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is equal to b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is smaller than b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The above code will output &quot;&lt;strong&gt;a is smaller than b&lt;/strong&gt;&quot;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;Now back to our form. Since the HTML form above says &quot;form action=&quot;&lt;strong&gt;process_form.php&lt;/strong&gt;&quot; we&apos;ll have to also name our new PHP file &lt;strong&gt;process_form.php&lt;/strong&gt; and enter the following code.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-5/</link>
+        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-5/</guid>
+      </item>
+    
+      <item>
+        <title>Intro to PHP Part 4, Numbers and math operators</title>
+        <description>&lt;p&gt;In this fourth post in the PHP series I&apos;ll go over numbers and math operators. There are two types of numbers, &lt;strong&gt;integers&lt;/strong&gt;, which are whole numbers, and &lt;strong&gt;floats&lt;/strong&gt; which are decimal numbers. These numbers never have quotation marks around them, the way that strings always do. You can perform math using the following operators:&lt;/p&gt;
+
+&lt;ul class=&quot;blog&quot;&gt;
+	&lt;li&gt;+ (addition)&lt;/li&gt;
+	&lt;li&gt;- (subtraction)&lt;/li&gt;
+	&lt;li&gt;* (multiplication)&lt;/li&gt;
+	&lt;li&gt;/ (division)&lt;/li&gt;
+	&lt;li&gt;% (modulos)&lt;/li&gt;
+	&lt;li&gt;++ (increment)&lt;/li&gt;
+	&lt;li&gt;-- (decrement)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;PHP also has a number of built in functions for working with numbers. For example, there is the &lt;strong&gt;round()&lt;/strong&gt; function, which will round a number to the desired decimals. Here&apos;s an example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.141592&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The following code will output &lt;strong&gt;3.14&lt;/strong&gt; rather than 3.141592 because the round() function is rounding to 2 decimal places. Another useful number function is &lt;strong&gt;number_format()&lt;/strong&gt; which will add commas to group numbers by thousands. Here&apos;s an example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bigNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This will output &lt;strong&gt;100,000,000&lt;/strong&gt; complete with those two commas, which makes the number much easier to read. 
+&lt;br /&gt;
+Now to practice using math operators, let&apos;s make a new file called &lt;strong&gt;program3.php&lt;/strong&gt; in which we&apos;ll perform some simple math operations that could apply to a retail store or ecomerce application. You&apos;ll notice that I use &lt;em&gt;comments&lt;/em&gt; in this program, which are preceded by double slashes &lt;strong&gt;//&lt;/strong&gt; This is simply to make the code more understandable for us programmers. The users will not be able to see any PHP comments.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;//defining the variables&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//buying 30 items&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;//calculate total at checkout&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//calculate total and add tax&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;//format the total&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+
+    &lt;span class=&quot;c1&quot;&gt;//print the results&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;You are buying &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; items at a price of &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; each, for a total of $$total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4755/39247118574_6c79f5077a_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Break it down!&lt;/h2&gt;
+&lt;p&gt;This program is a fair bit longer than the other ones we&apos;ve written together so far, so I&apos;ll break this one down into smaller pieces and explain each chunk in detail.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//buying 30 items&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;In the code above, I&apos;ve defined three variables and &lt;em&gt;hard coded&lt;/em&gt; their values in. Later on, I&apos;ll show how to use &lt;em&gt;user input&lt;/em&gt; through an HTML form to generate these values instead, so that this program is more dynamic.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//calculate total and add tax&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The above code is where the actual calculation takes place. The first line establishes the &lt;em&gt;subtotal&lt;/em&gt; as being the number of items multiplied by the price of the items. The second line then adds the tax rate, by multiplying the tax rate by the subtotal, thereby finding the &lt;em&gt;total&lt;/em&gt; cost.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;In the code above, I&apos;m using the &lt;strong&gt;number_format()&lt;/strong&gt; function that I mentioned earlier. This will round the output to two places after the decimal. If I hadn&apos;t used &lt;strong&gt;number_format()&lt;/strong&gt; then the output would have been &lt;strong&gt; $188.685&lt;/strong&gt; instead of &lt;strong&gt; $188.69&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;You are buying &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; items at a price of &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; each, for a total of $$total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This last step just outputs the result into a sentence, using the methods discussed in the last post. That&apos;s all there is to it! You can experiment with different values for the first three variables. For example:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2340&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1319.45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Plugging these numbers in will result in a total of &lt;strong&gt;$3,241,888.65!&lt;/strong&gt; 
+&lt;br /&gt;
+In the next post, we&apos;ll learn about &lt;em&gt;user input&lt;/em&gt; and how to use them in your PHP programs to handle submitted values&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
+</description>
+        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-4/</link>
+        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-4/</guid>
+      </item>
+    
+      <item>
+        <title>Intro to PHP Part 3, Variables</title>
+        <description>&lt;p&gt;In this third post in the PHP series, we&apos;ll dive into how PHP variables work. Variables are containers for temporarily storing values. The values stored in PHP variables could be any of the following: &lt;/p&gt;
+
+&lt;ul class=&quot;blog&quot;&gt;
+		&lt;li&gt;Integers&lt;/li&gt;
+		&lt;li&gt;Floats&lt;/li&gt;
+		&lt;li&gt;Strings&lt;/li&gt;
+		&lt;li&gt;Booleans&lt;/li&gt;
+		&lt;li&gt;Arrays&lt;/li&gt;
+		&lt;li&gt;Objects&lt;/li&gt;
+		&lt;li&gt;Resources&lt;/li&gt;
+		&lt;li&gt;NULL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I&apos;ll go into detail about each of those datatypes in future posts. No matter what kind of value will be stored in a PHP variable, they will always follow some simple rules:
+&lt;/p&gt;
+
+&lt;ul class=&quot;blog&quot;&gt;
+	&lt;li&gt;The variable&apos;s name must always start with a dollar sign (&lt;strong&gt;$&lt;/strong&gt;)&lt;/li&gt;
+	&lt;li&gt;Variable names can contain letters, numbers, and the underscore, for example &lt;strong&gt;$tax_rate&lt;/strong&gt;&lt;/li&gt;
+	&lt;li&gt;The charachter after the dollar sign can be either a letter or an underscore (Not a number)&lt;/li&gt;
+	&lt;li&gt;Like most programming languages, PHP&apos;s variables are case sensitive. This means that &lt;strong&gt;$price&lt;/strong&gt; is not the same as &lt;strong&gt;$Price&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here&apos;s an example of a PHP variable:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Miles&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;This outputs the string &quot;Miles&quot; to the web page.
+&lt;br /&gt;
+Now that you know the basics of PHP variables, let&apos;s create a new file called &lt;strong&gt;program2.php&lt;/strong&gt; starting off with the familiar template from before. &lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;PHP Program 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Between the php tags, we&apos;ll make three variables, &lt;strong&gt;$song&lt;/strong&gt;, &lt;strong&gt;$album&lt;/strong&gt;, and &lt;strong&gt;$artist&lt;/strong&gt;. These variables can contain whatever data you wish.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Epidermis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Chocolate Wheelchair&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Venetian Snares&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now that we&apos;ve defined these three variables, let&apos;s echo them out into an actual sentance.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Epidermis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Chocolate Wheelchair&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Venetian Snares&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;The song &amp;lt;em&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;/em&amp;gt; is on the album &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; by &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;/p&amp;gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4714/28158494839_f63fa789af_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;PHP makes this easy because you can just throw variable names right in the middle of a string. Many other languages make you end the string before concatenating the variable to it, and then concatenating the rest of the string. Speaking of concatenating, lets go into how that works in PHP.&lt;/p&gt;
+
+&lt;h2&gt;Concatenation: a fancy way of saying &quot;Sticking stuff together&quot;&lt;/h2&gt;
+
+&lt;p&gt;That pretty much sums it up. Concatenation is where you add characters to the end of a string. PHP even allows you to concatinate numbers, while some other languages do not. You do this using the concatenation operator, which is just a period (&lt;strong&gt;.&lt;/strong&gt;) as an example, make a new line under the last echo statement and define the following variables.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dr.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Michio &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Kaku&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$fullName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The variable &lt;strong&gt;$fullName&lt;/strong&gt; now holds the value &lt;strong&gt;&quot;Dr.MichioKaku&quot;&lt;/strong&gt;, which is not really what we want. We&apos;ll need to concatenate spaces between each of the three variables.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dr.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Michio &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Kaku&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;nv&quot;&gt;$fullName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now the variable &lt;strong&gt;$fullName&lt;/strong&gt; holds the value &lt;strong&gt;&quot;Dr. Michio Kaku&quot;&lt;/strong&gt;, which is exactly what we would expect. Keep in mind that none of this concatination will be noticeable to the user. Even if they look at the source code, they would just see standard HTML. This is an excellent way to make the HTML content of web pages dynamically generated by your PHP program. This will be much more useful later on in this series.&lt;/p&gt;
+
+&lt;p&gt;Now that we&apos;ve gone over variables, strings, and concatination, the next post will be about numbers and math operators!&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
+</description>
+        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-3/</link>
+        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-3/</guid>
+      </item>
+    
+      <item>
+        <title>Intro to PHP Part 2, First PHP Script</title>
+        <description>&lt;p&gt;Now that you&apos;ve finished installing PHP and Apache, it&apos;s time to start writing PHP! Start by opening your favorite text editor and making a new file called &lt;strong&gt;program1.php&lt;/strong&gt; saved in the same server root folder as last time (in my case, it&apos;s C:\wamp64\www since I&apos;m running windows) This page will have one regular HTML paragraph tag, and another paragraph tag that is generated by php! This can be accomplished by using php&apos;s &lt;strong&gt;echo&apos;...&apos;&lt;/strong&gt; statement to print out a paragraph tag. 
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;PHP Program 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This line is regular old HTML...&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;&amp;lt;p&amp;gt;But this line was generated by PHP!&amp;lt;/p&amp;gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;PHP is able to dynamically generate HTML code from the &lt;strong&gt;echo&lt;/strong&gt; statement. As you can see from the picture below, the result looks just like normal HTML. If you view the source code below, it looks as if there was never any php there at all! 
+&lt;/p&gt;
+
+&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4650/26046898288_25e835a788_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
+&lt;/a&gt;
+
+&lt;p&gt;One thing to note s that since the PHP code is being parsed by your apache server, you can only access the page through a URL like this:
+&lt;br /&gt;
+&lt;strong&gt;http://localhost/program1.php&lt;/strong&gt; (Windows) 
+&lt;br /&gt;or &lt;br /&gt;
+&lt;strong&gt;http://127.0.0.1/program1.php&lt;/strong&gt; (Linux)
+&lt;br /&gt;or&lt;br /&gt;
+&lt;strong&gt;http://localhost/~&amp;lt;user&amp;gt;/program.php&lt;/strong&gt;(Mac) 
+&lt;br /&gt;
+if you try to access this page through your file directory like any normal HTML file on your hard drive like this &lt;strong&gt;file:///C:/wamp64/www/program1.php&lt;/strong&gt; then the PHP code will not work. It MUST be accessed through a URL.&lt;/p&gt;
+
+&lt;p&gt;Like JavaScript, every line of code in PHP must be ended with a semicolon. &lt;/p&gt;
+
+&lt;h2&gt;Escape characters&lt;/h2&gt;
+&lt;p&gt;So, Imagine you&apos;re trying to use PHP to output the following:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;He told me, &quot;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;know&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PHP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;I&apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ve&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;learned&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PHP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Both of these lines will result in a syntax error. There are two ways to get around this. First, you &lt;em&gt;could&lt;/em&gt; just use double quotes when printing a single quote, and use single quotes when printing a double quote...&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;He told me, &quot;I know PHP!&quot;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;I&apos;ve learned PHP!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;And that works just fine for this example, but another method is to &lt;em&gt;escape&lt;/em&gt; the quotes using a backslash, like this.
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;He told me, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;I know PHP!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;I\&apos;ve learned PHP!&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;This is especially useful if you need to print both single and double quote, like this:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;here&apos;s something that would be problematic without the &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;escape&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; backslashes! There&apos;s single and double quotes here.&quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;Now that we&apos;ve learned about PHP&apos;s echo statement, the next post will be about using variables in PHP.&lt;/p&gt;
+
+&lt;br /&gt;
+&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
+&lt;/p&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 26 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//code/2018/01/26/intro-to-php-part-2/</link>
+        <guid isPermaLink="true">http://localhost:4000//code/2018/01/26/intro-to-php-part-2/</guid>
+      </item>
+    
+      <item>
+        <title>Intro to PHP Part 1, Installation</title>
+        <description>&lt;p&gt;It&apos;s been a few months since my last post, and I&apos;ve learned a lot about PHP programming during that time. So I&apos;ve decided to create this series of articles explaining what I&apos;ve learned so far in the world of PHP! 
+&lt;br /&gt;
+PHP is a server-side web language, as opposed to JavaScript, which is a client-side language that runs in the browser. This means that in order to program in PHP, we will either need to connect to a server through a hosting company that already has PHP installed on it, or we can simply install our own server on our own computers for development / learning purposes. I&apos;m not going to assume that everybody reading this has access to a hosting server, especially if you are just getting started, so the first thing I&apos;ll do is show you how to install an Apache server on your own computer so that you can run PHP locally. This is just one method of running PHP, but I think that it is the easiest method for beginners, and it doesn&apos;t involve spending any money! &lt;/p&gt;
+
+&lt;h2&gt;Installing PHP on Windows&lt;/h2&gt;
+&lt;p&gt;I&apos;m using windows, so I&apos;ll focus on this OS in more detail. I installed PHP using software called &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;http://www.wampserver.com/en/&quot;&gt;WampServer&lt;/a&gt;. The acronym &quot;WAMP&quot; stands for &quot;Windows&quot;, &quot;Apache&quot;, &quot;Mysql&quot;, and &quot;PHP&quot;. This software will install PHP along with MySql, and Apache. This is useful, because chanses are, if you&apos;re learning PHP programming, you&apos;ll probably want to have MySql on your machine as well, as these technologies are often used together. The installation is fairly self explanatory, once it is finished you should see the icon for wampserver in your taskbar. Click this icon, and a small popup window will appear. Select &quot;start all services&quot; option, which will start the PHP and Apache servers. Then click &quot;localhost&quot;, if everything is working, it should automatically open a browser window with the heading &quot;Server Configuration&quot; and information about your Apache and PHP versions. &lt;/p&gt;
+
+&lt;h2&gt;Installing PHP on Linux&lt;/h2&gt;
+
+&lt;p&gt;Linux is a great choice for running PHP, as both are open source. Here is a great simple article from &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;http://howtoubuntu.org/how-to-install-lamp-on-ubuntu&quot;&gt;How To Ubuntu&lt;/a&gt; that explains the process in detail.&lt;/p&gt;
+&lt;h2&gt;Installing PHP on Mac&lt;/h2&gt;
+&lt;p&gt;If you&apos;re running Mac, you probably alredy have PHP and Apache preinstalled! But you may want to update to the latest versions using &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;https://www.mamp.info/en/&quot;&gt;MAMP&lt;/a&gt; and be sure you are using port (80)&lt;/p&gt;
+
+&lt;p&gt;Now that everything is installed, it&apos;s time to write a simple webpage to test that Apache is working. Open your favorite text editor and type/paste the following to create a bare bones webpage:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Testing Apache&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Testing&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Save this as &lt;strong&gt;testing.html&lt;/strong&gt; and save it in the root folder of the server. When you installed apache it comes with a default Web
+site folder. If you&apos;re on Windows, your server&apos;s root folder should be something like &lt;strong&gt;C:\wamp\www&lt;/strong&gt;
+&lt;br /&gt;
+If you&apos;re on Ubuntu Linux, the server&apos;s root folder should be something like &lt;strong&gt;/var/www&lt;/strong&gt;
+&lt;br /&gt;
+If you&apos;re on Mac, and if MAMP was installed into the &lt;strong&gt;/Applications&lt;/strong&gt; folder, then the root folder should be something like &lt;strong&gt;/Applications/MAMP/htdocs&lt;/strong&gt;
+&lt;br /&gt;
+Once you&apos;ve saved &lt;strong&gt;testing.html&lt;/strong&gt; to the right folder, then open a browser and type/paste the following: &lt;strong&gt;http://localhost/testing.html&lt;/strong&gt; If everything worked out, this address should show your new web page! If it worked, congratz! You installed Apache! If it didn&apos;t, double check to make sure PHP and Apache are running, and double check that you saved into the right folder.
+&lt;br /&gt;
+NOTE: If you&apos;re on a mac, and you didn&apos;t set apache to use port (80), it&apos;s probably still using it&apos;s default port of 8888. You&apos;ll just have to use this address instead &lt;strong&gt;localhost:8888/testing.html &lt;/strong&gt; and it should work.
+&lt;br /&gt;
+Now that Apache is working, we&apos;ll test PHP to make sure it&apos;s working right. Open your text editor again and make a new text file called &lt;strong&gt;testing.php&lt;/strong&gt;. Save it in the same root folder, next to testing.html. Now type the following PHP code, which will display information about your PHP installation&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Testing PHP&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+	&lt;span class=&quot;nb&quot;&gt;phpinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt; 
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;As you can see, PHP can be nested inside of the body tags of an html document.&lt;/p&gt;
+
+&lt;p&gt;One thing to note s that since the PHP code is being parsed by your apache server, you can only access the page through a URL like this:
+&lt;br /&gt;
+&lt;strong&gt;http://localhost/testing.php&lt;/strong&gt; (Windows) 
+&lt;br /&gt;or &lt;br /&gt;
+&lt;strong&gt;http://127.0.0.1/testing.php&lt;/strong&gt; (Linux)
+&lt;br /&gt;or&lt;br /&gt;
+&lt;strong&gt;http://localhost/~&amp;lt;user&amp;gt;/testing.php&lt;/strong&gt;(Mac) 
+&lt;br /&gt;
+if you try to access this page through your file directory like any normal HTML file on your hard drive like this &lt;strong&gt;file:///C:/wamp64/www/testing.php&lt;/strong&gt; then the PHP code will not work. It MUST be accessed through a URL.&lt;/p&gt;
+
+&lt;p&gt;Open your browser again and type &lt;strong&gt;http://localhost/testing.php&lt;/strong&gt;. This should bring up a purple screen with text saying something like &lt;strong&gt;PHP Version 5.6.31&lt;/strong&gt;(Newer versions will likely have been released since the writing of this post).
+&lt;br /&gt;
+phpinfo(); is a usefull built in function that will display information about your version of PHP. If you&apos;ve made it this far, then you&apos;ve successfully installed both Apache and PHP! Now you&apos;re ready to start the next post in this series, where we&apos;ll actually get started programming in PHP!&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
+</description>
+        <pubDate>Fri, 26 Jan 2018 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//code/2018/01/26/intro-to-php-part-1/</link>
+        <guid isPermaLink="true">http://localhost:4000//code/2018/01/26/intro-to-php-part-1/</guid>
+      </item>
+    
+      <item>
+        <title>Assessing the Credibility of Websites That Report About Climate Change</title>
+        <description>&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35799008654/in/dateposted-public/&quot; title=&quot;tree&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4431/35799008654_95901c04c4_b.jpg&quot; width=&quot;960&quot; height=&quot;650&quot; alt=&quot;tree&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt; Even as the vast majority of climate scientists present a wealth of evidence in support of the theory of climate change, public policy has lagged far behind the knowledge of the scientific community, with many still believing that climate change is a “hoax”. In addition to debates at the public policy level, both climate change deniers and believers have contributed to an ongoing online debate through blogs, news articles, and social media. Many deniers are still uncertain about the effects that humanity has had on the environment, while other deniers are intentionally pushing an agenda of misinformation and fake news in order to cloud the climate change debate. It is necessary to assess the credibility of websites that report on climate change.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;redlink&quot; href=&quot;https://climate.nasa.gov/evidence/&quot;&gt;NASA&lt;/a&gt; is a credible source from a government science agency.
+The National Aeronautics and Space Administration (NASA) is a government organization that focuses on using science to expand human knowledge of the earth and the universe.
+The NASA website about climate change is climate.nasa.gov, it includes links to many credible scientifically accurate articles with ample supporting evidence. For example, the article titled “Climate change: How do we know?” opens with a graph depicting atmospheric carbon dioxide patterns that date back to 400,000 BC. The chart reveals stable patterns of carbon dioxide in the atmosphere. Throughout this recorded time period the carbon dioxide content of the atmosphere slowly rises for thousands of years and then slowly falls for thousands of years in a predictable frequency that probably coincides with the ebb and flow of the ice ages. The pattern is only broken in a dramatic uptick that coincides with the late industrial revolution to modern time. The information in this graph is credible because its data comes from comparing the carbon dioxide content in samples of ice cores that date back many hundreds of thousands of years.  Under the graph is a heading that states “Ninety-seven percent of climate scientists agree that climate-warming trends over the past century are very likely due to human activities, and most of the leading scientific organizations worldwide have issued public statements endorsing this position.” To prove the credibility of this statement, there is a link to another article titled &lt;a class=&quot;redlink&quot; href=&quot;https://climate.nasa.gov/scientific-consensus/&quot;&gt;“Scientific consensus: Earth&apos;s climate is warming&lt;/a&gt;, which contains public statements from many well established american scientific societies that are all in agreement about climate change. The article “Climate change: How do we know?” establishes its credibility in the top of the page by displaying scientific evidence, citing reputable scientific sources, and displaying a quote from the Intergovernmental Panel on Climate Change.&lt;/p&gt;
+
+&lt;p&gt;&lt;a class=&quot;redlink&quot; href=&quot;https://www.infowars.com/the-truth-about-climate-change/&quot;&gt;Infowars&lt;/a&gt; is a conspiracy theorist website and a very unreliable source of information. Infowars is a website founded by the popular conspiracy theorist Alex Jones, whose hyperbolic, guttural rants have made him infamous around the internet and around the world. Among other things, this website contains many articles that attempt to dispel the theory of climate change. One such article, titled “THE TRUTH ABOUT CLIMATE CHANGE” written by Kit Daniels is full of bold unsubstantiated statements, such as  “Global warming is a manufactured problem played up by the government to instigate a public reaction – fear – the government then exploits to offer a predetermined solution: the expansion of government at the public’s expense.” There was no further evidence to support this claim or prove its accuracy. Many other bold statements in this article require a willing suspension of disbelief. A few links are provided that elaborate on certain points, however, these links all point to questionable sources with no scientific credibility. For example, one of the main sources cited in this article is a book called “The Creature From Jekyll Island”, written by passionate fear-mongering conspiracy theorist G. Edward Griffin. Another example of the questionable credibility of this Infowars article is the fact that one of Infowars’s “sources” is really just a link to another older infowars article, so they are essentially just circularly reaffirming their own conspiracies. In addition to the other far out claims on Infowars, this article on climate change is mostly aimed at an audience that has already made up its mind that climate change is a “hoax” and that all climate scientists have simply sold out to a secretive, malicious world dominating government conspiracy.&amp;lt;p/
+
+&lt;p&gt;In contrast, &lt;a class=&quot;redlink&quot; href=&quot;https://www.livescience.com/16388-climate-change-debate-man-nature.html&quot;&gt;Live Science&lt;/a&gt; is a fairly credible source examining both sides of the climate change debate. Live Science is a scientific news website that focuses on various scientific breakthroughs and reports on research findings. Live Science presents articles from a very objective [comma between adjectives: place a comma between two adjectives that &quot;and&quot; would not appropriately connect.] scientific perspective, attempting to avoid political bias. This helps them present themselves as a fairly credible source on scientific matters. The linked article titled “The Climate Change Debate: Man vs. Nature” written by Anuradha K. Herath examines the divided political positions of both the climate change supporters and deniers.  Anuradha K. Herath considers natural phenomena that could contribute to climate change, such as the frequency of sunspots on the surface of the sun, which affect the energy output of the sun, causing temperatures to fluctuate on earth. While these sunspots do cause a small measurable change in the earth’s climate, Anuradha says that “The evidence of the Sun and other natural forces being the primary cause for climate change is still inadequate.” She also examines other possible natural causes for climate change such as the Earth’s orbital changes throughout history. Anuradha says,  “Consider the Sahara desert, for example. There is a wide acceptance among scientists that the Sahara transformed from a fertile grassland to a desert because of a change to the Earth&apos;s orbit. This shift in how the Earth circled the Sun affected the amount of sunlight that region of Africa received.” However it is also possible that climate change could be a cause for orbital shift, rather than an effect of it. Anuradha quotes from Astrobiology Magazine, saying, “Scientists from NASA&apos;s Jet Propulsion Laboratory say that the current melting of ice in Greenland is already causing the tilt to change at a rate of approximately 2.6 centimeters each year. They predict that this change could increase in the years ahead.” This article examines both sides of the argument because it shows that there are both natural causes for climate change as well as man made causes. However, Anuradha’s article goes on to explain that “Hundreds of scientists around the world have conducted research that show human activities contribute the most to today’s climate change . . . scientists who think human activity is the main cause of climate change don&apos;t deny that natural changes will cause temperature fluctuations on Earth. However, their argument is that in the current cycle of climate change, the impact caused by man is far greater.”&lt;/p&gt;
+
+
+&lt;p&gt;While gathering information online, it is important to be able to determine what information is credible, objective, and free from political prejudice. Reading with a skeptical, inquisitive mindset is the best way to protect oneself from the manipulation of political agendas. The ability to spot misleading headlines and political misinformation will aid one’s ability to be an informed member of society who will make socially responsible decisions.&lt;/p&gt;
+
+
+&lt;p&gt;One way or another, climate change will affect the lives of every living being on earth. It is important the we as a society have the scientific literacy to understand our impact on the world that we depend on for our very survival. It is ridiculous and embarrassing for our country that our political policies have lagged so far behind the scientific knowledge of the rest of the developed world.&lt;/p&gt;
+&lt;/p&gt;
+</description>
+        <pubDate>Thu, 17 Aug 2017 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2017/08/17/climate-change-websites/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2017/08/17/climate-change-websites/</guid>
+      </item>
+    
+      <item>
+        <title>Photoshop Floating Island Castle Tutorial</title>
+        <description>&lt;article&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LPhkSkKaBhM&quot;&gt;Check out the video tutorial&lt;/a&gt; to learn how to create this floating island kingdom using photoshop!&lt;br /&gt;
+&lt;b&gt; Scroll all the way down&lt;/b&gt; to find the four images you&apos;ll need to recreate this project.&lt;/p&gt;
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/36404943142/in/dateposted-public/&quot; title=&quot;kingdom of the Clouds tutorial&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4368/36404943142_f30ecf6249_b.jpg&quot; width=&quot;1024&quot; height=&quot;791&quot; alt=&quot;kingdom of the Clouds tutorial&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Click on each of the pictures to download them from flickr.&lt;/p&gt;
+
+
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35738494814/in/dateposted-public/&quot; title=&quot;castle&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4354/35738494814_46b84786b6_b.jpg&quot; width=&quot;1024&quot; height=&quot;680&quot; alt=&quot;castle&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35738494364/in/dateposted-public/&quot; title=&quot;mountain&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4404/35738494364_c5120ebce9_b.jpg&quot; width=&quot;1024&quot; height=&quot;553&quot; alt=&quot;mountain&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35763926333/in/dateposted-public/&quot; title=&quot;birds&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4343/35763926333_d9ccd0a615_b.jpg&quot; width=&quot;1024&quot; height=&quot;657&quot; alt=&quot;birds&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/36404942712/in/dateposted-public/&quot; title=&quot;sky&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4431/36404942712_35187d6906_b.jpg&quot; width=&quot;1024&quot; height=&quot;791&quot; alt=&quot;sky&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+
+
+
+
+&lt;/article&gt;
+</description>
+        <pubDate>Mon, 14 Aug 2017 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//design/2017/08/14/photoshop-floating-island-castle/</link>
+        <guid isPermaLink="true">http://localhost:4000//design/2017/08/14/photoshop-floating-island-castle/</guid>
+      </item>
     
       <item>
         <title>Using Super Mario Bros to learn about JavaScript Constructor functions and Prototypes</title>
@@ -413,548 +1135,6 @@ If it&apos;s false, we will assign the value of playerTwo to the variable highSc
         <pubDate>Sun, 14 May 2017 00:00:00 -0400</pubDate>
         <link>http://localhost:4000//code/2017/05/14/Ternary-operator/</link>
         <guid isPermaLink="true">http://localhost:4000//code/2017/05/14/Ternary-operator/</guid>
-      </item>
-    
-      <item>
-        <title>Free clean water for anybody, anywhere.</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4173/34321372361_167bd3877f_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;finished&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4173/34321372361_167bd3877f_z.jpg&quot; width=&quot;100%&quot; alt=&quot;finished&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Nobody should ever be without clean water. Any region in the world with a few inches of rainfall can capture that rain water, filter it, purify it, and put it to good use. My friend has an urban farm where she grows fruit, vegetables, and herbs. But there was no reliable source of water on her land and she had to have water hauled in.
-So I designed and built this simple structure on her land to capture, filter, and store rain water for agricultural irrigation. With additional filtration and sterilization, this system could also be used to provide safe drinking water.&lt;/p&gt;
-
-&lt;p&gt;Now I&apos;m putting the plans and instructions online so that anybody around the world can build their own off-grid stand alone rainwater collection system. This particular structure is 128 square feet, measuring 8 feet wide, 16 feet long, and 8 feet 6 inches tall. We contacted the local building department and they told us that we don&apos;t need a permit for any structures less than 200 square feet.&lt;/p&gt;
-
-&lt;h2&gt;Step 1: Posts&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4161/34410035526_c7662f130f_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step1&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4161/34410035526_c7662f130f_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step1&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;I used 10 foot long 4x4 posts buried 48 inches deep in the ground with concrete. The posts are spaced 8 feet apart from each other. The front posts are cut 7 feet 5 inches tall, and the back posts are cut 6 feet 5 inches tall.&lt;/p&gt;
-
-&lt;h2&gt;Step 2: Beams and Braces&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4192/34292059622_675638d4e7_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step2&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4192/34292059622_675638d4e7_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step2&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Beams are horizontal 8 foot boards that sit on the posts. Braces are the smaller 4 foot long boards at 45 degree angles that provide support.&lt;/p&gt;
-
-&lt;h2&gt;Step 3: Rafters&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4182/34292059732_edce1c4208_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step3&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4182/34292059732_edce1c4208_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step3&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt; The rafters are 10 foot long 2x6s with a 6 inch overhang on the low end, and about a foot of overhang on the high end&lt;/p&gt;
-
-&lt;h2&gt;Step 4: Purlins&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4163/34410035326_a97f060ebb_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step4&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4163/34410035326_a97f060ebb_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step4&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Purlins are long thin strips of wood that measure 1 1/2 x 1 1/2 inches and 8 feet long. They sit on top of the rafters spaced 1 foot apart. Purlins provide support for the roof pannels, as well as a surface to drive the roofing nails into.&lt;/p&gt;
-
-&lt;h2&gt;Step 5: Roofing&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4176/34292059062_fa0ac8269f_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step5&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4176/34292059062_fa0ac8269f_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step5&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;I used corrugated asphalt roofing panels from a company called &quot;Ondura&quot; They measure 6.5 feet by 4 feet and they are very flexible and easy to cut and work with.&lt;/p&gt;
-
-&lt;h2&gt; Step 6: Gutters, Pipes, Containers&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4162/34292072632_ebeb5944b7_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step6&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4162/34292072632_ebeb5944b7_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step6&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The metal gutters are only needed on the low pitch of the roof. There is a filter in the gutter to keep leaves and debris out of the water. I attached a 3 inch PVC pipe to the downspout of the gutter using a two part epoxy called JB Weld. The PVC pipes direct the gutter water into three water containers. Once the water fills the first container, it will flow up into the pipe to the second container, etc... Each container can hold 255 gallons of water, so all three hold a total of 765 gallons of water. We could continue to add as many containers as we wanted.&lt;/p&gt;
-
-&lt;h2&gt;Step 7: Collect free water&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4185/34292058302_b9109ebc3a_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step7&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4185/34292058302_b9109ebc3a_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step7&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;We will attach irrigation lines to the containers to water our crops this summer. This system could be cheaply and easily replicated anywhere in the world that has a few inches of rainfall, especially in places with no groundwater for a well, or in situations where the cost of drilling a well would be too cost prohibitive.&lt;/p&gt;
-
-&lt;h2&gt;Step 9: Optional: Enclose Walls to Make Greenhouse Nursery&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4185/34683269665_1e70cf208c_h.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step7&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4185/34683269665_1e70cf208c_h.jpg&quot; width=&quot;100%&quot; alt=&quot;step8&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;In the future, we would like to enclose the walls. I build the high side facing south, so we could put big windows covering the whole wall to create a greenhouse using transparent plastic roofing panels. The north, east, and west walls can be framed using strong pallets, clad in painted plywood. The inside of the pallets can be stuffed with straw for insulation.&lt;/p&gt;
-
-&lt;h2&gt;Download my 3D model to edit and build your own!&lt;/h2&gt;
-
-&lt;p class=&quot;centerText&quot;&gt;To interact with 3D models, make sure you have enabled &lt;a href=&quot;https://offcampushousing.uconn.edu/auth/help-cookies&quot; target=&quot;_blank&quot; class=&quot;redlink&quot;&gt;third party cookies and site data.&lt;/a&gt;
-You&apos;ll also need a browser that supports &lt;a href=&quot;https://get.webgl.org/&quot; target=&quot;_blank&quot; class=&quot;redlink&quot;&gt;WebGL.&lt;/a&gt;&lt;/p&gt;
-
-&lt;p class=&quot;centerText&quot;&gt;Click the image below to interact with the 3D model. 
-After the model loads, click the &quot;&amp;lt;&quot; Icon to the right for camera control options.&lt;br /&gt;
-&lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;https://3dwarehouse.sketchup.com/model/bb060212-66ae-4580-996b-505f48eec904/8x16-rainwater-catchment-a-irrigation-system&quot;&gt;Click here&lt;/a&gt; to download this model as an editable SketchUp file.&lt;/p&gt;
-
-&lt;iframe src=&quot;https://3dwarehouse.sketchup.com/embed.html?mid=bb060212-66ae-4580-996b-505f48eec904&amp;amp;width=580&amp;amp;height=326&quot; frameborder=&quot;0&quot; scrolling=&quot;no&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; width=&quot;100%&quot; height=&quot;600px&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Thu, 04 May 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//life/2017/05/04/free-water/</link>
-        <guid isPermaLink="true">http://localhost:4000//life/2017/05/04/free-water/</guid>
-      </item>
-    
-      <item>
-        <title>What&apos;s the difference between a &quot;do...while&quot; loop and a &quot;while&quot; loop in JavaScript?</title>
-        <description>&lt;p&gt;So, JavaScript has a &quot;while&quot; loops and a &quot;do... while&quot; loops. sure, they&apos;re written a little bit differently, but ther&apos;re mostly the same right?&lt;br /&gt;
-Wrong!&lt;br /&gt;
-Here is the syntax for a while loop:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//initialize a counter&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//sets the loop&apos;s condition&lt;/span&gt;
- 	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//code block to execute for each iteration of the loop&lt;/span&gt;
- 	&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//increment the counter by 1 for each iteration of the loop&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;//outputs 1 2 3 4 5 6 7 8 9&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And here is the syntax for a do... while loop:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//initialize a counter&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; 
- 	&lt;span class=&quot;c1&quot;&gt;//code block to execute for each iteration of the loop&lt;/span&gt;
- 	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- 	&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//increment the counter by 1 for each iteration of the loop&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//sets the loop&apos;s condition&lt;/span&gt;
- &lt;span class=&quot;c1&quot;&gt;//outputs 1 2 3 4 5 6 7 8 9&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The most important difference to note here is that in a &quot;while&quot; loop, the loop&apos;s condition is checked &lt;i&gt;before&lt;/i&gt; the code block within the curly braces is able to be executed. &lt;br /&gt;
-So if the condition of a &quot;while&quot; loop is false, the code block won&apos;t be executed.
-&lt;br /&gt;&lt;br /&gt;
-In contrast, in a &quot;do... while&quot; loop, the loop&apos;s condition is checked &lt;i&gt;after&lt;/i&gt; the first iteration of the code block within the curly braces has already been executed. 
-This is an important distinction, because a &quot;do... while&quot; loop&apos;s code block is always executed at least once, regardless of whether it&apos;s condition is true or false. 
-&lt;br /&gt;&lt;br /&gt;
-However, a &quot;while&quot; loop&apos;s code is only executed if the loop&apos;s condition is true. 
-&lt;br /&gt;
-&quot;while&quot; loops are used far more often than &quot;do... while&quot; loops because you would typically want to check whether a loop&apos;s condition is true before you execute the first iteration of it&apos;s code block. I also find &quot;while&quot; loops to be easier to read.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 23 Apr 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/04/23/while-and-dowhile/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/04/23/while-and-dowhile/</guid>
-      </item>
-    
-      <item>
-        <title>How does the JavaScript method &quot;indexOf&quot; and &quot;lastIndexOf&quot; work?</title>
-        <description>&lt;p&gt;The indexOf method will index a string to find whether or not a particular term or word appears in a string or not, and it also indicates what character position that term or word appears. 
-
-For example, we have a string that says &quot;Hail to the king, baby!&quot;
-and we want to find out what character position the word &quot;king&quot; appears at. &lt;/p&gt;
-&lt;p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hail to the king, baby!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;king&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;That word appears at character position &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-&lt;span class=&quot;c1&quot;&gt;//outputs &quot;That word appears at position 12&quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-&lt;p&gt;But what if we try to find the index of a word that doesn&apos;t appear in the string, like the word &quot;prince&quot;? By default, the indexOf method will return &quot;-1&quot; if a word is not found.&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hail to the king, baby!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;prince&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-  &lt;span class=&quot;c1&quot;&gt;//outputs -1 &lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;But that &quot;-1&quot; isn&apos;t very informative unless you already know what it means, so it would be more useful to set up an if statement to handle cases where the word is not found.&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hail to the king, baby!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;indexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;prince&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
- &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;That word isn&apos;t here!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;That word appears at character position &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
- &lt;span class=&quot;c1&quot;&gt;//outputs &quot;That word isn&apos;t here!&quot;&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;But what if you have multiple occurances of the same word or term, and you want to find the last occurance?
-The method &quot;lastIndexOf&quot; would be useful for that.
-For example, if you have the string that has the same word twice, like &quot;Hail to the king, baby! I&apos;m the king!&quot;
-and you want to find the position of the last occurance of the word &quot;king&quot; you could use the following code&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Hail to the king, baby! I&apos;m the king!&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;phrase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;lastIndexOf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;king&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;That word appears at character position &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
- &lt;span class=&quot;c1&quot;&gt;//outputs &quot;That word appears at character position 32&quot;&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
- 
- &lt;p&gt;
- This is just one simple example of a use-case for the built in JavaScript methods &quot;indexOf&quot; and &quot;lastIndexOf&quot;
-&lt;/p&gt;
-
-&lt;/p&gt;
-</description>
-        <pubDate>Sun, 23 Apr 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/04/23/indexOf-and-lastIndexOf/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/04/23/indexOf-and-lastIndexOf/</guid>
-      </item>
-    
-      <item>
-        <title>console.log&apos;s friends, The four other types of JavaScript console messages</title>
-        <description>&lt;p&gt;The most common type of console message is console.log() which simply logs the contents within the parentheses out to the browser&apos;s developer tools console section. However, there are additional console message types that could be useful in different situations.&lt;/p&gt;
-
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33388813124/in/dateposted-public/&quot; title=&quot;console messages&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2939/33388813124_cc51ef2eb6_m.jpg&quot; width=&quot;800&quot; alt=&quot;console messages&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;br /&gt;
-&lt;a href=&quot;http://blog.500tech.com/browser-console-tricks/&quot; style=&quot;color:grey&quot;&gt;image courtesy of 500Tech&lt;/a&gt;
-&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;The first is &lt;span style=&quot;color:grey&quot;&gt;console.debug&lt;/span&gt;, which looks the same as a normal console.log() message, and is very useful for debugging code.&lt;/p&gt;
-
-&lt;p&gt;Then there is &lt;span style=&quot;color:blue&quot;&gt;console.info(),&lt;/span&gt; which will make a little blue info icon appear next to the console message. This could be useful to help keep track of some status information in your code, and make it easy to distinguish from other console messages.&lt;/p&gt;
-
-&lt;p&gt;The next is &lt;span style=&quot;color:orange&quot;&gt;console.warn()&lt;/span&gt; which will make a yellow warning icon with an exclemation mark next to the console message. The warning icon is useful to indicate that a potential error could occur, but has not yet happened.&lt;/p&gt;
-
-&lt;p&gt;The third is &lt;span style=&quot;color:red&quot;&gt;console.error()&lt;/span&gt; which will make a red error icon next to the console mesage. An error counter will also appear in the status section of the browser&apos;s developer tools console. This message is useful to indicate that a problem has already occured. The message should describe what the error is, and ideally offer some solution. Creating custom error messages could be very useful for debugging, rather than only trying to interprit javadcript&apos;s default error messages.&lt;/p&gt;
-
-&lt;p&gt;It could be helpful to output different console message types for different situations. Their colors and icons make different console messages easy to spot while scanning through console output.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 23 Apr 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/04/23/console-messages/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/04/23/console-messages/</guid>
-      </item>
-    
-      <item>
-        <title>Document Object Model Overview</title>
-        <description>&lt;p&gt;&quot;DOM&quot; stands for Document Object Model.&lt;br /&gt;
-&lt;b&gt;Document&lt;/b&gt; = A web page (Either viewed through the broweser, or the source code)&lt;br /&gt;
-&lt;b&gt;Object&lt;/b&gt; = Any pieces of a HTML (titles, paragraphs, headings, lists, etc...)&lt;br /&gt;
-&lt;b&gt;Model&lt;/b&gt; =  The relationship that different pieces of HTML have to each other, represented in a tree hierarchy.&lt;br /&gt;&lt;br /&gt;
-
-The DOM is an agreed upon set of terms that allows a JavaScript program to navigate an HTML document. The DOM allows a JS program to traverse into any webpage to manipulate elements of that page. So the DOM is more of a concept, rather than a language.&lt;br /&gt;&lt;br /&gt;
-
-For example, a JS program can traverce the DOM to get the text of the title, to get the second paragraph, even to get the third link in the menu and set it&apos;s CSS to display:none&lt;br /&gt;&lt;br /&gt;
-
-By traversing the DOM, a JS program could change the background color of all paragraphs with a class of &quot;important&quot;, or change a link&apos;s behavior so that it performs a JS function when clicked.&lt;/p&gt;
-
-&lt;p&gt;The Document Object Model is the means by which a JacaScript program can interact with HTML on a webpage.
-The DOM represents HTML elements in terms of &quot;nodes&quot; on a tree hierarchy structure. Every html page is made of these nodes. Look at the HTML code on the left, and compare it to the simple tree structure on the right.&lt;/p&gt;
-
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33844356290/in/dateposted-public/&quot; title=&quot;nodes of the DOM&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2915/33844356290_71b41fe740_m.jpg&quot; width=&quot;1000&quot; alt=&quot;nodes of the DOM&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;In this simplistic example, we can see a tree with one node per html element.
-But an html file is more than just elements! There are attributes, text, comments etc. There is a lot of text in this example that isn&apos;t being represented on the DOM tree. Also, there are typically one or more attribures as part of an HTML element, as well as comments.&lt;p&gt;
-&lt;p&gt;
-All of those things are seen as different kinds of nodes in the DOM.
-The reason for this is so that we can use javascript to get to them directly.
-JS can target the text inside of the second paragraph, find the source attricute of an image tag, etc...
-
- So the real DOM diagram would be quite complex and crowded if we displayed ALL of the nodes. There would not only be nodes that represent elements, but also nodes for attributes, text, comments etc...&lt;/p&gt;
-
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33844356500/in/dateposted-public/&quot; title=&quot;ALL THE NODES&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4172/33844356500_ce297ae542_m.jpg&quot; width=&quot;650px&quot; alt=&quot;ALL THE NODES&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;p&gt;
-There are 12 different types of nodes in total:&lt;br /&gt;
-1 element nodes,&lt;br /&gt;
-2 attribute nodes,&lt;br /&gt;
-3 text nodes&lt;br /&gt;
-4 CDATA (text that will NOT be parsed by a parser) nodes&lt;br /&gt;
-5 entity refrence nodes,&lt;br /&gt;
-6 entity nodes,&lt;br /&gt;
-7 processing instruction nodes,&lt;br /&gt;
-8 comment nodes,&lt;br /&gt;
-9 document nodes,&lt;br /&gt;
-10 documentType nodes,&lt;br /&gt;
-11 documentFragment nodes,&lt;br /&gt;
-12 notation nodes.&lt;br /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;This has been only a general overview of the DOM. For more in depth knowledge about the DOM, check out &lt;a href=&quot;https://www.w3schools.com/js/js_htmldom.asp&quot; class=&quot;redlink&quot; target=&quot;blank&quot;&gt;this collection of articles by w3schools&lt;/a&gt;&lt;/p&gt;
-&lt;/p&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 23 Apr 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/04/23/DOM-overview/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/04/23/DOM-overview/</guid>
-      </item>
-    
-      <item>
-        <title>I stayed at an organic fruit tree orchard in Hawaii for a month... This is what I learned</title>
-        <description>&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33335045343/in/album-72157680202854482/&quot; title=&quot;ocean-jungle&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2811/33335045343_d2b115d79b_m.jpg&quot; width=&quot;1000&quot; alt=&quot;ocean-jungle&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;W.W.O.O.F stands for World Wide Opportunities on Organic Farms. Essentially, it&apos;s about connecting small organic farms with people who want to learn how to grow organic healthy food. You learn to farm by working a set number of hours in exchange for room and board. You can WWOOF almost anywhere on earth, which is awesome because WWOOFing makes the cost living while traveling ridiculously cheap.&lt;/p&gt;
-
-&lt;p&gt;I&apos;ve always loved to travel different parts of the US, bouncing back and forth from my home state of southeast Florida, then up north to the metro Detroit area of Michigan, and out west to the bay area of California. &lt;br /&gt;
-I always travel solo, not wanting anybody else&apos;s schedules, obligations or hesitations to stand between me and a good adventure. &lt;/p&gt;
-
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146353945/in/album-72157680202854482/&quot; title=&quot;cliffs&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2818/34146353945_a6a6e07206_m.jpg&quot; width=&quot;1000&quot; alt=&quot;cliffs&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;I&apos;ve also always enjoyed gardening, from growing veggies in the back yard to volunteering at local community gardens. So when I found out about an opportunity to learn organic farming while traveling to the tropical paradise of Hawaii, I jumped at that opportunity.&lt;/p&gt;
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146354205/in/album-72157680202854482/&quot; title=&quot;banana closeup&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2813/34146354205_989950674c_m.jpg&quot; width=&quot;1000&quot; alt=&quot;banana closeup&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;a href=&quot;http://wwoof.net/&quot; class=&quot;redlink&quot;&gt;WWOOF website&lt;/a&gt; has many organic farms available to crash at in exchange for a few hours of work. Each farm is different, but most expect 5 hours of work for 5 days a week in exchange for a place to sleep and free food. Accommodations vary, from a spare bedroom, a private cabin, or just a place to set up a tent. I made sure to find out as much as I could about what I was getting into&lt;/p&gt;
-
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33335045213/in/album-72157680202854482/&quot; title=&quot;oechard&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2820/33335045213_2d63470aee_m.jpg&quot; width=&quot;1000&quot; alt=&quot;orchard&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;I found a 3 acre fruit tree orchard in the Hawaiian Acres subdivision of the Big Island of Hawaii. It had a modest off grid cabin, meaning no electric or water utilities. All electricity came from a single 240 watt solar panel, and non-potable water was gathered from the roof, filtered, and heated with propane for showers.
-Drinking water was brought in from town in water containers.&lt;/p&gt;
-
-&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33335046493/in/album-72157680202854482/&quot; title=&quot;cabin&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2922/33335046493_3ab03f819a_m.jpg&quot; width=&quot;1000&quot; alt=&quot;cabin&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
-
-&lt;p&gt;I worked on 2 separate properties, the first being a well established 3 acre fruit tree orchard.
-The second property is where I spent most of my effort. It was an untouched quarter acre that we were developing to become a new smaller farm.&lt;br /&gt;
-&lt;h2&gt;I spent most of my effort transforming this empty lot into a fruit tree orchard&lt;/h2&gt;
-&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146354125/in/album-72157680202854482/&quot; title=&quot;before-trees&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2933/34146354125_0058397079_m.jpg&quot; width=&quot;1000&quot; alt=&quot;before-trees&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
- &lt;p&gt;
- There are generally two (main) different types of lava rock on Hawaii. One is called &quot;Pahoehoe&quot; It takes the form of a basaltic lava forming smooth undulating slabs of hard lava rock, almost like asphalt. Since this kind of lava rock forms in large slabs, it is nearly impossible to dig through with mere hand tools. &lt;/p&gt;
- &lt;h2&gt;An example of &quot;Pahoehoe&quot; lava rock by the ocean.&lt;/h2&gt;
- &lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/33335044973/in/album-72157680202854482/&quot; title=&quot;pahoehoe&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2805/33335044973_d04d8d03e3_m.jpg&quot; width=&quot;1000&quot; alt=&quot;pahoehoe&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
- &lt;p&gt;The second kind of lava rock is called &quot;A&apos;a&quot;. A&apos;a lava looks completely different than pahoehoe lava, it takes the form of very sharp chunky rocks. A&apos;a rock on the surface are very light weight, as they have many little holes and air pockets. &lt;/p&gt;
-&lt;h2&gt;An example of &quot;A&apos;a&quot; rock. I dug this hole in the rocks to plant a fruit tree.&lt;/h2&gt;
- &lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146353655/in/album-72157680202854482/&quot; title=&quot;hole&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2931/34146353655_7eee73e0b7_m.jpg&quot; width=&quot;1000&quot; alt=&quot;hole&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
- &lt;p&gt;The process takes about 15 minutes or more to dig a hole big enough for a baby fruit tree  (approximately 2 feet deep, by 3 feet around) it takes lots of patience, but that is the reality of farming on a lava field.
- Of course, lava rocks aren&apos;t a terribly nutritious medium for trees to grow in. So I mixed two 5 gallon buckets of cinder-soil and two 5 gallon buckets of macadamia nut compost into the holes with the fruit tree. &lt;/p&gt;
-
- &lt;h2&gt;Here is a baby banana tree growing in a medium of macadamia nut compost and cinder soil&lt;/h2&gt;
- &lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146353525/in/album-72157680202854482/&quot; title=&quot;mac-nut-compost&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2869/34146353525_12bef9300f_m.jpg&quot; width=&quot;1000&quot; alt=&quot;mac-nut-compost&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
- &lt;p&gt;There are lots of macadamia nut orchards on the big Island of Hawaii, so macadamia nut shells are an abundant natural byproduct of this industry, perfect for composting with fruit trees. after each tree is planted, it needs to be fertilized.  A couple of cups of dolomite and dried chicken manure pellets are sprinkled over the soil before the tree is covered with a deep layer of wood chip mulch. &lt;/p&gt;
-
-&lt;h2&gt;This baby banana tree is mulched with wood-chips. It kinda looks like a flag&lt;/h2&gt;
-&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/34146354325/in/album-72157680202854482/&quot; title=&quot;baby-banana-flag&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2909/34146354325_ea73ba09fa_m.jpg&quot; width=&quot;1000&quot; alt=&quot;baby-banana-flag&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;The mulch serves multiple purposes. It smothers out weeds around the tree, helps to retain moisture in the hot dry climate, and as the mulch eventually breaks down and decomposes, it&apos;s nutrients will leak down to feed the fruit tree roots.&lt;/p&gt;
-
-&lt;p&gt;
-...And finally, here are the 33 fruit trees I planted in the last 4 weeks living and working on the Big Island of Hawaii! &lt;/p&gt;
-&lt;h2&gt;Click the arrows on the edges of the frame to scroll through the album and see all of the trees I planted!&lt;/h2&gt;
-&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/albums/72157682814337435&quot; title=&quot;all the trees i planted in hawaii&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/3/2884/33761595540_d00b4761e0_m.jpg&quot; width=&quot;1000&quot; alt=&quot;all the trees i planted in hawaii&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;I would reccomend anyone who is interested in traveling and gardening to look into the &lt;a href=&quot;http://wwoof.net/&quot; class=&quot;redlink&quot;&gt;WWOOF website&lt;/a&gt; and do some research. &lt;/p&gt;
-
-&lt;p&gt; I absolutely love planting trees, it is one of the most rewarding activities, especially fruit trees that will eventually provide an abundance of healthy organic food for decades to come in the future!&lt;/p&gt;
-&lt;/p&gt;
-</description>
-        <pubDate>Thu, 16 Feb 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//life/2017/02/16/travel/</link>
-        <guid isPermaLink="true">http://localhost:4000//life/2017/02/16/travel/</guid>
-      </item>
-    
-      <item>
-        <title>Create a Paper Cut-Out Animation with After Effects</title>
-        <description>&lt;article&gt;
-	&lt;p&gt; In this tutorial you&apos;ll learn how to create this stylized paper cut-out animation using After Effects and a few image textures!&lt;/p&gt;
-	&lt;img src=&quot;https://imageshack.us/a/img924/6792/Dzw5TX.gif&quot; /&gt;
-
-	&lt;p&gt;To make this animation we&apos;ll only need these 3 paper textures below. Click on each of the pictures to download them from flickr.&lt;/p&gt;
-
-	&lt;h2&gt;Crumply paper texture&lt;/h2&gt;
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027711262/in/dateposted-public/&quot; title=&quot;crumply brown paper&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/538/32027711262_ac04bb10a7_m.jpg&quot; width=&quot;240&quot; height=&quot;196&quot; alt=&quot;crumply brown paper&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-	&lt;h2&gt;Cardboard texture&lt;/h2&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027732112/in/dateposted-public/&quot; title=&quot;cardboard&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/389/32027732112_5b193dabf5_m.jpg&quot; width=&quot;184&quot; height=&quot;240&quot; alt=&quot;cardboard&quot; /&gt;&lt;/a&gt;
-
-	&lt;h2&gt;Brown paper texture&lt;/h2&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32057894261/in/dateposted-public/&quot; title=&quot;brown_paper&quot;&gt;&lt;img src=&quot;https://c6.staticflickr.com/1/723/32057894261_d45b0b8b18_m.jpg&quot; width=&quot;240&quot; height=&quot;172&quot; alt=&quot;brown_paper&quot; /&gt;&lt;/a&gt;
-
-	&lt;p&gt;We&apos;ll start by making a new composition sized 1280 x 720. Then click File &amp;gt; Import &amp;gt; Multiple Files, and import our 3 new image textures.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137632216/in/album-72157676949094332/&quot; title=&quot;1 - import multiple files&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/464/32137632216_0a92d9a60d_m.jpg&quot; width=&quot;178&quot; height=&quot;240&quot; alt=&quot;1 - import multiple files&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-	&lt;p&gt;Then drag the cardboard image texture into the composition and scale it down to 23 so that it fits within the composition. We&apos;ll name this layer &quot;Trunk 1&quot;&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800741290/in/album-72157676949094332/&quot; title=&quot;2 - drag cardboard texture into comp&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/477/31800741290_bcce1484ee_m.jpg&quot; width=&quot;240&quot; height=&quot;141&quot; alt=&quot;2 - drag cardboard texture into comp&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-	&lt;p&gt;Use the pen tool to draw this mask pattern on the cardboard texture. This shape will be be our basic tree trunk shape&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137631266/in/album-72157676949094332/&quot; title=&quot;3 - draw mask on cardboard texture&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/357/32137631266_aa8ee9a096_m.jpg&quot; width=&quot;240&quot; height=&quot;150&quot; alt=&quot;3 - draw mask on cardboard texture&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;To make it look like this shape was cut out of a real piece of cardboard, we will need to make the edges look less straight and clean. Search the Effects Search bar for &quot;Roughen Edges&quot; and set Border to 45.00 and set Scale to 76.0&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800738480/in/album-72157676949094332/&quot; title=&quot;4 - trunk roughen edges&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/547/31800738480_1e6ba2c071_m.jpg&quot; width=&quot;240&quot; height=&quot;176&quot; alt=&quot;4 - trunk roughen edges&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;We can adjust the color a little bit to bring out the warm tones in the image texture. Search the effect search bar for &quot;Curves&quot;. Curves is my favorite color correction tool in after effects, it lets you adjust the brightness/contrast and the red/green/blue values by clicking and draging on the diagonal curves line. Right now we only need to change the RGB tab to Red. Now click and drag up on the middle of the diagonal curve line to increase the red just a little bit&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365451833/in/album-72157676949094332/&quot; title=&quot;5 - red curves&quot;&gt;&lt;img src=&quot;https://c2.staticflickr.com/1/551/31365451833_feb3870a62_m.jpg&quot; width=&quot;240&quot; height=&quot;196&quot; alt=&quot;5 - red curves&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Next, we&apos;ll start making the tree&apos;s &quot;leaves&quot; Start by importing the &quot;crumply paper texture&quot; and scale it down to 88. We&apos;ll name this layer &quot;Leaves 1&quot;.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365451023/in/album-72157676949094332/&quot; title=&quot;6 - import crumply paper texture&quot;&gt;&lt;img src=&quot;https://c8.staticflickr.com/1/652/31365451023_84f039f07a_m.jpg&quot; width=&quot;240&quot; height=&quot;204&quot; alt=&quot;6 - import crumply paper texture&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;We can use the same Curves color correction effect to change our crumply paper texture to a nice leafy green color&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027420782/in/album-72157676949094332/&quot; title=&quot;7 - make crumply texture green&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/593/32027420782_da528854bb_m.jpg&quot; width=&quot;240&quot; height=&quot;150&quot; alt=&quot;7 - make crumply texture green&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;We can use the pen tool again to cut the leaves shape out of the image texture. Make sure you use the pen tool&apos;s bezier curves on every point to make the rounded edges. Just click and drag with the pen tool when drawing points to enable the bezier curves.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027420372/in/album-72157676949094332/&quot; title=&quot;8 - crumply paper cut mask&quot;&gt;&lt;img src=&quot;https://c5.staticflickr.com/1/524/32027420372_88d05d12b0_m.jpg&quot; width=&quot;240&quot; height=&quot;178&quot; alt=&quot;8 - crumply paper cut mask&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Use the Roughen Edges effect on the Leaves 1 layer and change Border to 22.00 and Scale to 193.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365448263/in/album-72157676949094332/&quot; title=&quot;9 - roughen leave edges&quot;&gt;&lt;img src=&quot;https://c8.staticflickr.com/1/765/31365448263_26c09e794a_m.jpg&quot; width=&quot;240&quot; height=&quot;159&quot; alt=&quot;9 - roughen leave edges&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;That&apos;s basically all it takes to make a tree! Now we can make copies of this tree by selecting both the &quot;Trunk 1&quot; and &quot;Leaves 1&quot; layers and Edit &amp;gt; Copy and Edit &amp;gt; Paste. Rename the copies to &quot;Trunk 2&quot;, &quot;Leaves 2&quot; and &quot;Trunk 3&quot;, &quot;Leaves 3&quot; I would also recommend changing the layer colors for each copy to make it easier for you to tell them apart in the time-line. To do this, just click the little colored box to the left of the layer name and select a new color for each copy. I set layers 1 to red, layers 2 to blue, and layers 3 to yellow. To make each copy look more unique, I made some minor adjustments to the mask points of each copy, so that they don&apos;t just look like completely identical copies.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027419842/in/album-72157676949094332/&quot; title=&quot;10 - tree copies&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/479/32027419842_0892cda610_m.jpg&quot; width=&quot;240&quot; height=&quot;186&quot; alt=&quot;10 - tree copies&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;To make this effect look even more like a physical paper cut out, we can add a drop-shadow to each tree layer to make it look like cut out pieces of paper are laying on a surface. But it will be difficult to see the drop shadow with that black background! We can toggle the transparency grid background by clicking the little checker icon just below the viewport.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027419262/in/album-72157676949094332/&quot; title=&quot;11 - toggle transparency grid&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/300/32027419262_0e1ca0e9eb_m.jpg&quot; width=&quot;240&quot; height=&quot;166&quot; alt=&quot;11 - toggle transparency grid&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;To make the drop-shadow of our first tree, we&apos;ll need to copy and paste both the Leaves 1 layer and the Trunk 1 layer. Rename the copied layers &quot;Leaves 1 shadow&quot; and Trunk 1 shadow respectively.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027419202/in/album-72157676949094332/&quot; title=&quot;12 - copy first tree layers&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/781/32027419202_71648717f2_m.jpg&quot; width=&quot;240&quot; height=&quot;166&quot; alt=&quot;12 - copy first tree layers&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Select the &quot;Leaves 1 shadow&quot; layer and then click the curves effect. Drag the RGB curve all the way down to make the layer completely black. Do the same for &quot;Trunk 1 shadow&quot;.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32027419032/in/album-72157676949094332/&quot; title=&quot;13 - blacken layers&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/420/32027419032_4c0bf94613_m.jpg&quot; width=&quot;240&quot; height=&quot;134&quot; alt=&quot;13 - blacken layers&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now search the Effects Search bar for Gaussian Blur and add it to the &quot;Leaves 1 Shadow&quot; layer. Turn the Blurieness setting up to 45. Then add Gaussian Blur to the &quot;Trunk 1 shadow&quot; layer, but this time turn the blurieness setting all the way up to 120.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365444093/in/album-72157676949094332/&quot; title=&quot;14 - blur shadow&quot;&gt;&lt;img src=&quot;https://c6.staticflickr.com/1/349/31365444093_ff33fd34d8_m.jpg&quot; width=&quot;240&quot; height=&quot;129&quot; alt=&quot;14 - blur shadow&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-	&lt;p&gt;Now that we have the shadow, move the &quot;leaves shadow 1&quot; and &quot;trunk shadow 1&quot; layer under the&quot;trunk 1&quot; and &quot;Leaves 1&quot; layers. This gives us a nice drop-shadow effect behind the tree, making it look more like a physical paper cut out.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365442843/in/album-72157676949094332/&quot; title=&quot;15 - move shadown under&quot;&gt;&lt;img src=&quot;https://c4.staticflickr.com/1/406/31365442843_aed8c916a0_m.jpg&quot; width=&quot;240&quot; height=&quot;165&quot; alt=&quot;15 - move shadown under&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now repeat the drop-shadow process for the other trees.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365441243/in/album-72157676949094332/&quot; title=&quot;16 - all drop shadows&quot;&gt;&lt;img src=&quot;https://c4.staticflickr.com/1/544/31365441243_b305551e02_m.jpg&quot; width=&quot;240&quot; height=&quot;156&quot; alt=&quot;16 - all drop shadows&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;To make all of these tree layers easier to deal with, let&apos;s pre-compose each tree into it&apos;s own composition. Select all 4 layers of each tree and then click Layer &amp;gt; Pre-compose to combine all 4 of each tree into it&apos;s own composition. Now each tree will be separated into it&apos;s own composition, and it will make managing the layers much easier.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31365438043/in/album-72157676949094332/&quot; title=&quot;17 - pre compose trees&quot;&gt;&lt;img src=&quot;https://c4.staticflickr.com/1/433/31365438043_67fe0b3900_m.jpg&quot; width=&quot;240&quot; height=&quot;138&quot; alt=&quot;17 - pre compose trees&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now that we have our trees pre-composed into their own compositions, let&apos;s start creating the environment that they&apos;ll be in! We&apos;ll start with the rolling green hills in the background. Import our brown paper texture and put it under our trees layers. don&apos;t worry about it&apos;s scale for now because we&apos;ll be resizing it again later.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800750990/in/album-72157676949094332/&quot; title=&quot;18 - new background&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/351/31800750990_8a6c15e229_m.jpg&quot; width=&quot;240&quot; height=&quot;141&quot; alt=&quot;18 - new background&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now go back to the Effects Search bar and type in Curves again. We&apos;ll increase the green quite a bit, and decrease the blue slightly to get a nice grassy green color.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32057613861/in/album-72157676949094332/&quot; title=&quot;19 - green background hills&quot;&gt;&lt;img src=&quot;https://c6.staticflickr.com/1/636/32057613861_b8bf805247_m.jpg&quot; width=&quot;240&quot; height=&quot;105&quot; alt=&quot;19 - green background hills&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now use the pen tool to cut out the rolling wavey hill shape for the background. Again, make sure to use the pen tool&apos;s bezier curves by clicking and dragging every time you make a new point! We can add a drop-shadow to the hills layer the same way we did for the trees. Just copy the hills layer, make the copy black, add a blur effect and put it behind the original. &lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800740090/in/album-72157676949094332/&quot; title=&quot;20 - cut mask on background&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/616/31800740090_8d9f422ff6_m.jpg&quot; width=&quot;240&quot; height=&quot;105&quot; alt=&quot;20 - cut mask on background&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now that we have our background hills, Let&apos;s make the sky! We can use the same brown paper image texture that we used for the hills.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800749070/in/album-72157676949094332/&quot; title=&quot;21 - background sky&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/691/31800749070_d3998d3c6c_m.jpg&quot; width=&quot;240&quot; height=&quot;105&quot; alt=&quot;21 - background sky&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Use the Curves color correction effect to increase the blue and decrease the red slightly. And that&apos;s about all we need to do to the sky!&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32057611871/in/album-72157676949094332/&quot; title=&quot;22 - sky color&quot;&gt;&lt;img src=&quot;https://c8.staticflickr.com/1/462/32057611871_5c2d798865_m.jpg&quot; width=&quot;240&quot; height=&quot;131&quot; alt=&quot;22 - sky color&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now we can make the ground layer. We can use the same crumply paper layer for the ground that we used for the tree&apos;s leaves. just change the position so that it is close to the bottom and mostly under the trees, as illustrated in the picture.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800747050/in/album-72157676949094332/&quot; title=&quot;23 - ground&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/433/31800747050_915505c6fd_m.jpg&quot; width=&quot;240&quot; height=&quot;138&quot; alt=&quot;23 - ground&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt; We can use the same Roughen Edges effect again to make the ground layer look more bumpy and organic. Just change Border to 12 and Scale to 83.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137635626/in/album-72157676949094332/&quot; title=&quot;24 - roughen edges on ground layer&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/654/32137635626_900c881ed5_m.jpg&quot; width=&quot;240&quot; height=&quot;138&quot; alt=&quot;24 - roughen edges on ground layer&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;We basically have created everything we need. We can copy more trees if we need to later but for now let&apos;s get to the really fun part... 3D layers! Well, more like 2.5D... You&apos;ll see what I mean in a minute! But first, whenever we work with 3D layers, we need to add a Camera to our composition. Click Layer &amp;gt; New &amp;gt; Camera &amp;gt; OK. A window will pop us saying &quot;Camera and Lights do not affect 2D layers&quot; click OK. So in the next step, we&apos;ll turn our 2D layers into 3D layers!&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800744930/in/album-72157676949094332/&quot; title=&quot;25 - new camera&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/576/31800744930_83c520bd09_m.jpg&quot; width=&quot;240&quot; height=&quot;138&quot; alt=&quot;25 - new camera&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;To turn our 2D layers into 3D layers, click the little 3D cube icon for all of the layers.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137633416/in/album-72157676949094332/&quot; title=&quot;26 - enable 3d layers&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/600/32137633416_7e736e689c_m.jpg&quot; width=&quot;240&quot; height=&quot;142&quot; alt=&quot;26 - enable 3d layers&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;You&apos;ll notice that we have a new layer called &quot;Camera 1&quot;. This is what we&apos;ll use to control the point of view. However, the camera&apos;s position controls aren&apos;t very easy to control. So we&apos;ll make a new null object and parent the camera to that null object. that way, whenever we move the null&apos;s position, the camera&apos;s position will match it as well. Click Layer &amp;gt; New &amp;gt; Null Object and name it cam-control. Check the 3D cube icon for cam-control as well to make it a 3D layer. You can parent the camera to the Cam-Control by clicking the camera&apos;s &quot;pick whip&quot; icon, which looks like a little spiral, and dragging it to the cam-control layer.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/31800743370/in/album-72157676949094332/&quot; title=&quot;27 - parent camera to cam control&quot;&gt;&lt;img src=&quot;https://c3.staticflickr.com/1/753/31800743370_6e96a0dfa5_m.jpg&quot; width=&quot;240&quot; height=&quot;79&quot; alt=&quot;27 - parent camera to cam control&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now we can control the camera&apos;s position by changing the position of the cam-control layer! But before we do that, let&apos;s set our Z positions on all of our layers. Up until now, we&apos;ve only been moving in the X and Y dimensions, but now that we&apos;re working in 3D we have a whole extra dimension to work with! We&apos;ll start by pushing the sky&apos;s Z position waaaay back to 3000 so that it&apos;s far back in the background. After pushing it so far back, we&apos;ll also need to scale it up to 183 so that it covers the entire viewport.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137629976/in/album-72157676949094332/&quot; title=&quot;28 - push sky position back&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/1/442/32137629976_cb8b3d97d2_m.jpg&quot; width=&quot;240&quot; height=&quot;79&quot; alt=&quot;28 - push sky position back&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;Now we&apos;ll do the same thing for our background hills. But our hills need to be closer to the camera than the background sky, so we&apos;ll set the hills Z position to 1500, then scale it up to 247.&lt;/p&gt;
-
-	&lt;a data-flickr-embed=&quot;true&quot; data-header=&quot;true&quot; href=&quot;https://www.flickr.com/photos/146669889@N04/32137633086/in/album-72157676949094332/&quot; title=&quot;29 - hill z index&quot;&gt;&lt;img src=&quot;https://c7.staticflickr.com/1/403/32137633086_6154f6df61_m.jpg&quot; width=&quot;240&quot; height=&quot;79&quot; alt=&quot;29 - hill z index&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-	&lt;p&gt;The Z index for our trees can remain at 0, but we can bring the ground layer a little bit closer to the camera by setting it&apos;s Z index to -200 and it&apos;s scale to 200.&lt;/p&gt;
-
-	&lt;p&gt;Once we have our Z index positioning setup the way we want it, we can adjust the Cam-Control&apos;s X position and observe how the different layers appear to move based on their position on the Z axis. The Sky being the furthest back at a Z position of 3000 moves much slower than the hills at Z 1500, which are a bit closer to the camera. The trees movement is much more noticeable at a Z position of 0, and the ground layer is closest to the camera, so it&apos;s movement is the most pronounced of all.&lt;/p&gt;
-
-	&lt;img src=&quot;https://imageshack.us/a/img923/8108/v08aSQ.gif&quot; /&gt;
-
-
-	&lt;p&gt;To animate our cam-control&apos;s X axis like in the demo GIF, move to the beginning of the timeline and change the cam-control&apos;s X position to 640. Then click the cam-control&apos;s position stopwatch to enable keyframe animation. Then move 3 seconds forward in the timeline and change the cam-control&apos;s X position 76. This should automatically create a keyframe 3 seconds in the time line. Then move the timeline forward another 3 seconds, and move the cam-control&apos;s X position back to it&apos;s original position of 640. This will create a 6 second loop of the camera moving left to right. You can make the camera keyframes ease in by right clicking over each keyfame and clicking Keyframe Assistant &amp;gt; Easy Ease.&lt;/p&gt;
-
-
-
-	&lt;p&gt;Now we can optionally copy more trees in behind the first row of trees. Just copy and paste the trees we already created and move their Z position back to 800. We can darken them a little bit too, to make it look like they are in the shadow of the foreground trees by using the Curves effect.&lt;/p&gt;
-
-	&lt;img src=&quot;https://imageshack.us/a/img924/6792/Dzw5TX.gif&quot; /&gt;
-
-	&lt;p&gt;And we&apos;re finished! You can move the camera&apos;s Y position to fly up above the trees, or even increase the camera&apos;s Z position to fly through the trees, like you&apos;re running through a forest! use your imagination! &lt;br /&gt; This is the same basic method that I used for &lt;a href=&quot;https://www.youtube.com/watch?v=7IP0Ch1Va44&amp;amp;spfreload=10&quot;&gt;my paper animation&lt;/a&gt;, so if you haven&apos;t already seen it, check it out! :)
-&lt;/p&gt;&lt;/article&gt;
-</description>
-        <pubDate>Fri, 06 Jan 2017 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//design/2017/01/06/paper-cutout-texture/</link>
-        <guid isPermaLink="true">http://localhost:4000//design/2017/01/06/paper-cutout-texture/</guid>
       </item>
     
   </channel>
