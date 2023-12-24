@@ -1,2 +1,1 @@
-# my-jekyll
-my jekyll blog
+# sapphire_theme

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<!--This is the defaualt layout that will be visible on all pages of the webste. It includes the title "Miles Rose" on top, the logo, and the main navigation 
+<!--This is the defaualt layout that will be visible on all pages of the webste. It includes the title "Your Name" on top and the main navigation 
 as well as all of the CSS links and JS links -->
-<html lang="en">
+<html lang="en-ca">
 <head>
 	<meta charset="utf-8">
-	<title>{% if page.title%}{{page.title}} · {% endif%}Miles Rose {% if page.titleAfter %}{{page.titleAfter}}{% endif %}</title>
+	<title>{% if page.title%}{{page.title}} · {% endif%}Portfolio {% if page.titleAfter %}{{page.titleAfter}}{% endif %}</title>
 	<link href='http://milesrose.net/feed.xml' rel='alternate' type='application/atom+xml'><!--RSS feed -->
-
 	<link rel="stylesheet" type="text/css" href="{{site.baseurl}}/assets/css/font-awesome.min.css"><!--social media icons -->
 	<link rel="stylesheet" type="text/css" href="{{site.baseurl}}/assets/css/hexagons.min.css"> <!--social media animated hexigons -->
 	<link rel="stylesheet" type="text/css" href="{{site.baseurl}}/assets/css/syntax.css"> <!--CSS link to style code snippets in the blog -->
@@ -17,32 +16,34 @@ as well as all of the CSS links and JS links -->
 	<link href="{{site.baseurl}}/css/lity.css" rel="stylesheet"><!-- the CSS that controls the "lity" light box used in all of the galleries -->
 </head>
 <body>
-<div class="wrapper">
-	<header>
-		<a id="backToTop"></a>
-		<div id="logo">
-			<a href="{{site.baseurl}}/"><h1 class="centerText title miles">Miles</h1> <div class="icon-placeholder"></div> <h1 class="centerText title rose">Rose</h1></a> <!-- the masthead-->
-		</div>
-		{% include nav.html navclass='nav-top' %}<!-- link to navigation under the masthead-->
-	</header>
-	{{content}}
+<div class="overlay">
+	<div class="wrapper">
+		<header>
+			<a id="backToTop"></a>
+			<div id="logo">
+				<a href="{{site.baseurl}}/"><h1 class="centerText title miles">Miles</h1> <div class="icon-placeholder"></div> <h1 class="centerText title rose">Rose
+			</div>
+			{% include nav.html navclass='nav-top' %}<!-- link to navigation under the masthead-->
+		</header>
+		{{content}}
 
-	<footer>
-		<h2 class="centerText" id="follow">Follow me!</h2>
-	<div class="container centerText">
-		<!-- Extra Small Buttons spin -->
-		<a href="https://www.youtube.com/channel/UCoi5IujqQmaHU48EduXVxew" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-youtube"></i></span></a> 
-		<a href="https://twitter.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-twitter"></i></span></a>
-		<a href="https://www.linkedin.com/in/miles-rose-44816752?trk=nav_responsive_tab_profile" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-linkedin-square"></i></span></a>
-		<a href="http://milesofcrimsonroses.tumblr.com/" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-tumblr-square"></i></span></a> 
-		<a href="{{site.baseurl}}/feed.xml" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-rss-square"></i></span></a>
-		<a href="https://vimeo.com/milesrose" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-vimeo-square"></i></span></a>
-		<a href="https://github.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-github-square"></i></span></a>
-				<!--  Extra Small Buttons spin  End -->
-	</div><!-- /.container -->
-		<p id="smallText"><a href = "mailto: Miles@MilesRose.net" target="blank">Email me at <span class="redlink">Miles@MilesRose.net</span></a></p>
-	</footer>
-</div>
+		<footer>
+			<h2 class="centerText" id="follow">Follow me!</h2>
+		<div class="container centerText">
+			<!-- Extra Small Buttons spin -->
+			<a href="https://www.youtube.com/channel/UCoi5IujqQmaHU48EduXVxew" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-youtube"></i></span></a> 
+			<a href="https://twitter.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-twitter"></i></span></a>
+			<a href="https://www.linkedin.com/in/miles-rose-44816752?trk=nav_responsive_tab_profile" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-linkedin-square"></i></span></a>
+			<a href="http://milesofcrimsonroses.tumblr.com/" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-tumblr-square"></i></span></a> 
+			<a href="{{site.baseurl}}/feed.xml" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-rss-square"></i></span></a>
+			<a href="https://vimeo.com/milesrose" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-vimeo-square"></i></span></a>
+			<a href="https://github.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-github-square"></i></span></a>
+					<!--  Extra Small Buttons spin  End -->
+		</div><!-- /.container -->
+			<!-- <p id="copy">©2017 Miles Rose</p> -->
+		</footer>
+	</div> <!--/wrapper -->
+</div> <!--/overlay -->
 
 <script src="{{site.baseurl}}/assets/js/jquery-2.1.0.min.js"></script>
 <script src="{{site.baseurl}}/assets/js/hexagons.min.js"></script><!--javascript fo the animated social media hexigons -->

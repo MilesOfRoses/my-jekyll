@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!--This is the defaualt layout that will be visible on all pages of the webste. It includes the title "Your Name" on top and the main navigation 
+as well as all of the CSS links and JS links -->
+<html lang="en-ca">
+<head>
+	<meta charset="utf-8">
+	<title>Using Super Mario Bros to learn about JavaScript Constructor functions and Prototypes · Portfolio </title>
+	<link href='http://milesrose.net/feed.xml' rel='alternate' type='application/atom+xml'><!--RSS feed -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css"><!--social media icons -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/hexagons.min.css"> <!--social media animated hexigons -->
+	<link rel="stylesheet" type="text/css" href="/assets/css/syntax.css"> <!--CSS link to style code snippets in the blog -->
+	<link href="/css/responsive-gallery.css" rel="stylesheet"><!-- CSS for the responsive image galleries -->
+	<meta name="description" content="Mario and Luigi can teach us a lot about coding!">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"><!--enables responsive layout on smartphones-->
+	<link href="/css/common.css" rel="stylesheet"><!-- The main CSS file that controls the layout for most of the site-->
+	<link href="/css/lity.css" rel="stylesheet"><!-- the CSS that controls the "lity" light box used in all of the galleries -->
+</head>
+<body>
+<div class="overlay">
+	<div class="wrapper">
+		<header>
+			<a id="backToTop"></a>
+			<div id="logo">
+				<a href="/"><h1 class="centerText title miles">Miles</h1> <div class="icon-placeholder"></div> <h1 class="centerText title rose">Rose
+			</div>
+			<nav>
+	<ul class="nav nav-top">
+		<li><a href="/" class="">Portfolio</a></li>
+		<li>-</li>
+		<li><a href="/blog/" class="current">Blog</a></li>
+		<li>-</li>
+		<li><a href="/about/" class="">About</a></li>
+		
+	</ul>
+</nav>
+<!-- link to navigation under the masthead-->
+		</header>
+		<nav>
+	<ul class="subnav">
+		<li><a href="/blog/design/" class="">Design</a></li>
+		<li>-</li>
+		<li><a href="/blog/code/" class="currentBlack">Code</a></li>
+		<li>-</li>
+		<li><a href="/blog/life/" class="">Life</a></li>
+	</ul>
+</nav>
+<p class="centerText" id="feed-button"><i>Subscribe via RSS!</i>  <a href="/feed.xml"><span class="hb hb-xs hb-custom"><i class="fa fa-rss-square" ></i></span></a></p>
+
+<div class="media-section">
+	<h1 class="centerText article-list">Using Super Mario Bros to learn about JavaScript Constructor functions and Prototypes</h1>
+
+	<div class=" article-list"><p><a href="https://c1.staticflickr.com/5/4220/34875075235_ca81d8ec12_z.jpg" data-lity="" data-lity-desc="step1"><img src="https://c1.staticflickr.com/5/4220/34875075235_ca81d8ec12_z.jpg" width="100%" alt="step1" /></a></p>
+
+<p>Today we'll use Nintendo characters to help us learn about JavaScript Constructor functions and Prorotypes! <br />
+Creating objects in JavaScript is a very common task, but often times you'll want to define multiple objects that share the same properties and the same basic structure. For example, if I were programming a video game and I wanted to define some players as objects, I might do so like this:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre>  <span class="kd">var</span> <span class="nx">playerOne</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Mario</span><span class="dl">"</span><span class="p">,</span> <span class="na">coins</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="na">lives</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>And then after I defined player one, I want to define player two. Except the problem is that I unintentionally define player two in a slightly inconsistent way:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">playerTwo</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Luigi</span><span class="dl">"</span><span class="p">,</span> <span class="na">score</span><span class="p">:</span> <span class="mi">55</span><span class="p">,</span> <span class="na">health</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>See what's inconsistent here? The name property is the same in both player objects, but for playerOne's "coins" property, playerTwo has "score" instead!
+And the players lives/health is stored inconsistently as well.
+
+What we need is a way to easily formalize our objects, making it easy to create many different objects with the same properties, but with different values for each property.
+
+<h2>Enter the constructor function!</h2>
+<p>What's a constructor function? 
+It's a function that can construct... Objects! Lots of objects!
+The first step is to just make a function like normal with the name of the type of object that we want to construct, in this case Player:
+</p>
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(){</span>
+	
+<span class="p">};</span>
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+<p>(BTW, The tradition is to always capitalize the first letter for these constructor functions!)
+
+Right now we'll leave the constructor function empty.
+Now we'll create our object by declaring a new variable using the keyword "new" to create a new object from the Player constructor function.
+</p>
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(){</span>
+
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">();</span>  
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+ <p>This creates a new object, calling the Player constructor function to create the new object. Obviously there is still nothing inside the constructor function, so let's add some code. Let's try:</p>
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">mario</span><span class="dl">"</span><span class="p">;</span>
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">();</span>
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+
+<p>Wait, that's no good… I want to be able to re-use this constructor function for multiple different players, and all of the players can't be named Mario! We need the constructor function to be able to take in a name parameter. When it is called, it will create a new player, passing in that name parameter for the current object that it is constructing.</p>
+
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>  <span class="kd">function</span> <span class="nf">Player</span><span class="p">(</span><span class="nx">n</span><span class="p">){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mario</span><span class="dl">"</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+
+<p>So now that we have the basic constructor working, we can call it again passing in a new name</p>
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">luigi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Luigi</span><span class="dl">"</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+<p>This is how we can create many similar objects in a very standardized way.
+So let's create some more properties in the constructor function. Let's give each player a number of collected coins, and a number of lives. For the parameters, we'll use the variables "c" and "l" respectively.
+</p>
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="nx">c</span><span class="p">,</span><span class="nx">l</span><span class="p">){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">coins</span> <span class="o">=</span> <span class="nx">c</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">lives</span> <span class="o">=</span> <span class="nx">l</span><span class="p">;</span>
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mario</span><span class="dl">"</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">luigi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Luigi</span><span class="dl">"</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+
+
+<p>This is a much more efficient way of creating many similar objects, but how to we display the data related to each object? </p>
+
+<h2>Enter prototypes!</h2>
+
+<p>Prototypes can allow us to attach new functions onto individual objects, rather than declaring functions inside of the constructor function, which would affect ALL of the constructor's objects at the same time. In this way, our prototype will just bolt a function onto an individual object. In this case, a function that outputs a console log about a player.
+Every JavaScript object has a prototype.
+Functions (including our player function) are also objects, and so they have prototypes too. We can use the prototype to get the player object to do things, like tell us the player's name
+
+</p>
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="code"><pre> <span class="nx">Player</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">It’s a me,</span><span class="dl">"</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">};</span>
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+<p>We use the keyword "this" to output the name property of whatever the current object is, because this prototype could be re-used on any player object we want.
+
+The "displayName" part is just something made up, you could use anything that is descriptive of what the prototype is getting the object to do.
+
+Now to have the Mario player output its name, we just type
+
+</p>
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre> <span class="nx">mario</span><span class="p">.</span><span class="nf">displayName</span><span class="p">();</span> 
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+
+<p>And it will log "It's a me, Mario" to the console!
+We can do the same for Luigi, too.
+
+</p>
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="nx">c</span><span class="p">,</span><span class="nx">l</span><span class="p">){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">coins</span> <span class="o">=</span> <span class="nx">c</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">lives</span> <span class="o">=</span> <span class="nx">l</span><span class="p">;</span>
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mario</span><span class="dl">"</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">luigi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Luigi</span><span class="dl">"</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+ <span class="nx">Player</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">It's a me,</span><span class="dl">"</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">};</span>
+
+ <span class="nx">mario</span><span class="p">.</span><span class="nf">displayName</span><span class="p">();</span> <span class="c1">//outputs "It's a me, Mario"</span>
+ <span class="nx">luigi</span><span class="p">.</span><span class="nf">displayName</span><span class="p">();</span>  <span class="c1">//outputs "It's a me, Luigi"</span>
+
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+ <p>And we can do more than just displaying information about the players, we can also use prototypes to bolt on new functions that actually change the values of the player objects too. For example, we can give each player a new 1UP like this:</p>
+
+
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="code"><pre><span class="kd">function</span> <span class="nf">Player</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="nx">c</span><span class="p">,</span><span class="nx">l</span><span class="p">){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">n</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">coins</span> <span class="o">=</span> <span class="nx">c</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">lives</span> <span class="o">=</span> <span class="nx">l</span><span class="p">;</span>
+<span class="p">};</span>
+
+ <span class="kd">var</span> <span class="nx">mario</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mario</span><span class="dl">"</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+ <span class="kd">var</span> <span class="nx">luigi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Player</span><span class="p">(</span><span class="dl">"</span><span class="s2">Luigi</span><span class="dl">"</span><span class="p">,</span><span class="mi">76</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+ <span class="nx">Player</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">displayName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">It's a me,</span><span class="dl">"</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">Player</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">levelUp</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">lives</span><span class="o">++</span><span class="p">;</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">1UP! I now have</span><span class="dl">"</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">lives</span> <span class="o">+</span><span class="dl">"</span><span class="s2"> lives</span><span class="dl">"</span> <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">mario</span><span class="p">.</span><span class="nf">displayName</span><span class="p">();</span> <span class="c1">//outputs "It's a me, Mario"</span>
+<span class="nx">luigi</span><span class="p">.</span><span class="nf">displayName</span><span class="p">();</span> <span class="c1">//outputs "It's a me, Luigi"</span>
+<span class="nx">mario</span><span class="p">.</span><span class="nf">levelUp</span><span class="p">();</span> <span class="c1">//outputs "1UP! I now have 4 lives"</span>
+<span class="nx">luigi</span><span class="p">.</span><span class="nf">levelUp</span><span class="p">();</span> <span class="c1">//outputs "1UP! I now have 3 lives"</span>
+
+
+ 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+
+
+<p>The efficient thing about this code is that all of the properties are consistent and standardized, and the whole thing is scalable because I can add as many new players as I want without having to repeat any code! Each new player already knows about its properties while still acting independently of each other. 
+
+Everything that each player can do is based on both the constructor function and the prototypes which have bolted new functions onto them after the fact.
+
+Video games can be so informative ;)
+</p>
+</p>
+</div>
+	<hr>
+
+	<div id="disqus_thread"></div>
+</div>
+<script>
+
+
+(function() { // ADD YOUR OWN DISQUS LINK BELOW
+var d = document, s = d.createElement('script');
+s.src = '//saphire-theme.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+		<footer>
+			<h2 class="centerText" id="follow">Follow me!</h2>
+		<div class="container centerText">
+			<!-- Extra Small Buttons spin -->
+			<a href="https://www.youtube.com/channel/UCoi5IujqQmaHU48EduXVxew" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-youtube"></i></span></a> 
+			<a href="https://twitter.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-twitter"></i></span></a>
+			<a href="https://www.linkedin.com/in/miles-rose-44816752?trk=nav_responsive_tab_profile" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-linkedin-square"></i></span></a>
+			<a href="http://milesofcrimsonroses.tumblr.com/" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-tumblr-square"></i></span></a> 
+			<a href="/feed.xml" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-rss-square"></i></span></a>
+			<a href="https://vimeo.com/milesrose" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-vimeo-square"></i></span></a>
+			<a href="https://github.com/MilesOfRoses" target="blank"><span class="hb hb-xs spin-icon"><i class="fa fa-github-square"></i></span></a>
+					<!--  Extra Small Buttons spin  End -->
+		</div><!-- /.container -->
+			<!-- <p id="copy">©2017 Miles Rose</p> -->
+		</footer>
+	</div> <!--/wrapper -->
+</div> <!--/overlay -->
+
+<script src="/assets/js/jquery-2.1.0.min.js"></script>
+<script src="/assets/js/hexagons.min.js"></script><!--javascript fo the animated social media hexigons -->
+<script src="/assets/js/lity.js"></script><!--javascript for the "lity" light box used in all of the galleries -->
+<script src="/assets/js/jquery.scrollTo.js"></script> <!--smooth scrolling jquery plugin -->
+<script src="/assets/js/jquery.localScroll.js"></script><!--smooth scrolling jquery plugin -->
+
+
+
+<!--  specify a duration for the animation. This one little block of code below takes care of the animated scrolling effect for us -->
+<script type="text/javascript">
+$(document).ready(function() {
+   $('.portfolio').localScroll({duration:800});
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('.top').localScroll({duration:800});
+});
+</script>
+
+<script> //google analytics code
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-72234909-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</body>
+</html>

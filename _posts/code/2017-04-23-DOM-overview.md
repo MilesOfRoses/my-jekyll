@@ -49,4 +49,4 @@ There are 12 different types of nodes in total:<br>
 12 notation nodes.<br>
 </p>
 
-<p>This has been only a general overview of the DOM. For more in depth knowledge about the DOM, check out <a href="https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html" class="redlink" target="blank">this  article by Guru99</a></p>
+<p>This has been only a general overview of the DOM. For more in depth knowledge about the DOM, check out <a href="https://www.w3schools.com/js/js_htmldom.asp" class="redlink" target="blank">this collection of articles by w3schools</a></p>
