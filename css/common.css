@@ -270,6 +270,12 @@ a {
 	margin-top: -5px;
 }
 
+.videoTitle{
+	text-align: center;
+	margin-bottom: -4px;
+	color: grey;
+}
+
 #copy{
 	color:white;
 }
