@@ -7,1134 +7,248 @@
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Intro to PHP Part 5, Forms and user input</title>
-        <description>&lt;p&gt;In this post, we&apos;ll create an HTML form and use PHP to handle submitted values. Understanding how to handle forms is important for developing most websites. The first we&apos;ll write the HTML form it&apos;s self. Then, we&apos;ll write a PHP program that will receive and process the resulting form input. To create the HTML form, start with the &lt;em&gt; form tags &lt;/em&gt; which look like this:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Notice the &lt;strong&gt;action=&quot;process_form.php&quot;&lt;/strong&gt; part of the form tag. This controls which PHP file will be processing the HTML form. You&apos;ll also notice the &lt;strong&gt;method=&quot;post&quot;&lt;/strong&gt;. There are two different form &quot;methods&quot; that are commonly used. There is &lt;strong&gt;method=&quot;post&quot;&lt;/strong&gt; and there is &lt;strong&gt;method=&quot;get&quot;&lt;/strong&gt;. A &quot;get&quot; method means that the user input will be visible in the URL, for example &lt;strong&gt;http://something.com/script.php?name=Miles&amp;amp;gender=M&lt;/strong&gt; The advantage of a &quot;get&quot; method is that the form&apos;s inputed values can easily be bookmarked by the user. The major disadvantage of the &quot;get&quot; method is security. anybody could just change those form values to whatever they wanted, and get around any input validation you may have set up to protect yourself from hacks. We&apos;ll get into input validation later on, but for the purposes of this series, I&apos;ll always lean toward the &quot;post&quot; method unless I have a very good reason not to.
-&lt;br /&gt;
-Anyway, to get started, just make a new file called &lt;strong&gt;form.html&lt;/strong&gt;
+        <title>Conformity Enforcers of the &quot;American Dream&quot; Home Construction and Lifestyle</title>
+        <description>&lt;p&gt;
+As a renegade off-grid eco-hermit weirdo, I have to wonder... Are we actually living in a &quot;Free country&quot;? It is surprisingly difficult to find places to (legally) live off-the-grid in a minimalistic, low-impact, environmentally responsible way.
+&lt;br /&gt;&lt;br /&gt;
+There’s a huge attempt to force everyone to conform into the same conventional white picket fence permitted and code obeying &quot;American dream&quot; house and lifestyle, and it primarily just benefits the elite, at the expense of the working class (not to mention the environment) 
+&lt;br /&gt;&lt;br /&gt;
+This conformity enforcement benefits the banks and financial industry (due to the interest they&apos;ll accrue on the increasingly massive loan you&apos;ll need to build a &quot;legal&quot; home) it benefits the construction and lumber industry owners (for the huge amount of *often toxic* building materials and hired licensed labor to build that oversized McMansion that meets all of the arbitrary code and permit requirements, their disallowing reclaimed lumber or reused building materials, their disallowing of natural building materials that you could collect from the land and build yourself, etc) and ultimately it benefits the rich corporation owners (because you&apos;ll need to sell 30 years of your prime life working for them in order to pay for that oversized mortgage and interest. If you dare to rock the boat in the corporate world, how will you pay for your mortgage when they fire you? They&apos;ve got you by the balls, and you need to be subservient to them) 
+&lt;br /&gt;&lt;br /&gt;
+All of these massive rich corporate industry owners benefit from maintaining the status quo at all costs, and so it&apos;s in their best interest to lobby(bribe) The State to enact laws to codify all of their &quot;requirements&quot; and The State is happy to do so, because they&apos;ll be getting more property taxes (due to that vastly increased &quot;property value&quot;) and they&apos;ll be getting more income taxes(due to all of those decades of work you&apos;re forced to do to pay the mortgage) 
+&lt;br /&gt;&lt;br /&gt;
+And if you personally don&apos;t like the little lifestyle plan that your State/Corporate overlords have gracefully lined up for you, if you dare disobey, if you dare build a little off-grid-eco-oasis-of-freedom outside of their walled garden and oversight, they&apos;ll fine you into bankruptcy, threaten you with jail time, and send a wrecking ball right through your beautiful tiny home, rendering you homeless, penniless, and possibly in jail with court fees...
+&lt;br /&gt;&lt;br /&gt;
+&quot;Land of the Free&quot; more like &quot;Land of the Two Headed Corporate/State Leviathan&quot;... Is it any wonder that I have gravitated towards Anarchism?
 &lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;form&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;fieldset&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;legend&amp;gt;&lt;/span&gt;Tell us about yourself!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/legend&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Name: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;20&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Email: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;50&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;What&apos;s your favorite operating system?&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Windows&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Windows
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mac&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Mac
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Linux&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Linux&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;What&apos;s your favorite browser?
-  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;browser&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chrome&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chrome&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;firefox&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;FireFox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;safari&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Safari&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Other&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Message to us: &lt;span class=&quot;nt&quot;&gt;&amp;lt;textarea&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;message&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rows=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;cols=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/textarea&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/fieldset&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Send my information&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;form&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4622/39267429764_c4c0b3a317_z.jpg&quot; width=&quot;600&quot; alt=&quot;form&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;Break it down!&lt;/h2&gt;
-&lt;p&gt;Once again, I&apos;ll break this code into small chunks, and discuss them in detail.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;form&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;action=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;process_form.php&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;method=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;post&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This form&apos;s action attribute points to a file called &lt;strong&gt;process_form.php&lt;/strong&gt;, which we will create in the next step.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;fieldset&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;legend&amp;gt;&lt;/span&gt;Tell us about yourself!&lt;span class=&quot;nt&quot;&gt;&amp;lt;/legend&amp;gt;&lt;/span&gt;
-  	  	...
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The &lt;strong&gt;fieldset&lt;/strong&gt;tags help group the form&apos;s content and add a box around it. This is optional, but I like the way it looks.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;		&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Name: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size = &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;20&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Email: &lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;email&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;size=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;maxlength=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;50&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;These are textarea boxes for users to enter their name and emails. The label tags are used to associate each text label with it&apos;s corresponding input area&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;for=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;What&apos;s your favorite operating system?&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Windows&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Windows
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Mac&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Mac
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;radio&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;os&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Linux&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Linux&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Radio buttons can only be selected one at a time. since these radio buttons all have the same &quot;name&quot; then only one can be seleced at a time.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;What&apos;s your favorite browser?
-  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;select&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;browser&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;chrome&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Chrome&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;firefox&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;FireFox&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;safari&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Safari&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;option&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;other&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Other&lt;span class=&quot;nt&quot;&gt;&amp;lt;/option&amp;gt;&lt;/span&gt;
-  	  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/select&amp;gt;&lt;/span&gt;
-  	  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/label&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Here&apos;s a &lt;strong&gt;pull down menu&lt;/strong&gt;, which starts with a select tag, and each option tag stands for a new line in the pull down menu. Here, four options are avalible. Similar to a radio button, only one option can be selected at a time.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;		&lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&amp;lt;label&amp;gt;&lt;/span&gt;Message to us: &lt;span class=&quot;nt&quot;&gt;&amp;lt;textarea&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;message&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rows=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;cols=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;40&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/textarea&amp;gt;&amp;lt;/label&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Here&apos;s a &lt;strong&gt;textarea&lt;/strong&gt;, which are just another form of text input, which allow users to enter in much more information. Textareas are presented as a box, instead of a single line.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/fieldset&amp;gt;&lt;/span&gt;
-  	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;align=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;center&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;input&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;value=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Send my information&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-  	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/form&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Finally, this submit button is what actually sends the user&apos;s unput to the PHP file that we are about to create. All of the data that the user entered will be accessable to PHP. The PHP program will store the user&apos;s data into variables, and then output those variables back to the browser. So far this post has only been about HTML, but not it&apos;s time to &lt;em&gt;finally&lt;/em&gt; write some PHP to process this form! And at the same time, I&apos;ll introduce a new programming concept called &lt;strong&gt;conditionals&lt;/strong&gt;, which we will use to process our form.&lt;/p&gt;
-
-&lt;h2&gt;Conditionals&lt;/h2&gt;
-&lt;p&gt;Conditionals allow for the execution of sections of code depending on whether or not a certain &lt;em&gt;condition&lt;/em&gt; is true or not. For example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;	&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is bigger than b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;elseif&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is equal to b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;a is smaller than b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The above code will output &quot;&lt;strong&gt;a is smaller than b&lt;/strong&gt;&quot;&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p&gt;Now back to our form. Since the HTML form above says &quot;form action=&quot;&lt;strong&gt;process_form.php&lt;/strong&gt;&quot; we&apos;ll have to also name our new PHP file &lt;strong&gt;process_form.php&lt;/strong&gt; and enter the following code.&lt;/p&gt;
-
 </description>
-        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-5/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-5/</guid>
+        <pubDate>Tue, 05 Dec 2023 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//life/2023/12/05/american-dream-home/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2023/12/05/american-dream-home/</guid>
       </item>
     
       <item>
-        <title>Intro to PHP Part 4, Numbers and math operators</title>
-        <description>&lt;p&gt;In this fourth post in the PHP series I&apos;ll go over numbers and math operators. There are two types of numbers, &lt;strong&gt;integers&lt;/strong&gt;, which are whole numbers, and &lt;strong&gt;floats&lt;/strong&gt; which are decimal numbers. These numbers never have quotation marks around them, the way that strings always do. You can perform math using the following operators:&lt;/p&gt;
+        <title>If you&apos;re ONE step ahead of the curve, they&apos;ll call you a genius...</title>
+        <description>&lt;p&gt;
+...If you&apos;re TWO steps ahead of the curve, they&apos;ll call you crazy.
+&lt;br /&gt;&lt;br /&gt;
+At the risk of sounding arrogant, I truly believe that the type of lifestyle that I have designed over the last few years, and the types of ideas that I come up with, are decades ahead of the current time.
+&lt;br /&gt;&lt;br /&gt;
+In a future involving a drastic decline in energy and resources, environmental collapse, and the crumbling of the complex systems that society depends on to function and exist, the uncomfortable fact is that everyone will need to adapt, or die. So, the ability to not only survive, but to thrive on a mere 5-10% of the energy, water, money and material resources that the average American consumes would be an indispensable skill set.
+&lt;br /&gt;&lt;br /&gt;
+People may look down at me, think I&apos;m paranoid or crazy, or think the way I live is &quot;extreme&quot;, and to an extent it is extreme... But not nearly as extreme as the fact that Americans constitute 5% of the world&apos;s population but consume 24% of the world&apos;s energy. That is far more extreme, and it is going to have extremely horrific consequences for everyone on earth, but at this current moment in time it&apos;s still normalized in our society, so we don&apos;t realize how extreme and horrific it truly is. This is not to blame the average American *individual* at all, this system was designed before we were born by the ultra wealthy and top capital owning classes, primarily to their benefit. The average American didn&apos;t sign up for this system, we were all simply born into this late stage capitalistic hellscape.
+&lt;br /&gt;&lt;br /&gt;
+The point is, collapse is inevitably coming, and I&apos;ll be more likely to be ready for it, but I want to make sure our communities are ready for it as well, the challenge is persuading them without sounding crazy. No politician will ever be able to acknowledge these truths because it would necessarily entail drastic economic degrowth, which would be career suicide to any politician who dared propose it. They need to be cheerleaders for &quot;more jobs&quot; and Infinite economic growth on a finite planet, and business as usual on a fundamental systemic level. But that system is killing us, there is no reforming it. It&apos;s revolution or death. And as much as I try to remain hopeful and optimistic, a lot of the evidence is pointing to death. But that won&apos;t stop me from doing everything I can to turn things around, by both living the change that I want to see at an individual level, while at the same time advocating for a fundamental systematic restructuring at a collective societal level. And in the meantime, I&apos;m doing my part to help create a parallel society, prefigurative support structures to meet all of our survival needs, essentially creating the &quot;new&quot; within the shell of the &quot;old&quot;, so that during and after the dominant society&apos;s collapse, there will hopefully at least be some anarchic support structures to emerge from the rubble.
+&lt;br /&gt;&lt;br /&gt;
+But since I&apos;m thinking so many steps ahead of the curve, they&apos;ll keep calling me crazy... All the way up until they can&apos;t deny their reality crashing down on them anymore.  But by then, it will be far too late. It might already be too late. But I have to try anyway.
+&lt;/p&gt;
 
-&lt;ul class=&quot;blog&quot;&gt;
-	&lt;li&gt;+ (addition)&lt;/li&gt;
-	&lt;li&gt;- (subtraction)&lt;/li&gt;
-	&lt;li&gt;* (multiplication)&lt;/li&gt;
-	&lt;li&gt;/ (division)&lt;/li&gt;
-	&lt;li&gt;% (modulos)&lt;/li&gt;
-	&lt;li&gt;++ (increment)&lt;/li&gt;
-	&lt;li&gt;-- (decrement)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;PHP also has a number of built in functions for working with numbers. For example, there is the &lt;strong&gt;round()&lt;/strong&gt; function, which will round a number to the desired decimals. Here&apos;s an example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.141592&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;round&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$number&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The following code will output &lt;strong&gt;3.14&lt;/strong&gt; rather than 3.141592 because the round() function is rounding to 2 decimal places. Another useful number function is &lt;strong&gt;number_format()&lt;/strong&gt; which will add commas to group numbers by thousands. Here&apos;s an example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bigNumber&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$bigNumber&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This will output &lt;strong&gt;100,000,000&lt;/strong&gt; complete with those two commas, which makes the number much easier to read. 
-&lt;br /&gt;
-Now to practice using math operators, let&apos;s make a new file called &lt;strong&gt;program3.php&lt;/strong&gt; in which we&apos;ll perform some simple math operations that could apply to a retail store or ecomerce application. You&apos;ll notice that I use &lt;em&gt;comments&lt;/em&gt; in this program, which are preceded by double slashes &lt;strong&gt;//&lt;/strong&gt; This is simply to make the code more understandable for us programmers. The users will not be able to see any PHP comments.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//defining the variables&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//buying 30 items&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//calculate total at checkout&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//calculate total and add tax&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;//format the total&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-
-    &lt;span class=&quot;c1&quot;&gt;//print the results&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;You are buying &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; items at a price of &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; each, for a total of $$total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4755/39247118574_6c79f5077a_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;Break it down!&lt;/h2&gt;
-&lt;p&gt;This program is a fair bit longer than the other ones we&apos;ve written together so far, so I&apos;ll break this one down into smaller pieces and explain each chunk in detail.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//buying 30 items&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.99&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;In the code above, I&apos;ve defined three variables and &lt;em&gt;hard coded&lt;/em&gt; their values in. Later on, I&apos;ll show how to use &lt;em&gt;user input&lt;/em&gt; through an HTML form to generate these values instead, so that this program is more dynamic.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$subtotal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//calculate total and add tax&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The above code is where the actual calculation takes place. The first line establishes the &lt;em&gt;subtotal&lt;/em&gt; as being the number of items multiplied by the price of the items. The second line then adds the tax rate, by multiplying the tax rate by the subtotal, thereby finding the &lt;em&gt;total&lt;/em&gt; cost.&lt;/p&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;number_format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;In the code above, I&apos;m using the &lt;strong&gt;number_format()&lt;/strong&gt; function that I mentioned earlier. This will round the output to two places after the decimal. If I hadn&apos;t used &lt;strong&gt;number_format()&lt;/strong&gt; then the output would have been &lt;strong&gt; $188.685&lt;/strong&gt; instead of &lt;strong&gt; $188.69&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;You are buying &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; items at a price of &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; each, for a total of $$total&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This last step just outputs the result into a sentence, using the methods discussed in the last post. That&apos;s all there is to it! You can experiment with different values for the first three variables. For example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;nv&quot;&gt;$quantity&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2340&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
-    &lt;span class=&quot;nv&quot;&gt;$price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1319.45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nv&quot;&gt;$tax_rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//5% tax rate&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Plugging these numbers in will result in a total of &lt;strong&gt;$3,241,888.65!&lt;/strong&gt; 
-&lt;br /&gt;
-In the next post, we&apos;ll learn about &lt;em&gt;user input&lt;/em&gt; and how to use them in your PHP programs to handle submitted values&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
 </description>
-        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-4/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-4/</guid>
+        <pubDate>Sun, 05 Nov 2023 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2023/11/05/ahead-of-the-curve/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2023/11/05/ahead-of-the-curve/</guid>
       </item>
     
       <item>
-        <title>Intro to PHP Part 3, Variables</title>
-        <description>&lt;p&gt;In this third post in the PHP series, we&apos;ll dive into how PHP variables work. Variables are containers for temporarily storing values. The values stored in PHP variables could be any of the following: &lt;/p&gt;
+        <title>My Resource Consumption Compared to the Average American</title>
+        <description>&lt;p&gt;
+I did the math and it turns out my lifestyle uses just 6% of the water that the average American uses per person.  And my electrical usage is about 8% of the average American per person. Imagine if everyone in America (and all industrialized nations) used such few resources, there might be a chance of beating climate change.
+&lt;br /&gt;&lt;br /&gt;
+Each American uses an average of 82 gallons of water a day at home. between my garden, my Partner, and myself, we uses at most 60 gallons a day, 50 for irrigation and 10 for the trailer. Many days, irrigation needs are even less. That amounts to 5 gallons of water for personal use each, which is 6% of what the average American uses.
+&lt;br /&gt;&lt;br /&gt;
+American Residential daily consumption of electricity is 12,000 watt hours per person.
+My battery bank has a maximum capacity of 2,400 watt hours, but I would not consume that all in one day, maybe 2 or 3 days, which would be between 800 and 1,200  watt hours per day, which could be rounded to 1,000 watt hours per day for easier math. So the trailer&apos;s electrical consumption is about 8% of the average American consumption. 
+&lt;br /&gt;&lt;br /&gt;
+This is not to blame the average American *individual* at all, this system was designed before we were born by the ultra wealthy and top capital owning classes, primarily to their benefit. The average American didn&apos;t sign up for this system, we were all simply born into this late stage capitalistic hellscape.
 
-&lt;ul class=&quot;blog&quot;&gt;
-		&lt;li&gt;Integers&lt;/li&gt;
-		&lt;li&gt;Floats&lt;/li&gt;
-		&lt;li&gt;Strings&lt;/li&gt;
-		&lt;li&gt;Booleans&lt;/li&gt;
-		&lt;li&gt;Arrays&lt;/li&gt;
-		&lt;li&gt;Objects&lt;/li&gt;
-		&lt;li&gt;Resources&lt;/li&gt;
-		&lt;li&gt;NULL&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I&apos;ll go into detail about each of those datatypes in future posts. No matter what kind of value will be stored in a PHP variable, they will always follow some simple rules:
 &lt;/p&gt;
-
-&lt;ul class=&quot;blog&quot;&gt;
-	&lt;li&gt;The variable&apos;s name must always start with a dollar sign (&lt;strong&gt;$&lt;/strong&gt;)&lt;/li&gt;
-	&lt;li&gt;Variable names can contain letters, numbers, and the underscore, for example &lt;strong&gt;$tax_rate&lt;/strong&gt;&lt;/li&gt;
-	&lt;li&gt;The charachter after the dollar sign can be either a letter or an underscore (Not a number)&lt;/li&gt;
-	&lt;li&gt;Like most programming languages, PHP&apos;s variables are case sensitive. This means that &lt;strong&gt;$price&lt;/strong&gt; is not the same as &lt;strong&gt;$Price&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here&apos;s an example of a PHP variable:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Miles&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This outputs the string &quot;Miles&quot; to the web page.
-&lt;br /&gt;
-Now that you know the basics of PHP variables, let&apos;s create a new file called &lt;strong&gt;program2.php&lt;/strong&gt; starting off with the familiar template from before. &lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;PHP Program 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Between the php tags, we&apos;ll make three variables, &lt;strong&gt;$song&lt;/strong&gt;, &lt;strong&gt;$album&lt;/strong&gt;, and &lt;strong&gt;$artist&lt;/strong&gt;. These variables can contain whatever data you wish.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Epidermis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Chocolate Wheelchair&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Venetian Snares&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now that we&apos;ve defined these three variables, let&apos;s echo them out into an actual sentance.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Epidermis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Chocolate Wheelchair&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Venetian Snares&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&amp;lt;p&amp;gt;The song &amp;lt;em&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$song&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;/em&amp;gt; is on the album &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$album&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; by &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$artist&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;lt;/p&amp;gt;&quot;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4714/28158494839_f63fa789af_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
-&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;PHP makes this easy because you can just throw variable names right in the middle of a string. Many other languages make you end the string before concatenating the variable to it, and then concatenating the rest of the string. Speaking of concatenating, lets go into how that works in PHP.&lt;/p&gt;
-
-&lt;h2&gt;Concatenation: a fancy way of saying &quot;Sticking stuff together&quot;&lt;/h2&gt;
-
-&lt;p&gt;That pretty much sums it up. Concatenation is where you add characters to the end of a string. PHP even allows you to concatinate numbers, while some other languages do not. You do this using the concatenation operator, which is just a period (&lt;strong&gt;.&lt;/strong&gt;) as an example, make a new line under the last echo statement and define the following variables.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dr.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Michio &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Kaku&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$fullName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The variable &lt;strong&gt;$fullName&lt;/strong&gt; now holds the value &lt;strong&gt;&quot;Dr.MichioKaku&quot;&lt;/strong&gt;, which is not really what we want. We&apos;ll need to concatenate spaces between each of the three variables.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dr.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Michio &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Kaku&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nv&quot;&gt;$fullName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$firstName&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos; &apos;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$lastName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now the variable &lt;strong&gt;$fullName&lt;/strong&gt; holds the value &lt;strong&gt;&quot;Dr. Michio Kaku&quot;&lt;/strong&gt;, which is exactly what we would expect. Keep in mind that none of this concatination will be noticeable to the user. Even if they look at the source code, they would just see standard HTML. This is an excellent way to make the HTML content of web pages dynamically generated by your PHP program. This will be much more useful later on in this series.&lt;/p&gt;
-
-&lt;p&gt;Now that we&apos;ve gone over variables, strings, and concatination, the next post will be about numbers and math operators!&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
 </description>
-        <pubDate>Sat, 27 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//code/2018/01/27/intro-to-php-part-3/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2018/01/27/intro-to-php-part-3/</guid>
+        <pubDate>Thu, 05 Oct 2023 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2023/10/05/my-resource-consumption/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2023/10/05/my-resource-consumption/</guid>
       </item>
     
       <item>
-        <title>Intro to PHP Part 2, First PHP Script</title>
-        <description>&lt;p&gt;Now that you&apos;ve finished installing PHP and Apache, it&apos;s time to start writing PHP! Start by opening your favorite text editor and making a new file called &lt;strong&gt;program1.php&lt;/strong&gt; saved in the same server root folder as last time (in my case, it&apos;s C:\wamp64\www since I&apos;m running windows) This page will have one regular HTML paragraph tag, and another paragraph tag that is generated by php! This can be accomplished by using php&apos;s &lt;strong&gt;echo&apos;...&apos;&lt;/strong&gt; statement to print out a paragraph tag. 
+        <title>Petit Bourgeoisie, Revolution and Dual Power</title>
+        <description>&lt;p&gt;
+I think that if more small business owners understood how manipulative capitalism truely is, and how they themselves are being manipulated and played for suckers by the system as well, and let go of the false notion that they too will one day join the billionaire class... Then more small business owners would voluntarily convert their businesses into worker-owned and worker-managed co-ops.
+&lt;br /&gt;&lt;br /&gt;
+If my Sole Proprietorships business (Earthly Wilds Farm) ever expands to the point of needing more labor, that would be my goal, to recruit &quot;partners&quot; (comrades?) who would (either immediately or eventually) have equal ownership and control over the business. Unless I choose to just remain at a micro scale where the farm labor is small enough that I can easily do it all myself. One part of degrowth philosophy is questioning &quot;growthism&quot; which is the dogma that a business (or society) must always expand and grow indefinitely in order to be &quot;successful&quot; ...
+&lt;br /&gt;&lt;br /&gt;
+
+I think the issue with &quot;revolution talk&quot; is that people often just imagine a bloody violent sudden revolution. I feel like that idea actually comes more from non-anarchist leftists who want to see a brand new socialist/marxist state authority replace the old capitalist state authority... But in the scenario of a sudden violent revolution, the working class and marginalized people would suffer the most, at the hands of the military police, backed by capital interest.
+&lt;br /&gt;&lt;br /&gt;
+On the other hand, a general strike would bring the capital owning class to their knees. They only have their wealth and power because they extracted productivity from the workers, the ultimate source of value (aside from nature itself). &quot;The great resignation&quot; from 2020-21 that I sort of participated in was kind of a small taste of that, the capitalists were terrified, and it shifted the labor market in favor of workers even to this day. But in an actual real general strike, the strikers would need to have all their basic needs met during (and after) the strike, otherwise they would be forced to return to work out of necessity. That&apos;s why strikes often fail or never begin in the first place, because there&apos;s no solid resilient support structure to fall back on and to care for the workers who are exiting the workplace.
+&lt;br /&gt;&lt;br /&gt;
+Capitalism needs a desperate underclass in order to function, &quot;it&apos;s a feature of the software, not a bug&quot;... That&apos;s why it is important to build dual power within the current system right now, decentralized networks that can cover all basic human needs outside of the capitalist and monetary system. That&apos;s where things like mutual aid, street medics, gurilla gardeners, off grid living, etc, can step in to fill the void. So in that sence, by developing robust mutual aid networks and tinkering off the grid, we are already &quot;fighting&quot; in the &quot;revolution&quot; right now, in a way that the dominant system cannot fight back against (or even perceive) ... Plus, the more the dominant system fails and disenfranchises more and more people, and the more mutual aid networks need to pick those people back up and show them another way, we can slowly shift the hegemonic culture and public consciousness from the bottom up, away from the dominant system. That&apos;s the real &quot;revolution&quot; to focus on, in my opinion.
 
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;PHP Program 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt;This line is regular old HTML...&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;&amp;lt;p&amp;gt;But this line was generated by PHP!&amp;lt;/p&amp;gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 
-&lt;p&gt;PHP is able to dynamically generate HTML code from the &lt;strong&gt;echo&lt;/strong&gt; statement. As you can see from the picture below, the result looks just like normal HTML. If you view the source code below, it looks as if there was never any php there at all! 
+
 &lt;/p&gt;
 
-&lt;a href=&quot;https://c7.staticflickr.com/1/257/31756713710_9d3efdc971_z.jpg&quot; title=&quot;program1&quot; data-lity=&quot;&quot;&gt; &lt;img src=&quot;https://farm5.staticflickr.com/4650/26046898288_25e835a788_z.jpg&quot; width=&quot;600&quot; alt=&quot;program1&quot; /&gt;
-&lt;/a&gt;
-
-&lt;p&gt;One thing to note s that since the PHP code is being parsed by your apache server, you can only access the page through a URL like this:
-&lt;br /&gt;
-&lt;strong&gt;http://localhost/program1.php&lt;/strong&gt; (Windows) 
-&lt;br /&gt;or &lt;br /&gt;
-&lt;strong&gt;http://127.0.0.1/program1.php&lt;/strong&gt; (Linux)
-&lt;br /&gt;or&lt;br /&gt;
-&lt;strong&gt;http://localhost/~&amp;lt;user&amp;gt;/program.php&lt;/strong&gt;(Mac) 
-&lt;br /&gt;
-if you try to access this page through your file directory like any normal HTML file on your hard drive like this &lt;strong&gt;file:///C:/wamp64/www/program1.php&lt;/strong&gt; then the PHP code will not work. It MUST be accessed through a URL.&lt;/p&gt;
-
-&lt;p&gt;Like JavaScript, every line of code in PHP must be ended with a semicolon. &lt;/p&gt;
-
-&lt;h2&gt;Escape characters&lt;/h2&gt;
-&lt;p&gt;So, Imagine you&apos;re trying to use PHP to output the following:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;He told me, &quot;&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;I&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;know&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PHP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;I&apos;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ve&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;learned&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;PHP&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Both of these lines will result in a syntax error. There are two ways to get around this. First, you &lt;em&gt;could&lt;/em&gt; just use double quotes when printing a single quote, and use single quotes when printing a double quote...&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;He told me, &quot;I know PHP!&quot;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;I&apos;ve learned PHP!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;And that works just fine for this example, but another method is to &lt;em&gt;escape&lt;/em&gt; the quotes using a backslash, like this.
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;He told me, &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;I know PHP!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&apos;I\&apos;ve learned PHP!&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;This is especially useful if you need to print both single and double quote, like this:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;here&apos;s something that would be problematic without the &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;escape&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; backslashes! There&apos;s single and double quotes here.&quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;Now that we&apos;ve learned about PHP&apos;s echo statement, the next post will be about using variables in PHP.&lt;/p&gt;
-
-&lt;br /&gt;
-&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
-&lt;/p&gt;&lt;/p&gt;
 </description>
-        <pubDate>Fri, 26 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//code/2018/01/26/intro-to-php-part-2/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2018/01/26/intro-to-php-part-2/</guid>
+        <pubDate>Sun, 05 Mar 2023 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//life/2023/03/05/Petit-Bourgeoisie-Revolution-and-Dual-Power/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2023/03/05/Petit-Bourgeoisie-Revolution-and-Dual-Power/</guid>
       </item>
     
       <item>
-        <title>Intro to PHP Part 1, Installation</title>
-        <description>&lt;p&gt;It&apos;s been a few months since my last post, and I&apos;ve learned a lot about PHP programming during that time. So I&apos;ve decided to create this series of articles explaining what I&apos;ve learned so far in the world of PHP! 
-&lt;br /&gt;
-PHP is a server-side web language, as opposed to JavaScript, which is a client-side language that runs in the browser. This means that in order to program in PHP, we will either need to connect to a server through a hosting company that already has PHP installed on it, or we can simply install our own server on our own computers for development / learning purposes. I&apos;m not going to assume that everybody reading this has access to a hosting server, especially if you are just getting started, so the first thing I&apos;ll do is show you how to install an Apache server on your own computer so that you can run PHP locally. This is just one method of running PHP, but I think that it is the easiest method for beginners, and it doesn&apos;t involve spending any money! &lt;/p&gt;
+        <title>What I Got out of my Experience Off-The-Grid</title>
+        <description>&lt;p&gt;Before I had ever lived off the grid, I had a lot of doubts and uncertainties about my ability to do so. I had been a city slicker my whole life, and while I had done a lot of research on off grid living, without the direct experience I could not be certain that I would be able or willing to live off the grid for an extended period of time.
+&lt;br /&gt;&lt;br /&gt;
+At the time of writing this, I have been living off the grid for about 16 months. There have definitely been challenges, but I overcame each challenge as they came, and now I am living quite happily and comfortably off the grid. I am now confident that I can not only survive, but thrive in this context indefinitely. 
+&lt;br /&gt;&lt;br /&gt;
+This is a huge achievement. There has been a massive shift in my thinking and my confidence level as a result. I know that, given modest resources and a year&apos;s time, I can establish a decent start to an off grid homestead all by myself. 
+&lt;br /&gt;&lt;br /&gt;
+There is one more thing that I would like to prove while I am here, whether or not I can make a modest living based on selling my market garden. If I can manage to do that, it would be another massive achievement and it would provide a financially sustainable method of continuing this lifestyle indefinitely. Hopefully by the end of October 2023 I will be able to answer that question. 
+&lt;br /&gt;&lt;br /&gt;
+If it turns out that I can successfully earn enough money to support this frugal off grid lifestyle, then in my mind, that is kind of a &quot;complete package&quot; of skills and abilities for being an off grid farmsteader successfully. 
+&lt;br /&gt;&lt;br /&gt;
+At that point, it could be more bearable to temporarily re-enter the traditional workforce in order to earn enough money to buy my own land one day. 
+&lt;br /&gt;&lt;br /&gt;
+In the past, when I was working a traditional job, I felt very alienated and uncertain about my goals and direction, since the idea of off grid living was still something of a low resolution pipe dream, and I was unsure about whether or not it was a reasonable goal to work towards. Now that I know the reality that it is indeed possible and realistic, I could make more concrete plans to work X amount of time at a traditional job in order to save up enough money to purchase my own land. Or possibly, pooling my money with like-minded people and buying land together. Or moving into a commune and becoming the farm manager. The point is that I now have the confidence, skills, and equipment to live on my own off grid farm, and I can take all of that with me for my next piece of land that I end up on.
 
-&lt;h2&gt;Installing PHP on Windows&lt;/h2&gt;
-&lt;p&gt;I&apos;m using windows, so I&apos;ll focus on this OS in more detail. I installed PHP using software called &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;http://www.wampserver.com/en/&quot;&gt;WampServer&lt;/a&gt;. The acronym &quot;WAMP&quot; stands for &quot;Windows&quot;, &quot;Apache&quot;, &quot;Mysql&quot;, and &quot;PHP&quot;. This software will install PHP along with MySql, and Apache. This is useful, because chanses are, if you&apos;re learning PHP programming, you&apos;ll probably want to have MySql on your machine as well, as these technologies are often used together. The installation is fairly self explanatory, once it is finished you should see the icon for wampserver in your taskbar. Click this icon, and a small popup window will appear. Select &quot;start all services&quot; option, which will start the PHP and Apache servers. Then click &quot;localhost&quot;, if everything is working, it should automatically open a browser window with the heading &quot;Server Configuration&quot; and information about your Apache and PHP versions. &lt;/p&gt;
 
-&lt;h2&gt;Installing PHP on Linux&lt;/h2&gt;
 
-&lt;p&gt;Linux is a great choice for running PHP, as both are open source. Here is a great simple article from &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;http://howtoubuntu.org/how-to-install-lamp-on-ubuntu&quot;&gt;How To Ubuntu&lt;/a&gt; that explains the process in detail.&lt;/p&gt;
-&lt;h2&gt;Installing PHP on Mac&lt;/h2&gt;
-&lt;p&gt;If you&apos;re running Mac, you probably alredy have PHP and Apache preinstalled! But you may want to update to the latest versions using &lt;a class=&quot;redlink&quot; target=&quot;blank&quot; href=&quot;https://www.mamp.info/en/&quot;&gt;MAMP&lt;/a&gt; and be sure you are using port (80)&lt;/p&gt;
 
-&lt;p&gt;Now that everything is installed, it&apos;s time to write a simple webpage to test that Apache is working. Open your favorite text editor and type/paste the following to create a bare bones webpage:&lt;/p&gt;
+&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Testing Apache&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Testing&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Save this as &lt;strong&gt;testing.html&lt;/strong&gt; and save it in the root folder of the server. When you installed apache it comes with a default Web
-site folder. If you&apos;re on Windows, your server&apos;s root folder should be something like &lt;strong&gt;C:\wamp\www&lt;/strong&gt;
-&lt;br /&gt;
-If you&apos;re on Ubuntu Linux, the server&apos;s root folder should be something like &lt;strong&gt;/var/www&lt;/strong&gt;
-&lt;br /&gt;
-If you&apos;re on Mac, and if MAMP was installed into the &lt;strong&gt;/Applications&lt;/strong&gt; folder, then the root folder should be something like &lt;strong&gt;/Applications/MAMP/htdocs&lt;/strong&gt;
-&lt;br /&gt;
-Once you&apos;ve saved &lt;strong&gt;testing.html&lt;/strong&gt; to the right folder, then open a browser and type/paste the following: &lt;strong&gt;http://localhost/testing.html&lt;/strong&gt; If everything worked out, this address should show your new web page! If it worked, congratz! You installed Apache! If it didn&apos;t, double check to make sure PHP and Apache are running, and double check that you saved into the right folder.
-&lt;br /&gt;
-NOTE: If you&apos;re on a mac, and you didn&apos;t set apache to use port (80), it&apos;s probably still using it&apos;s default port of 8888. You&apos;ll just have to use this address instead &lt;strong&gt;localhost:8888/testing.html &lt;/strong&gt; and it should work.
-&lt;br /&gt;
-Now that Apache is working, we&apos;ll test PHP to make sure it&apos;s working right. Open your text editor again and make a new text file called &lt;strong&gt;testing.php&lt;/strong&gt;. Save it in the same root folder, next to testing.html. Now type the following PHP code, which will display information about your PHP installation&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Testing PHP&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;phpinfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt; 
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;As you can see, PHP can be nested inside of the body tags of an html document.&lt;/p&gt;
-
-&lt;p&gt;One thing to note s that since the PHP code is being parsed by your apache server, you can only access the page through a URL like this:
-&lt;br /&gt;
-&lt;strong&gt;http://localhost/testing.php&lt;/strong&gt; (Windows) 
-&lt;br /&gt;or &lt;br /&gt;
-&lt;strong&gt;http://127.0.0.1/testing.php&lt;/strong&gt; (Linux)
-&lt;br /&gt;or&lt;br /&gt;
-&lt;strong&gt;http://localhost/~&amp;lt;user&amp;gt;/testing.php&lt;/strong&gt;(Mac) 
-&lt;br /&gt;
-if you try to access this page through your file directory like any normal HTML file on your hard drive like this &lt;strong&gt;file:///C:/wamp64/www/testing.php&lt;/strong&gt; then the PHP code will not work. It MUST be accessed through a URL.&lt;/p&gt;
-
-&lt;p&gt;Open your browser again and type &lt;strong&gt;http://localhost/testing.php&lt;/strong&gt;. This should bring up a purple screen with text saying something like &lt;strong&gt;PHP Version 5.6.31&lt;/strong&gt;(Newer versions will likely have been released since the writing of this post).
-&lt;br /&gt;
-phpinfo(); is a usefull built in function that will display information about your version of PHP. If you&apos;ve made it this far, then you&apos;ve successfully installed both Apache and PHP! Now you&apos;re ready to start the next post in this series, where we&apos;ll actually get started programming in PHP!&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p id=&quot;smallText&quot;&gt;Special thanks to Larry Ullman, whose textbooks helped me learn PHP programming (no affiliation)&lt;/p&gt;
 </description>
-        <pubDate>Fri, 26 Jan 2018 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000//code/2018/01/26/intro-to-php-part-1/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2018/01/26/intro-to-php-part-1/</guid>
+        <pubDate>Wed, 05 Oct 2022 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2022/10/05/what-i-got-living-off-grid/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2022/10/05/what-i-got-living-off-grid/</guid>
       </item>
     
       <item>
-        <title>Assessing the Credibility of Websites That Report About Climate Change</title>
-        <description>&lt;p&gt;&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35799008654/in/dateposted-public/&quot; title=&quot;tree&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4431/35799008654_95901c04c4_b.jpg&quot; width=&quot;960&quot; height=&quot;650&quot; alt=&quot;tree&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+        <title>Spirituality?</title>
+        <description>&lt;p&gt;
+The word “Spirituality” has always been tricky for me since it seems to have a different meaning to each person. That word tends to most often be used by people who I do not share much in common with philosophically. Since I don’t have any beliefs that could be considered “supernatural”I have usually leaned away from the term “Spiritual” as well. However, despite this, I have had people tell me that they consider my lifestyle and philosophy to be “very spiritual” so maybe others are more easily able to see the spirituality in me which I am not able to see myself. But still, “spiritual” it is not a label that I am comfortable applying to myself. That being said, I do still feel that it is possible to derive spiritual value from naturalistic sources, especially the fields of Ecology and Cosmology.
+&lt;br /&gt;&lt;br /&gt;
 
-&lt;p&gt; Even as the vast majority of climate scientists present a wealth of evidence in support of the theory of climate change, public policy has lagged far behind the knowledge of the scientific community, with many still believing that climate change is a “hoax”. In addition to debates at the public policy level, both climate change deniers and believers have contributed to an ongoing online debate through blogs, news articles, and social media. Many deniers are still uncertain about the effects that humanity has had on the environment, while other deniers are intentionally pushing an agenda of misinformation and fake news in order to cloud the climate change debate. It is necessary to assess the credibility of websites that report on climate change.&lt;/p&gt;
+For example, “Biophilia” or the “love of nature” seems to be present in most mentally sound people and animals. This love of nature only makes sense, we evolved in nature and not in artificial environments. So we prefer some expression of that nature, even if it is fake and decorative.
+&lt;br /&gt;&lt;br /&gt;
+My own biophilia has led me down the path of permaculture, to work with nature closely every day.
+&lt;br /&gt;&lt;br /&gt;
+Does nature have a conscious intelligence? Probably not in the sense that we think of human conscious intelligence, but what other examples do we have to compare to?
+&lt;br /&gt;&lt;br /&gt;
+Plants and fungus have their own intelligence. Trees remember, learn and count. Slime mold solves mazes. Fungal mycelium connects tree roots in a forest, transmitting chemical/electrical information to them about what else is happening in the forest. If one tree is being attacked by insects, the wood wide web lets the rest of the forest know so that they can defend themselves with naturally produced pesticides.
+&lt;br /&gt;&lt;br /&gt;
+If an entire forest can have intelligent behavior, could the entire planet?
+There doesn’t seem to be a single mycelium network that spans the globe to be able to transmit information. But there might be other ways to transmit information on wind or in the ocean, if not underground.
+&lt;br /&gt;&lt;br /&gt;
+What kind of properties would an intelligent entity have that spans the biosphere and is 4 billion years old? We can barely understand the intelligence of a plant or mushroom. We can barely understand our own intelligence. 
+&lt;br /&gt;&lt;br /&gt;
+If there is a planetary intelligence (and I am still not sure that there necessarily is) would it have the ability to transmit information to individuals, in the same way that a fungal mycelium network can transmit information to individual trees? Is that my “muse” directing me down a path of biophilia and permaculture in an attempt to heal some of the wounds that humanity has inflicted on the earth? Or is that too much of a grandiose vision for my own purpose? “I have been called by an ancient goddess to do her bidding” doesn’t really sound like something I would proclaim with a straight face.
 
-&lt;p&gt;&lt;a class=&quot;redlink&quot; href=&quot;https://climate.nasa.gov/evidence/&quot;&gt;NASA&lt;/a&gt; is a credible source from a government science agency.
-The National Aeronautics and Space Administration (NASA) is a government organization that focuses on using science to expand human knowledge of the earth and the universe.
-The NASA website about climate change is climate.nasa.gov, it includes links to many credible scientifically accurate articles with ample supporting evidence. For example, the article titled “Climate change: How do we know?” opens with a graph depicting atmospheric carbon dioxide patterns that date back to 400,000 BC. The chart reveals stable patterns of carbon dioxide in the atmosphere. Throughout this recorded time period the carbon dioxide content of the atmosphere slowly rises for thousands of years and then slowly falls for thousands of years in a predictable frequency that probably coincides with the ebb and flow of the ice ages. The pattern is only broken in a dramatic uptick that coincides with the late industrial revolution to modern time. The information in this graph is credible because its data comes from comparing the carbon dioxide content in samples of ice cores that date back many hundreds of thousands of years.  Under the graph is a heading that states “Ninety-seven percent of climate scientists agree that climate-warming trends over the past century are very likely due to human activities, and most of the leading scientific organizations worldwide have issued public statements endorsing this position.” To prove the credibility of this statement, there is a link to another article titled &lt;a class=&quot;redlink&quot; href=&quot;https://climate.nasa.gov/scientific-consensus/&quot;&gt;“Scientific consensus: Earth&apos;s climate is warming&lt;/a&gt;, which contains public statements from many well established american scientific societies that are all in agreement about climate change. The article “Climate change: How do we know?” establishes its credibility in the top of the page by displaying scientific evidence, citing reputable scientific sources, and displaying a quote from the Intergovernmental Panel on Climate Change.&lt;/p&gt;
-
-&lt;p&gt;&lt;a class=&quot;redlink&quot; href=&quot;https://www.infowars.com/the-truth-about-climate-change/&quot;&gt;Infowars&lt;/a&gt; is a conspiracy theorist website and a very unreliable source of information. Infowars is a website founded by the popular conspiracy theorist Alex Jones, whose hyperbolic, guttural rants have made him infamous around the internet and around the world. Among other things, this website contains many articles that attempt to dispel the theory of climate change. One such article, titled “THE TRUTH ABOUT CLIMATE CHANGE” written by Kit Daniels is full of bold unsubstantiated statements, such as  “Global warming is a manufactured problem played up by the government to instigate a public reaction – fear – the government then exploits to offer a predetermined solution: the expansion of government at the public’s expense.” There was no further evidence to support this claim or prove its accuracy. Many other bold statements in this article require a willing suspension of disbelief. A few links are provided that elaborate on certain points, however, these links all point to questionable sources with no scientific credibility. For example, one of the main sources cited in this article is a book called “The Creature From Jekyll Island”, written by passionate fear-mongering conspiracy theorist G. Edward Griffin. Another example of the questionable credibility of this Infowars article is the fact that one of Infowars’s “sources” is really just a link to another older infowars article, so they are essentially just circularly reaffirming their own conspiracies. In addition to the other far out claims on Infowars, this article on climate change is mostly aimed at an audience that has already made up its mind that climate change is a “hoax” and that all climate scientists have simply sold out to a secretive, malicious world dominating government conspiracy.&amp;lt;p/
-
-&lt;p&gt;In contrast, &lt;a class=&quot;redlink&quot; href=&quot;https://www.livescience.com/16388-climate-change-debate-man-nature.html&quot;&gt;Live Science&lt;/a&gt; is a fairly credible source examining both sides of the climate change debate. Live Science is a scientific news website that focuses on various scientific breakthroughs and reports on research findings. Live Science presents articles from a very objective [comma between adjectives: place a comma between two adjectives that &quot;and&quot; would not appropriately connect.] scientific perspective, attempting to avoid political bias. This helps them present themselves as a fairly credible source on scientific matters. The linked article titled “The Climate Change Debate: Man vs. Nature” written by Anuradha K. Herath examines the divided political positions of both the climate change supporters and deniers.  Anuradha K. Herath considers natural phenomena that could contribute to climate change, such as the frequency of sunspots on the surface of the sun, which affect the energy output of the sun, causing temperatures to fluctuate on earth. While these sunspots do cause a small measurable change in the earth’s climate, Anuradha says that “The evidence of the Sun and other natural forces being the primary cause for climate change is still inadequate.” She also examines other possible natural causes for climate change such as the Earth’s orbital changes throughout history. Anuradha says,  “Consider the Sahara desert, for example. There is a wide acceptance among scientists that the Sahara transformed from a fertile grassland to a desert because of a change to the Earth&apos;s orbit. This shift in how the Earth circled the Sun affected the amount of sunlight that region of Africa received.” However it is also possible that climate change could be a cause for orbital shift, rather than an effect of it. Anuradha quotes from Astrobiology Magazine, saying, “Scientists from NASA&apos;s Jet Propulsion Laboratory say that the current melting of ice in Greenland is already causing the tilt to change at a rate of approximately 2.6 centimeters each year. They predict that this change could increase in the years ahead.” This article examines both sides of the argument because it shows that there are both natural causes for climate change as well as man made causes. However, Anuradha’s article goes on to explain that “Hundreds of scientists around the world have conducted research that show human activities contribute the most to today’s climate change . . . scientists who think human activity is the main cause of climate change don&apos;t deny that natural changes will cause temperature fluctuations on Earth. However, their argument is that in the current cycle of climate change, the impact caused by man is far greater.”&lt;/p&gt;
-
-
-&lt;p&gt;While gathering information online, it is important to be able to determine what information is credible, objective, and free from political prejudice. Reading with a skeptical, inquisitive mindset is the best way to protect oneself from the manipulation of political agendas. The ability to spot misleading headlines and political misinformation will aid one’s ability to be an informed member of society who will make socially responsible decisions.&lt;/p&gt;
-
-
-&lt;p&gt;One way or another, climate change will affect the lives of every living being on earth. It is important the we as a society have the scientific literacy to understand our impact on the world that we depend on for our very survival. It is ridiculous and embarrassing for our country that our political policies have lagged so far behind the scientific knowledge of the rest of the developed world.&lt;/p&gt;
 &lt;/p&gt;
+
 </description>
-        <pubDate>Thu, 17 Aug 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//life/2017/08/17/climate-change-websites/</link>
-        <guid isPermaLink="true">http://localhost:4000//life/2017/08/17/climate-change-websites/</guid>
+        <pubDate>Wed, 03 Aug 2022 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2022/08/03/spirituality/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2022/08/03/spirituality/</guid>
       </item>
     
       <item>
-        <title>Photoshop Floating Island Castle Tutorial</title>
-        <description>&lt;article&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=LPhkSkKaBhM&quot;&gt;Check out the video tutorial&lt;/a&gt; to learn how to create this floating island kingdom using photoshop!&lt;br /&gt;
-&lt;b&gt; Scroll all the way down&lt;/b&gt; to find the four images you&apos;ll need to recreate this project.&lt;/p&gt;
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/36404943142/in/dateposted-public/&quot; title=&quot;kingdom of the Clouds tutorial&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4368/36404943142_f30ecf6249_b.jpg&quot; width=&quot;1024&quot; height=&quot;791&quot; alt=&quot;kingdom of the Clouds tutorial&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+        <title>How much land do you need to sustain a small group?</title>
+        <description>&lt;p&gt;
+A lot of this depends on the soil quality, slopes, water availability, and sunlight availability. 
+&lt;br /&gt;&lt;br /&gt;
 
-&lt;p&gt;Click on each of the pictures to download them from flickr.&lt;/p&gt;
+For this region (northern Michigan), I think the ideal plot of land would have a gently south facing slope, without much shade from trees further south, with a shallow water table easy to access with a DIY Sandpoint well, and loamy soil. Heavily wooded near the road for privacy.
+&lt;br /&gt;&lt;br /&gt;
 
+Also, it depends on what is grown on it. Most studies you&apos;ll find about &quot;how many people can an acre feed&quot; will probably be based on conventional farming methods using commodity crops that are very inefficient on a small scale. (E.g, the least efficient usage of land on a small scale would probably be to grow grain to feed beef cattle.)
+&lt;br /&gt;&lt;br /&gt;
 
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35738494814/in/dateposted-public/&quot; title=&quot;castle&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4354/35738494814_46b84786b6_b.jpg&quot; width=&quot;1024&quot; height=&quot;680&quot; alt=&quot;castle&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+More efficient would be something that supports a diverse, mostly plant based diet with a small amount of chicken meat and eggs, just enough to meet basic protein needs. Substitute a rabbit hutch or a fish pond if you want. And obviously, any wildlife you manage to hunt.
+&lt;br /&gt;&lt;br /&gt;
 
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35738494364/in/dateposted-public/&quot; title=&quot;mountain&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4404/35738494364_c5120ebce9_b.jpg&quot; width=&quot;1024&quot; height=&quot;553&quot; alt=&quot;mountain&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+The best survival (annual) crops are things that will give higher calories like potatoes, sweet potatoes, squash, beans and corn (both Sweet corn and Field corn for cornmeal) and the best (perennial) survival crops are nut and fruit trees. That covers protein and calories, but for nutrients and vitamins, leafy green annuals and dark berry bush perennials are best.
+&lt;br /&gt;&lt;br /&gt;
 
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/35763926333/in/dateposted-public/&quot; title=&quot;birds&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4343/35763926333_d9ccd0a615_b.jpg&quot; width=&quot;1024&quot; height=&quot;657&quot; alt=&quot;birds&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+But the real determining factor in how much food a given piece of land can produce depends on how much labor is available. If you put more time and attention into maximizing a small piece of land, you can grow more food than someone who is putting minimal time and effort into a larger piece of land. There is a saying &quot;the best fertilizer is the gardener&apos;s shadow&quot; which means if the Gardners are active and out there, keeping on top of things and looking for every nook and cranny to put new plants, the garden will grow better.
+&lt;br /&gt;&lt;br /&gt;
+With good design, a one acre garden with chickens could feed multiple people.
+&lt;/p&gt;
 
-&lt;a data-flickr-embed=&quot;true&quot; href=&quot;https://www.flickr.com/photos/149069890@N07/36404942712/in/dateposted-public/&quot; title=&quot;sky&quot;&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4431/36404942712_35187d6906_b.jpg&quot; width=&quot;1024&quot; height=&quot;791&quot; alt=&quot;sky&quot; /&gt;&lt;/a&gt;&lt;script async=&quot;&quot; src=&quot;//embedr.flickr.com/assets/client-code.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-
-
-
-
-
-&lt;/article&gt;
 </description>
-        <pubDate>Mon, 14 Aug 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//design/2017/08/14/photoshop-floating-island-castle/</link>
-        <guid isPermaLink="true">http://localhost:4000//design/2017/08/14/photoshop-floating-island-castle/</guid>
+        <pubDate>Sun, 01 May 2022 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2022/05/01/how-much-land/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2022/05/01/how-much-land/</guid>
       </item>
     
       <item>
-        <title>Using Super Mario Bros to learn about JavaScript Constructor functions and Prototypes</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://c1.staticflickr.com/5/4220/34875075235_ca81d8ec12_z.jpg&quot; data-lity=&quot;&quot; data-lity-desc=&quot;step1&quot;&gt;&lt;img src=&quot;https://c1.staticflickr.com/5/4220/34875075235_ca81d8ec12_z.jpg&quot; width=&quot;100%&quot; alt=&quot;step1&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Today we&apos;ll use Nintendo characters to help us learn about JavaScript Constructor functions and Prorotypes! &lt;br /&gt;
-Creating objects in JavaScript is a very common task, but often times you&apos;ll want to define multiple objects that share the same properties and the same basic structure. For example, if I were programming a video game and I wanted to define some players as objects, I might do so like this:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;coins&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lives&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And then after I defined player one, I want to define player two. Except the problem is that I unintentionally define player two in a slightly inconsistent way:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Luigi&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;health&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;See what&apos;s inconsistent here? The name property is the same in both player objects, but for playerOne&apos;s &quot;coins&quot; property, playerTwo has &quot;score&quot; instead!
-And the players lives/health is stored inconsistently as well.
-
-What we need is a way to easily formalize our objects, making it easy to create many different objects with the same properties, but with different values for each property.
-
-&lt;h2&gt;Enter the constructor function!&lt;/h2&gt;
-&lt;p&gt;What&apos;s a constructor function? 
-It&apos;s a function that can construct... Objects! Lots of objects!
-The first step is to just make a function like normal with the name of the type of object that we want to construct, in this case Player:
-&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;(BTW, The tradition is to always capitalize the first letter for these constructor functions!)
-
-Right now we&apos;ll leave the constructor function empty.
-Now we&apos;ll create our object by declaring a new variable using the keyword &quot;new&quot; to create a new object from the Player constructor function.
-&lt;/p&gt;
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
- &lt;p&gt;This creates a new object, calling the Player constructor function to create the new object. Obviously there is still nothing inside the constructor function, so let&apos;s add some code. Let&apos;s try:&lt;/p&gt;
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-&lt;p&gt;Wait, that&apos;s no good… I want to be able to re-use this constructor function for multiple different players, and all of the players can&apos;t be named Mario! We need the constructor function to be able to take in a name parameter. When it is called, it will create a new player, passing in that name parameter for the current object that it is constructing.&lt;/p&gt;
-
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;  &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-&lt;p&gt;So now that we have the basic constructor working, we can call it again passing in a new name&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Luigi&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;This is how we can create many similar objects in a very standardized way.
-So let&apos;s create some more properties in the constructor function. Let&apos;s give each player a number of collected coins, and a number of lives. For the parameters, we&apos;ll use the variables &quot;c&quot; and &quot;l&quot; respectively.
-&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lives&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Luigi&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;76&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-
-&lt;p&gt;This is a much more efficient way of creating many similar objects, but how to we display the data related to each object? &lt;/p&gt;
-
-&lt;h2&gt;Enter prototypes!&lt;/h2&gt;
-
-&lt;p&gt;Prototypes can allow us to attach new functions onto individual objects, rather than declaring functions inside of the constructor function, which would affect ALL of the constructor&apos;s objects at the same time. In this way, our prototype will just bolt a function onto an individual object. In this case, a function that outputs a console log about a player.
-Every JavaScript object has a prototype.
-Functions (including our player function) are also objects, and so they have prototypes too. We can use the prototype to get the player object to do things, like tell us the player&apos;s name
-
-&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;nx&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;displayName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	    &lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;It’s a me,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-&lt;p&gt;We use the keyword &quot;this&quot; to output the name property of whatever the current object is, because this prototype could be re-used on any player object we want.
-
-The &quot;displayName&quot; part is just something made up, you could use anything that is descriptive of what the prototype is getting the object to do.
-
-Now to have the Mario player output its name, we just type
-
-&lt;/p&gt;
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; 
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-&lt;p&gt;And it will log &quot;It&apos;s a me, Mario&quot; to the console!
-We can do the same for Luigi, too.
-
-&lt;/p&gt;
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lives&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Luigi&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;76&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
- &lt;span class=&quot;nx&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;displayName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;It&apos;s a me,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//outputs &quot;It&apos;s a me, Mario&quot;&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//outputs &quot;It&apos;s a me, Luigi&quot;&lt;/span&gt;
-
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
- &lt;p&gt;And we can do more than just displaying information about the players, we can also use prototypes to bolt on new functions that actually change the values of the player objects too. For example, we can give each player a new 1UP like this:&lt;/p&gt;
-
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;coins&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lives&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Mario&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;Luigi&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;76&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
- &lt;span class=&quot;nx&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;displayName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;It&apos;s a me,&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;Player&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;levelUp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lives&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;1UP! I now have&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;lives&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; lives&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//outputs &quot;It&apos;s a me, Mario&quot;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//outputs &quot;It&apos;s a me, Luigi&quot;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;mario&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;levelUp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//outputs &quot;1UP! I now have 4 lives&quot;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;luigi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;levelUp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//outputs &quot;1UP! I now have 3 lives&quot;&lt;/span&gt;
-
-
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-
-
-&lt;p&gt;The efficient thing about this code is that all of the properties are consistent and standardized, and the whole thing is scalable because I can add as many new players as I want without having to repeat any code! Each new player already knows about its properties while still acting independently of each other. 
-
-Everything that each player can do is based on both the constructor function and the prototypes which have bolted new functions onto them after the fact.
-
-Video games can be so informative ;)
-&lt;/p&gt;
+        <title>I have a Love/Hate Relationship with the &quot;Back to the Land&quot; Movement</title>
+        <description>&lt;p&gt;I hate the glorification of the pilgrims. 
+&lt;br /&gt;&lt;br /&gt;
+Putting these settler colonists on a pedestal implicitly involves disrespecting the indigenous people who were displaced / genocided to make the westward expansion possible. Which is especially ironic, since it was the indigenous societies who have the most to teach when it comes to long-term sustainable survival in balance with nature over many thousands of years, not the pilgrims. But since the prepping and homesteading movement is so dominated by white right wingers, it is no wonder that this sort of colonist LARPing is so popular.
+&lt;br /&gt;&lt;br /&gt;
+Speaking of which, another thing I hate about the movement is the insistence on Rugged Individualism, an outgrowth of right wing libertarianism. The concept of one individual or one nuclear family being 100% self sufficient is completely ahistorical, it just doesn&apos;t happen in reality outside of prepper fantasy novels. It takes a collaborative community with different skill sets working together in order to survive long-term.
+&lt;br /&gt;&lt;br /&gt;
+ALL THAT BEING SAID, there are still some very positive aspects to this movement. I currently live off the grid in a self built structure, I grow a big garden, and I&apos;m learning more about wildcrafting. Is this to &quot;survive total ecological collapse?&quot; Hell no, I&apos;d still die without an intact ecology like everyone else. I do these things because they improve my quality of life and happiness RIGHT NOW, and it allows me to not have to participate in the rat race as much as I used to. And when times get tougher, I could use what I&apos;ve learned to be an asset to my community, helping others and passing on the skills I&apos;ve developed over the years to them so we can work together.
+&lt;br /&gt;&lt;br /&gt;
+Community organizing, collaboration, and mutual aid are vastly overlooked &quot;survival skill sets&quot;
 &lt;/p&gt;
 </description>
-        <pubDate>Wed, 24 May 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/05/24/constructors,prototypes,super-mario/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/05/24/constructors,prototypes,super-mario/</guid>
+        <pubDate>Fri, 04 Mar 2022 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000//life/2022/03/04/love-hate-relationship-with-the-back-to-the-land-movement/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2022/03/04/love-hate-relationship-with-the-back-to-the-land-movement/</guid>
       </item>
     
       <item>
-        <title>How to use JavaScript to write dynamic inline styles</title>
-        <description>&lt;p&gt;Using JavaScript, we can programmatically change our webpage&apos;s style and presentation. One way to do this is to use JS to select an element and give it an inline style.&lt;br /&gt; First we&apos;ll need to select an element. Let&apos;s assume we have an HTML element with the ID of &quot;mainContent&quot;&lt;/p&gt;
+        <title>Does Clinging to Attachments and Outcomes Cause Suffering?</title>
+        <description>&lt;p&gt;
+Are my attachments the cause of my suffering? If so, is it worth it?
+&lt;br /&gt;&lt;br /&gt;
+I am attached to an evolving idea, a future goal for myself. I have integrated it with my own identity. 
+Because of this, my identity seems to suffer when this goal is not fulfilled.
+This is a major source of anxiety and depression. But these feelings often motivate actions as well. Actions to close the gap between my current reality and my possible reality.
+&lt;br /&gt;&lt;br /&gt;
+I fear that I have become too attached with a long term vision of my future lifestyle. This vision is only a tentative possibility, glimmering like a mirage in the distance of the desert wasteland of my mind
+&lt;br /&gt;&lt;br /&gt;
+If this goal is only an illusion, then what? The goal might evolve and be replaced. But that is still an attachment to a future reality which will cause more suffering.
+&lt;br /&gt;&lt;br /&gt;
+I developed my goals to help make my future life more bearable, even enjoyable. But I have sacrificed the present at the altar of the future, an eternal bargain that can never lead to future happiness because it is never &quot;tomorrow&quot;
+&lt;br /&gt;&lt;br /&gt;
+Do I need to discard that which I think will help me most? Am I clinging to an illusion while my real world burns around me?
+&lt;br /&gt;&lt;br /&gt;
+What is the difference between those who fight relentlessly to bring their dream into reality, vs those who fight in futility, climbing the wrong ladder and getting more and more blinded and lost?
+&lt;br /&gt;&lt;br /&gt;
+If the ideas that I am attached to serve to motivate me to endure hardships in the expectation that &quot;it will be worth it when…&quot; am I really working toward a better future, or am I simply digging my own grave? 
+&lt;br /&gt;&lt;br /&gt;
+If I decided that I have everything I need right now to be happy, and stop trying to follow attachments and build up to something else, would I find peace? Or would I stagnate into mediocrity?
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mainContent&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;mainContent&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;/p&gt;
 
-&lt;p&gt;Once we have selected the element that we want to style, we can use the same styles that we would use in CSS. For example, to change font color:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nx&quot;&gt;mainContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;#ff0000&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//changes font color to red&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Or to add 50 pixels of margin around the selected element&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nx&quot;&gt;mainContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;margin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;50px&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Any style property that can be written usng CSS can also be dynamically written using JavaScript as a string. JS uses the same pixel units as CSS. Just make sure the semicolon is outside of the string quotes. &lt;br /&gt;
-One important difference between style properties written in JavaScript vs CSS is that JavaScript uses camelCase, while CSS uses hyphen-spaced-text. for example, in CSS we would write this:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nf&quot;&gt;#mainContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;background-repeat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;repeat-x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;While in JavaScript, we would write that same line in CamelCase:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nx&quot;&gt;mainContent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;backgroundRepeat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;repeat-x&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This is not just an arbitrary quirk of JS. In JS, any &quot;-&quot; would be interpreted as &quot;minus&quot; &lt;br /&gt;for example, saying &quot;background minus repeat&quot; which wouldn&apos;t make any sense. &lt;br /&gt; Keep in mind that we obviously will still want to keep most of our styles seperate in our CSS file, away from our .js file. This method is only useful if we NEED to have a style property changed dynamically in a way that CSS alone wouldn&apos;t be capible of by it&apos;s self.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 22 May 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/05/22/JS-for-inline-styles/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/05/22/JS-for-inline-styles/</guid>
+        <pubDate>Tue, 19 Oct 2021 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2021/10/19/clinging-to-attachments-and-outcomes/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2021/10/19/clinging-to-attachments-and-outcomes/</guid>
       </item>
     
       <item>
-        <title>What is the &quot;Ternary&quot; operator, and how is it used?</title>
-        <description>&lt;p&gt;As opposed to a Binary operator which focus on two elements (such as &quot;foo &amp;gt; bar&quot; or &quot;dollars / hour) a Ternary operator instead focuses on 3 elements. 
-The ternary operator has 2 symbols, the question mark &quot;?&quot; and the colon &quot;:&quot; the syntax looks like this  &lt;/p&gt;
+        <title>A Future where &quot;Jobs&quot; and &quot;Careers&quot; Don&apos;t Matter Anymore</title>
+        <description>&lt;p&gt;In my opinion, the whole concept of a &quot;job/career&quot; that we have become accustomed to over the last 200ish years, with the usual employee/employer relationship for a fixed wage/salary is mostly an industrial invention.
+That concept is very well suited to our current society, and for some, it is still an effective strategy to accumulate resources for the anticipated lean times ahead...
+However, when industrial society can no longer be sustained and it inevitably collapses, the economy will collapse too, and so too will the usefulness of this whole &quot;job/career&quot; concept as we currently know it.
+&lt;br /&gt;&lt;br /&gt;
+But even in non industrial societies, people still always needed goods and services in order to survive. The same will be true for post-industrial-collapse societies.
+The future will still need sustainable food producers, safe shelter builders, various healers, even folks skilled at salvaging and repairing various useful tech, etc... Things like &quot;trauma field medic EMT / herbal medicine&quot; or &quot;small electrical appliance repair / off grid solar installation&quot;?
+&lt;br /&gt;&lt;br /&gt;
+Personally, I&apos;m heavily leaning toward learning as much as I can about small scale intensive permaculture market gardening, using hand tools and various nutrient cycling techniques to minimize all outside inputs. One day, I&apos;d love to make a living this way. I&apos;m lucky because this also happens to be a huge passion of mine.
+&lt;br /&gt;&lt;br /&gt;
+Historically, look at the Cuban organic gardening innovations that happened as a result of the embargo, when they suddenly had no access to industrial fertilizer and no fuel for tractors. The whole world will be in their shoes eventually.
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;nx&quot;&gt;Condition&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;This is the equivilent of a mini if/else statement. For example, the following code with if/else statements could be refactored with the ternary operator.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-6
-7
-8
-9
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
- &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;highScore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;if &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;highScore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;nx&quot;&gt;highScore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt;
- &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The above code is equivilant to the following code, which replaces if/else statements with a single ternary operator&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;table class=&quot;rouge-table&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter gl&quot;&gt;&lt;pre class=&quot;lineno&quot;&gt;1
-2
-3
-4
-5
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;600&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;highScore&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerOne&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;playerTwo&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
- 
-&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;The condition is &quot;Is the value of playerOne greater than playerTwo?&quot; The result can either be true or false. If it&apos;s true, we will assign the value of playerOne to the variable highScore.
-If it&apos;s false, we will assign the value of playerTwo to the variable highScore.&lt;/p&gt;
-
+Best to get ahead of the curve while we still can.
+&lt;/p&gt;
 </description>
-        <pubDate>Sun, 14 May 2017 00:00:00 -0400</pubDate>
-        <link>http://localhost:4000//code/2017/05/14/Ternary-operator/</link>
-        <guid isPermaLink="true">http://localhost:4000//code/2017/05/14/Ternary-operator/</guid>
+        <pubDate>Thu, 01 Apr 2021 00:00:00 -0400</pubDate>
+        <link>http://localhost:4000//life/2021/04/01/a-future-where-jobs-and-careers-dont-matter/</link>
+        <guid isPermaLink="true">http://localhost:4000//life/2021/04/01/a-future-where-jobs-and-careers-dont-matter/</guid>
       </item>
     
   </channel>
