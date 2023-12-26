@@ -419,6 +419,11 @@ h3 {
 
 @media (max-width: 735px){
 
+
+	.videoTitle {
+		font-size: 0.8rem;
+	}
+
 	.allPosts{
 		margin-top: -60px;
 	}
