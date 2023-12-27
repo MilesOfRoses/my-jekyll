@@ -302,6 +302,7 @@ a {
     margin-bottom: 5px;
     padding-left: 10px;
     text-align: justify;
+    color: white;
 }
 
 #bio-card{
@@ -311,11 +312,13 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
+    color: white;
 }
 
 #bio-card p{
 	padding-left: 20px;
 	padding-right: 20px;
+	color: white;
 }
 
 #bio-card h2{
