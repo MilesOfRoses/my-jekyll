@@ -98,7 +98,7 @@ Now that you know the basics of PHP variables, let's create a new file called <s
 	{% highlight php linenos %}
     <?php
       $title = "Dr.";
-      $firstName = "Michio ";
+      $firstName = "Michio";
       $lastName = "Kaku";
       $fullName = $title . ' ' . $firstName . ' ' . $lastName;
     ?>

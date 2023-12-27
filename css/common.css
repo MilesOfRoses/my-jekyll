@@ -212,6 +212,10 @@ hr{
 
 /*blog articles*/
 
+.blog{ /*this is the unordered lists in the blogs*/
+	margin-left: 10px;
+}
+
 .article-title{
 	font-size: 1.5rem;
 	margin-left: auto;
