@@ -352,7 +352,7 @@ a {
 
 h1 {
 	font-family: 'Orbitron', sans-serif;
-	font-size: 2.5rem;
+	font-size: 2.5xrem;
 }
 
 .img {
@@ -436,8 +436,8 @@ h3 {
 		margin-top: -60px;
 	}
 
-	div.icon-placeholder:before {
-	content:url(../img/rose-loop-50x50.gif);
+	div.wrapperholder:before {
+	content:url(..100mg/rose-loop-50x50.gif);
 	margin-left: -40px;
 	margin-right: -40px;
 	}
@@ -451,6 +451,12 @@ h3 {
 		margin-left: 10px;
 		margin-right: 10px;
 	}
+
+	.media-section{
+		margin-left: -10px;
+		width: 100%;
+	}
+
 
 	.nav-top{
 		font-size:1.22rem;
@@ -508,7 +514,7 @@ h3 {
 	}
 
 	h1{
-		font-size: 3rem;
+		font-size: 1.5rem;
 	}
 
 	.article-title {
