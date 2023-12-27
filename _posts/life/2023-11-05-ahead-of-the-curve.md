@@ -6,7 +6,7 @@ category: life
 ---
 
 <p>
-...If you're TWO steps ahead of the curve, they'll call you crazy.
+...But if you're TWO steps ahead of the curve, they'll call you crazy.
 <br><br>
 At the risk of sounding arrogant, I truly believe that the type of lifestyle that I have designed over the last few years, and the types of ideas that I come up with, are decades ahead of the current time.
 <br><br>
