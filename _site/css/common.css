@@ -79,7 +79,7 @@ body {
 
 .wrapper {
 	z-index: 2;
-	max-width: 1270px;
+	max-width: 85%;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: rgba(0, 0, 0, 0.5);
@@ -529,9 +529,9 @@ h3 {
 
 
 
+/*
 
-
-@media (max-width: 1300px){ /*narrows the video grid*/
+@media (max-width: 1300px){ 
 	#videos {
 		max-width:1015px;
 	}
@@ -558,3 +558,6 @@ h3 {
 		max-width:505px;
 	}
 }
+*/
+
+
