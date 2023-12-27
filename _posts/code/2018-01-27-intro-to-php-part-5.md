@@ -5,7 +5,7 @@ meta: Using variables in PHP scripts
 category: code
 ---
 
-<p>In this post, we'll create an HTML form and use PHP to handle submitted values. Understanding how to handle forms is important for developing most websites. The first we'll write the HTML form it's self. Then, we'll write a PHP program that will receive and process the resulting form input. To create the HTML form, start with the <em> form tags </em> which look like this:</p>
+<p>In this post, we'll create an HTML form and use PHP to handle submitted values. Understanding how to handle forms is important for developing most websites. First, we'll write the HTML form its self. Then, we'll write a PHP program that will receive and process the resulting form input. To create the HTML form, start with the <em> form tags </em> which look like this:</p>
 
 
 {% highlight php linenos %}
@@ -122,7 +122,7 @@ Anyway, to get started, just make a new file called <strong>form.html</strong>
   	  <p align="center"><input type="submit" name="submit" value="Send my information"></p>
   	</form>
 {% endhighlight %}
-<p>Finally, this submit button is what actually sends the user's unput to the PHP file that we are about to create. All of the data that the user entered will be accessable to PHP. The PHP program will store the user's data into variables, and then output those variables back to the browser. So far this post has only been about HTML, but not it's time to <em>finally</em> write some PHP to process this form! And at the same time, I'll introduce a new programming concept called <strong>conditionals</strong>, which we will use to process our form.</p>
+<p>Finally, this submit button is what actually sends the user's input to the PHP file that we are about to create. All of the data that the user entered will be accessable to PHP. The PHP program will store the user's data into variables, and then output those variables back to the browser. So far this post has only been about HTML, but not it's time to <em>finally</em> write some PHP to process this form! And at the same time, I'll introduce a new programming concept called <strong>conditionals</strong>, which we will use to process our form.</p>
 
 <h2>Conditionals</h2>
 <p>Conditionals allow for the execution of sections of code depending on whether or not a certain <em>condition</em> is true or not. For example:</p>
