@@ -422,7 +422,7 @@ h3 {
 
 @media (max-width: 800px){
 
-	
+
 	#follow{
 		margin-bottom: 15px;
 	}
@@ -446,11 +446,11 @@ h3 {
 	margin-top: 10px;
 	}
 
-/*	.media-section {
-		margin-top: 30px;
-		margin-left: -10px;
+	.media-section p {
+		
+		margin-left: 10px;
 		margin-right: 10px;
-	}*/
+	}
 
 	.nav-top{
 		font-size:1.22rem;
@@ -478,8 +478,12 @@ h3 {
 	.centerText {
 		margin-bottom: 15px;
 		margin-top: -15px;
+		max-width: 90%;
 		text-align: center;
 		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+
 
 	}
 
