@@ -27,7 +27,7 @@ mainContent.style.color="#ff0000"; //changes font color to red
 mainContent.style.margin="50px";
  {% endhighlight %}
 
-<p>Any style property that can be written usng CSS can also be dynamically written using JavaScript as a string. JS uses the same pixel units as CSS. Just make sure the semicolon is outside of the string quotes. <br>
+<p>Any style property that can be written using CSS can also be dynamically written using JavaScript as a string. JS uses the same pixel units as CSS. Just make sure the semicolon is outside of the string quotes. <br>
 One important difference between style properties written in JavaScript vs CSS is that JavaScript uses camelCase, while CSS uses hyphen-spaced-text. for example, in CSS we would write this:</p>
 
 
