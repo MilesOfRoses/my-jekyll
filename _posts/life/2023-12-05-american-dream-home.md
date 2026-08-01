@@ -15,6 +15,6 @@ All of these massive rich corporate industry owners benefit from maintaining the
 <br><br>
 And if you personally don't like the little lifestyle plan that your State/Corporate overlords have gracefully lined up for you, if you dare disobey, if you dare build a little off-grid-eco-oasis-of-freedom outside of their walled garden and oversight, they'll fine you into bankruptcy, threaten you with jail time, and send a wrecking ball right through your beautiful tiny home, rendering you homeless, penniless, and possibly in jail with court fees...
 <br><br>
-"Land of the Free" more like "Land of the Two Headed Corporate/State Leviathan"... Is it any wonder that I have gravitated towards Anarchism?
+"Land of the Free" more like "Land of the Two Headed Corporate/State Leviathan"... 
 </p>
 
